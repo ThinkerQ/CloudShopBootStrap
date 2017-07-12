@@ -4,7 +4,6 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.guangxunet.shop.base.domain.BaseDomain;
 /**
  * 商品分类表实体类
@@ -18,11 +17,11 @@ public class Category extends BaseDomain{
 
     private String parentId;//父级分类
     
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GTM+8")
+//    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GTM+8")
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date createDate;//创建时间
 
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GTM+8")//后台显示到前端格式
+//    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GTM+8")//后台显示到前端格式
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date updateDate;
 

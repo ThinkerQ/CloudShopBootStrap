@@ -25,7 +25,7 @@ import com.aliyun.mns.model.TopicMessage;
 import com.guangxunet.shop.base.service.ILogininfoService;
 import com.guangxunet.shop.base.service.IVerifyCodeService;
 import com.guangxunet.shop.base.util.BidConst;
-import com.guangxunet.shop.base.util.DateUtil;
+import com.guangxunet.shop.base.util.DateUtils;
 import com.guangxunet.shop.base.util.LoggerUtil;
 import com.guangxunet.shop.base.util.PhoneFormatCheckUtils;
 import com.guangxunet.shop.base.util.UserContext;
@@ -97,14 +97,14 @@ public class VerifyCodeServiceImpl implements IVerifyCodeService {
         	throw new RuntimeException("验证码错误!");
 		}
         
-        if (DateUtil.getBetweenSecond(vc.getSendTime(),new Date()) > BidConst.SEND_VERIFY_EXPIRY_DATE) {
+        if (DateUtils.getBetweenSecond(vc.getSendTime(),new Date()) > BidConst.SEND_VERIFY_EXPIRY_DATE) {
         	throw new RuntimeException("验证码已过期!");
 		}
         
        boolean isSend =  vc!=null//发过短信
 		                && vc.getPhoneNumber().equals(phoneNumber)//并且手机号和之前输入的一样
 		                && vc.getCode().equals(verifyCode)//并且验证码相等
-		                && DateUtil.getBetweenSecond(vc.getSendTime(),new Date()) <= BidConst.SEND_VERIFY_INTERVAL;//并且验证码没有过期，全部满足时返回true
+		                && DateUtils.getBetweenSecond(vc.getSendTime(),new Date()) <= BidConst.SEND_VERIFY_INTERVAL;//并且验证码没有过期，全部满足时返回true
         
       return isSend;
     }
@@ -127,7 +127,7 @@ public class VerifyCodeServiceImpl implements IVerifyCodeService {
         
         // 发送短信
         //sendMessageByThisSystem(phoneNumber, code);//使用本系统模拟发送验证码
-//        this.batchPublishSMSMessage(phoneNumber,code);//通过阿里云短信服务发送验证码
+        this.batchPublishSMSMessage(phoneNumber,code);//通过阿里云短信服务发送验证码
             
     }
 
@@ -195,7 +195,7 @@ public class VerifyCodeServiceImpl implements IVerifyCodeService {
     	
     	//3.发送时间间隔不可超出限制
         VerifyCodeVO vo = UserContext.getVerifyCode();
-    	if (vo != null && DateUtil.getBetweenSecond(vo.getSendTime(), new Date()) <= BidConst.SEND_VERIFY_INTERVAL) {
+    	if (vo != null && DateUtils.getBetweenSecond(vo.getSendTime(), new Date()) <= BidConst.SEND_VERIFY_INTERVAL) {
     		throw new RuntimeException("发送过于频繁，每分钟只可获取一次验证码!");
     	}
     	

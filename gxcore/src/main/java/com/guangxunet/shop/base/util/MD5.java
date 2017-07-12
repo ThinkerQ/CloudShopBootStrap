@@ -17,6 +17,7 @@ package com.guangxunet.shop.base.util;
  */
 
 import java.lang.reflect.Array;
+import java.security.MessageDigest;
 
 public class MD5 {
 
@@ -60,6 +61,32 @@ public class MD5 {
 	public static long b2iu(byte b) {
 		return (b >= 0 ? b : b & 0xff);
 	}
+	
+	public static String md5(String str) {
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(str.getBytes());
+			byte b[] = md.digest();
+
+			int i;
+
+			StringBuffer buf = new StringBuffer("");
+			for (int offset = 0; offset < b.length; offset++) {
+				i = b[offset];
+				if (i < 0)
+					i += 256;
+				if (i < 16)
+					buf.append("0");
+				buf.append(Integer.toHexString(i));
+			}
+			str = buf.toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return str;
+	}
+	
 
 	public static String byteHEX(byte ib) {
 		char Digit[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',
@@ -76,6 +103,11 @@ public class MD5 {
 		return m.getMD5ofStr(s);
 	}
 
+	/*public static void main(String[] args) {
+	System.out.println(md5("31119@qq.com"+"123456"));
+	System.out.println(md5("mj1"));
+}*/
+	
 	public static void main(String args[]) {
 		MD5 m = new MD5();
 		if (Array.getLength(args) == 0) {
@@ -325,4 +357,5 @@ public class MD5 {
 			i = 0;
 		md5Memcpy(buffer, inbuf, index, i, inputLen - i);
 	}
+	
 }
