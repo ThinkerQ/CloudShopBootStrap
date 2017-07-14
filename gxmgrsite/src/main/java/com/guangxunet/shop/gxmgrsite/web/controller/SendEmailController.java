@@ -17,7 +17,7 @@ import com.guangxunet.shop.base.util.JsonResult;
 import com.guangxunet.shop.base.util.LoggerUtil;
 
 /**
- * 发送邮箱控制器
+ * 发送邮箱控制器 cm
  * @Description: 
  * @author King
  * @date 2017年7月12日
