@@ -12,7 +12,7 @@ import com.fh.util.UuidUtil;
 import com.guangxunet.shop.base.system.Page;
 import com.guangxunet.shop.base.system.PageData;
 
-public class BaseController {
+public class BaseController { 
 	
 	protected Logger logger = Logger.getLogger(this.getClass());
 
