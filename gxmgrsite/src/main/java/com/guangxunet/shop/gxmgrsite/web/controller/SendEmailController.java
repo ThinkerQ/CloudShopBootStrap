@@ -24,6 +24,7 @@ import com.guangxunet.shop.base.util.LoggerUtil;
  */
 @Controller
 public class SendEmailController {
+	
     @Autowired
     private IEmailService emailService;
 
