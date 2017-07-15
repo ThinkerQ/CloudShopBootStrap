@@ -135,7 +135,7 @@
 		</table>
 		
 		
-		<table id="table_report" class="table table-striped table-bordered table-hover">
+		<table id="" class="table table-striped table-bordered table-hover">
 			<tr>
 				<td style="text-align: center;" colspan="100">
 					<a class="btn btn-app btn-success btn-mini" onclick="dialog_open();"><i class="icon-ok"></i>新增</a>
@@ -146,17 +146,17 @@
 		</table>
 		</div>
 		
-		<div id="zhongxin2" class="center" style="display:none"><br/><br/><br/><br/><img src="static/images/jiazai.gif" /><br/><h4 class="lighter block green"></h4></div>
+		<div id="zhongxin2" class="center" style="display:none"><br/><br/><br/><br/><img src="/static/images/jiazai.gif" /><br/><h4 class="lighter block green"></h4></div>
 		
 	</form>
 	
 	
 		<!-- 引入 -->
-		<script type="text/javascript">window.jQuery || document.write("<script src='static/js/jquery-1.9.1.min.js'>\x3C/script>");</script>
-		<script src="static/js/bootstrap.min.js"></script>
-		<script src="static/js/ace-elements.min.js"></script>
-		<script src="static/js/ace.min.js"></script>
-		<script src="static/js/myjs/productCode.js"></script>
+		<script type="text/javascript">window.jQuery || document.write("<script src='/static/js/jquery-1.9.1.min.js'>\x3C/script>");</script>
+		<script src="/static/js/bootstrap.min.js"></script>
+		<script src="/static/js/ace-elements.min.js"></script>
+		<script src="/static/js/ace.min.js"></script>
+		<script src="/static/js/myjs/productCode.js"></script>
 		<script type="text/javascript">
 		$(top.hangge());
 		</script>
