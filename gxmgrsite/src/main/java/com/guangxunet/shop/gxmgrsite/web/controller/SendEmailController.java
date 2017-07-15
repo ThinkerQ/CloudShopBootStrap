@@ -28,6 +28,7 @@ public class SendEmailController {
     @Autowired
     private IEmailService emailService;
 
+    
    /* @RequestMapping("sendEmail.do")
     @ResponseBody
     public JsonResult sendEmail(@RequestParam Map<String, Object> params){
