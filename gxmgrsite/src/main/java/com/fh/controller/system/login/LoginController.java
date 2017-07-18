@@ -1,25 +1,5 @@
 package com.fh.controller.system.login;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.fh.controller.base.BaseController;
 import com.fh.service.system.menu.MenuService;
 import com.fh.service.system.role.RoleService;
@@ -33,6 +13,24 @@ import com.guangxunet.shop.base.system.Role;
 import com.guangxunet.shop.base.system.User;
 import com.guangxunet.shop.base.util.Const;
 import com.guangxunet.shop.base.util.Tools;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 /*
  * 总入口
  */
@@ -256,7 +254,6 @@ public class LoginController extends BaseController {
 					}
 				}
 			 	//读取websocket配置
-			 	
 				mv.setViewName("system/admin/index");
 				mv.addObject("user", user);
 				mv.addObject("menuList", menuList);
@@ -294,7 +291,6 @@ public class LoginController extends BaseController {
 	
 	/**
 	 * 用户注销
-	 * @param session
 	 * @return
 	 */
 	@RequestMapping(value="/logout")

@@ -19,11 +19,11 @@ public class Product {
 
     private String secondName;
 
-    private String littlePath;
+    private String littleImgUrl;
 
-    private String bigPath;
+    private String bigImgUrl;
 
-    private Date time;
+    private Date createTime;
 
     private Integer status;
 

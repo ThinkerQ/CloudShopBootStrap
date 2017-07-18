@@ -86,7 +86,7 @@
 		        				<font color="red" style="font-weight: bold;">
 		        					注意：<br/>
 		        					  1. 请不要添加  XX_ID 的主键，系统自动生成一个32位无序不重复字符序列作为主键<br/>
-		        					  2. 主键为  类名_ID 格式，所有字段的字母均用大写
+		        					  2. 主键为  类名_ID 格式
 		        				</font>
 							</td>
 		        		</tr>

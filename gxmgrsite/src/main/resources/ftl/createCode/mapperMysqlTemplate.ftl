@@ -4,41 +4,38 @@
 	
 	
 	<!-- 新增-->
-	<insert id="save" parameterType="pd">
-		insert into ${tabletop}${objectNameUpper}(
+	<insert id="save" parameterType="pd" useGeneratedKeys="true" keyProperty="${objectNameLower}_ID">
+		insert into ${tabletop}${objectNameLower}(
 	<#list fieldList as var>
-			${var[0]},	
+			${var[0]}<#if var_index != fieldList?size-1>,</#if >
 	</#list>
-			${objectNameUpper}_ID
 		) values (
 	<#list fieldList as var>
-			${r"#{"}${var[0]}${r"}"},	
+			${r"#{"}${var[0]}${r"}"}<#if var_index != fieldList?size-1>,	</#if >
 	</#list>
-			${r"#{"}${objectNameUpper}_ID${r"}"}
 		)
 	</insert>
 	
 	
 	<!-- 删除-->
 	<delete id="delete" parameterType="pd">
-		delete from ${tabletop}${objectNameUpper}
+		delete from ${tabletop}${objectNameLower}
 		where 
-			${objectNameUpper}_ID = ${r"#{"}${objectNameUpper}_ID${r"}"}
+			${objectNameLower}_ID = ${r"#{"}${objectNameLower}_ID${r"}"}
 	</delete>
 	
 	
 	<!-- 修改 -->
 	<update id="edit" parameterType="pd">
-		update  ${tabletop}${objectNameUpper}
+		update  ${tabletop}${objectNameLower}
 			set 
 	<#list fieldList as var>
 		<#if var[3] == "是">
-				${var[0]} = ${r"#{"}${var[0]}${r"}"},
+				${var[0]} = ${r"#{"}${var[0]}${r"}"}	<#if var_index != fieldList?size-1>,	</#if >
 		</#if>
 	</#list>
-			${objectNameUpper}_ID = ${objectNameUpper}_ID
-			where 
-				${objectNameUpper}_ID = ${r"#{"}${objectNameUpper}_ID${r"}"}
+			where
+				${objectNameLower}_ID = ${r"#{"}${objectNameLower}_ID${r"}"}
 	</update>
 	
 	
@@ -46,43 +43,44 @@
 	<select id="findById" parameterType="pd" resultType="pd">
 		select 
 	<#list fieldList as var>
-			${var[0]},	
+			${var[0]},
 	</#list>
-			${objectNameUpper}_ID
+			${objectNameLower}_ID
 		from 
-			${tabletop}${objectNameUpper}
+			${tabletop}${objectNameLower}
 		where 
-			${objectNameUpper}_ID = ${r"#{"}${objectNameUpper}_ID${r"}"}
+			${objectNameLower}_ID = ${r"#{"}${objectNameLower}_ID${r"}"}
 	</select>
-	
-	
-	<!-- 列表 -->
-	<select id="datalistPage" parameterType="page" resultType="pd">
-		select
+
+    <sql id="selectSql">
 		<#list fieldList as var>
-				a.${var[0]},	
+        	a.${var[0]},
 		</#list>
-				a.${objectNameUpper}_ID
+	</sql>
+
+    <!-- 列表 -->
+    <select id="datalistPage" parameterType="page" resultType="pd">
+		select
+        	<include refid="selectSql"/>
+				a.${objectNameLower}_ID
 		from 
-				${tabletop}${objectNameUpper} a
+				${tabletop}${objectNameLower} a
 	</select>
 	
 	<!-- 列表(全部) -->
 	<select id="listAll" parameterType="pd" resultType="pd">
 		select
-		<#list fieldList as var>
-				a.${var[0]},	
-		</#list>
-				a.${objectNameUpper}_ID
+        <include refid="selectSql"/>
+				a.${objectNameLower}_ID
 		from 
-				${tabletop}${objectNameUpper} a
+				${tabletop}${objectNameLower} a
 	</select>
 	
 	<!-- 批量删除 -->
 	<delete id="deleteAll" parameterType="String">
-		delete from ${tabletop}${objectNameUpper}
+		delete from ${tabletop}${objectNameLower}
 		where 
-			${objectNameUpper}_ID in
+			${objectNameLower}_ID in
 		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
                  ${r"#{item}"}
 		</foreach>
