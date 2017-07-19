@@ -32,20 +32,17 @@
 	
 	//保存
 	function save(){
-	<#list fieldList as var>
-		<#if var[3] == "是">
-		if($("#${var[0] }").val()==""){
-			$("#${var[0] }").tips({
+			if($("#name").val()==""){
+			$("#name").tips({
 				side:3,
-	            msg:'请输入${var[2] }',
+	            msg:'请输入分类名称',
 	            bg:'#AE81FF',
 	            time:2
 	        });
-			$("#${var[0] }").focus();
+			$("#name").focus();
 			return false;
 		}
-		</#if>
-	</#list>
+
 		$("#Form").submit();
 		$("#zhongxin").hide();
 		$("#zhongxin2").show();
@@ -54,30 +51,25 @@
 </script>
 	</head>
 <body>
-	<form action="${objectNameLower}/${r"${msg }"}.do" name="Form" id="Form" method="post">
-		<input type="hidden" name="${objectNameLower}_ID" id="${objectNameLower}_ID" value="${r"${pd."}${objectNameLower}_ID${r"}"}"/>
+	<form action="category/${msg }.do" name="Form" id="Form" method="post">
+		<input type="hidden" name="category_ID" id="category_ID" value="${pd.category_ID}"/>
 		<div id="zhongxin">
 		<table id="table_report" class="table table-striped table-bordered table-hover">
-<#list fieldList as var>
-	<#if var[3] == "是">
-		<#if var[1] == 'Date'>
 			<tr>
-				<td style="width:70px;text-align: right;padding-top: 13px;">${var[2] }:</td>
-				<td><input class="span10 date-picker" name="${var[0] }" id="${var[0] }" value="${r"${pd."}${var[0] }${r"}"}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="${var[2] }" title="${var[2] }"/></td>
+				<td style="width:70px;text-align: right;padding-top: 13px;">分类名称:</td>
+				<td><input type="text" name="name" id="name" value="${pd.name}" maxlength="32" placeholder="这里输入分类名称" title="分类名称"/></td>
 			</tr>
-		<#elseif var[1] == 'Integer'>
 			<tr>
-				<td style="width:70px;text-align: right;padding-top: 13px;">${var[2] }:</td>
-				<td><input type="number" name="${var[0] }" id="${var[0] }" value="${r"${pd."}${var[0] }${r"}"}" maxlength="32" placeholder="这里输入${var[2] }" title="${var[2] }"/></td>
+				<td style="width:70px;text-align: right;padding-top: 13px;">上一级分类:</td>
+				<td>
+					<select class="chzn-select" name="parentId" id="parentId" data-placeholder="请选择上一级" style="vertical-align:top;"  title="上一级">
+						<option value="0">一级分类</option>
+						<c:forEach items="${parentList}" var="va">
+							<option value="${va.category_ID}" <c:if test="${va.category_ID == pd.parentId }">selected</c:if>>${va.name }</option>
+						</c:forEach>
+					</select>
+				</td>
 			</tr>
-		<#else>
-			<tr>
-				<td style="width:70px;text-align: right;padding-top: 13px;">${var[2] }:</td>
-				<td><input type="text" name="${var[0] }" id="${var[0] }" value="${r"${pd."}${var[0] }${r"}"}" maxlength="32" placeholder="这里输入${var[2] }" title="${var[2] }"/></td>
-			</tr>
-		</#if>
-	</#if>
-</#list>
 			<tr>
 				<td style="text-align: center;" colspan="10">
 					<a class="btn btn-mini btn-primary" onclick="save();">保存</a>

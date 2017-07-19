@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CategoryMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd" useGeneratedKeys="true" keyProperty="category_ID">
+		insert into category(name,parentId,createDate) values (#{name},#{parentId},#{createDate})
+	</insert>
+
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from category
+		where 
+			category_ID = #{category_ID}
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  category
+			set 
+				name = #{name} ,
+				parentId = #{parentId} ,
+				createDate=#{createDate}
+			where
+				category_ID = #{category_ID}
+	</update>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			name,
+			parentId,
+			createDate,
+			category_ID
+		from 
+			category
+		where 
+			category_ID = #{category_ID}
+	</select>
+
+	<!-- 列表 -->
+	<select id="parentList" resultType="pd">
+		select
+				a.name,	
+				a.category_ID
+		from 
+				category a
+		where 	a.parentId = 0
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a.name,	
+				a.parentId,	b.name as parentName,
+				a.createDate,	
+				a.category_ID
+		from 
+				category a LEFT JOIN category b ON a.parentId = b.category_ID
+		where 	a.parentId != 0
+	</select>
+
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a.name,
+				a.parentId,b.name as parentName,
+				a.createDate,
+				a.category_ID
+		from
+				category a LEFT JOIN category b ON a.parentId = b.category_ID
+		where 	a.parentId != 0
+	</select>
+
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from category
+		where 
+			category_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>
