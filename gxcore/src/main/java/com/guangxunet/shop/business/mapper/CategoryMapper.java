@@ -3,6 +3,7 @@ package com.guangxunet.shop.business.mapper;
 import java.util.List;
 import java.util.Map;
 
+import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.business.domain.Category;
 
 
@@ -41,5 +42,13 @@ public interface CategoryMapper {
 	 * @return
 	 */
 	int insertCateGorysItem(Map<String,Object> itemParams);
+	
+	/**
+	 * 获取某一级类目
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public PageData getCategoryById(PageData pd) throws Exception;
 
 }

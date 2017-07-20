@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.business.domain.Category;
 import com.guangxunet.shop.business.mapper.CategoryMapper;
 import com.guangxunet.shop.business.service.ICategoryService;
@@ -22,7 +23,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	private CategoryMapper categoryMapper;
 
 	@Override
-	public List<Category> categoryOneListAll() {
+	public List<Category> selectCategoryOneListAll() {
 		return categoryMapper.selectOneAll();
 	}
 
@@ -47,6 +48,11 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Override
 	public int deleteByPrimaryKey(Long id) {
 		return categoryMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public PageData getCategoryById(PageData pd) throws Exception {
+		return categoryMapper.getCategoryById(pd);
 	}
 
 	

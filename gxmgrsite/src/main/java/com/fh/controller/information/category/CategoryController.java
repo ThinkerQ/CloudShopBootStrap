@@ -8,6 +8,10 @@ import com.fh.util.ObjectExcelView;
 import com.guangxunet.shop.base.system.Page;
 import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.base.util.Const;
+import com.guangxunet.shop.business.domain.Category;
+
+import net.sf.json.JSONArray;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -16,10 +20,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -84,7 +91,7 @@ public class CategoryController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		pd.put("createDate", new Date());	//修改时间
+		pd.put("updateDate", new Date());	//修改时间
 		categoryService.edit(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
@@ -104,6 +111,7 @@ public class CategoryController extends BaseController {
 			pd = this.getPageData();
 			page.setPd(pd);
 			List<PageData> varList = categoryService.list(page);	//列出Category列表
+			logger.info("----------一级商品类目---"+varList);
 			mv.setViewName("information/category/category_list");
 			mv.addObject("varList", varList);
 			mv.addObject("pd", pd);
@@ -239,4 +247,30 @@ public class CategoryController extends BaseController {
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(format,true));
 	}
+	
+	
+	/**
+	 * 获取当前类目的所有子类目
+	 * @param menuId
+	 * @param response
+	 */
+	@RequestMapping(value="/subnew")
+	public void getSub(@RequestParam String categoryId,HttpServletResponse response)throws Exception{
+		try {
+			List<Map<String, Object>> subMenu = categoryService.selectByParentId(categoryId);
+			JSONArray arr = JSONArray.fromObject(subMenu);
+			PrintWriter out;
+			
+			response.setCharacterEncoding("utf-8");
+			out = response.getWriter();
+			String json = arr.toString();
+			logger.info("-------sub.do--json---"+json);
+			out.write(json);
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			logger.error(e.toString(), e);
+		}
+	}
+	
 }

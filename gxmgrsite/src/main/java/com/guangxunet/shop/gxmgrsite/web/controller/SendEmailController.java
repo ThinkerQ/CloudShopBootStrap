@@ -17,18 +17,16 @@ import com.guangxunet.shop.base.util.JsonResult;
 import com.guangxunet.shop.base.util.LoggerUtil;
 
 /**
- * 发送邮箱控制器 cm 
+ * 发送邮箱控制器
  * @Description: 
  * @author King
  * @date 2017年7月12日
  */
 @Controller
 public class SendEmailController {
-	
     @Autowired
     private IEmailService emailService;
 
-    
    /* @RequestMapping("sendEmail.do")
     @ResponseBody
     public JsonResult sendEmail(@RequestParam Map<String, Object> params){

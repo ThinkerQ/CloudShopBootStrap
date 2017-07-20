@@ -59,7 +59,9 @@ public class RoleController extends BaseController {
 		try{
 			pd = this.getPageData();
 			String msg = pd.getString("msg");
-			if(Jurisdiction.buttonJurisdiction(menuUrl, "edit")){roleService.updateQx(msg,pd);}
+			if(Jurisdiction.buttonJurisdiction(menuUrl, "edit")){
+				roleService.updateQx(msg,pd);
+			}
 			mv.setViewName("save_result");
 			mv.addObject("msg","success");
 		} catch(Exception e){

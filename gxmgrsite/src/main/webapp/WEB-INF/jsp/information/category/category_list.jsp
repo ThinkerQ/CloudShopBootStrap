@@ -9,7 +9,61 @@
 <html lang="en">
 	<head>
 	<base href="<%=basePath%>"><!-- jsp文件头和头部 -->
-	<%@ include file="../../system/admin/top.jsp"%> 
+	<%@ include file="../../system/admin/top.jsp"%>
+	<script type="text/javascript">
+		$(top.hangge());
+		
+		/*类目id,点击的对象,顺序*/
+		function openClose(categoryId,curObj,trIndex){
+			var txt = $(curObj).text();
+			if(txt=="展开"){
+				$(curObj).text("折叠");
+				$("#tr"+categoryId).after("<tr class='center' id='tempTr"+categoryId+"'><td class='center' colspan='7'>数据载入中</td></tr>");
+				if(trIndex%2==0){
+					$("#tempTr"+categoryId).addClass("main_table_even");
+				}
+				var url = "<%=basePath%>category/subnew.do?categoryId="+categoryId+"&guid="+new Date().getTime();
+				$.get(url,function(data){
+					
+					if(data.length>0){
+						var html = "";
+						$.each(data,function(i){
+							html = "<tr style='height:24px;line-height:24px;' name='subTr"+categoryId+"'>";
+							html += "<td></td>";
+							html += "<td></td>";
+							html += "<td class='center'><span style='width:80px;display:inline-block;'></span>";
+							if(i==data.length-1)
+								html += "<img src='static/images/joinbottom.gif' style='vertical-align: middle;'/>";
+							else
+								html += "<img src='static/images/join.gif' style='vertical-align: middle;'/>";
+							html += "<span style='width:100px;text-align:left;display:inline-block;'>"+this.name+"</span>";
+							html += "</td>";
+							html += "<td class='center'>"+this.parentName+"</td>";
+							html += "<td class='center'>"+this.createDate+"</td>";
+							html += "<td class='center'>"+this.categoryOrder+"</td>";
+							html += "<td><a class='btn btn-mini btn-info' title='编辑' onclick='edit(\""+this.id+"\")'><i class='icon-edit'></i></a> <a class='btn btn-mini btn-danger' title='删除' onclick='delmenu(\""+this.MENU_ID+"\",false)'><i class='icon-trash'></i></a></td>";
+							html += "</tr>";
+							$("#tempTr"+categoryId).before(html);
+						});
+						
+						$("#tempTr"+categoryId).remove();
+						if(trIndex%2==0){
+							$("tr[name='subTr"+categoryId+"']").addClass("main_table_even");
+						}
+					}else{
+						$("#tempTr"+categoryId+" > td").html("没有相关数据");
+					}
+				},"json");
+			}else{
+				$("#tempTr"+categoryId).remove();
+				$("tr[name='subTr"+categoryId+"']").remove();
+				$(curObj).text("展开");
+			}
+		}
+		
+	</script>
+	
+	 
 	</head>
 <body>
 		
@@ -62,6 +116,7 @@
 						<th class="center">分类名称</th>
 						<th class="center">上一级</th>
 						<th class="center">创建时间</th>
+						<th class="center">排序</th>
 						<th class="center">操作</th>
 					</tr>
 				</thead>
@@ -73,14 +128,15 @@
 					<c:when test="${not empty varList}">
 						<c:if test="${QX.cha == 1 }">
 						<c:forEach items="${varList}" var="var" varStatus="vs">
-							<tr>
+							<tr id="tr${var.category_ID}">
 								<td class='center' style="width: 30px;">
 									<label><input type='checkbox' name='ids' value="${var.category_ID}" /><span class="lbl"></span></label>
 								</td>
 								<td class='center' style="width: 30px;">${vs.index+1}</td>
 										<td class="center">${var.name}</td>
-										<td class="center">${var.parentName}</td>
-										<td class="center">${var.createDate}</td>
+										<td class="center"><span class="label label-success arrowed">根级目录</span></td>
+										<td class="center"><fmt:formatDate value="${var.createDate}" pattern="yyyy-MM-dd"/></td>
+										<td class="center">${var.categoryOrder}</td>
 								<td style="width: 30px;" class="center">
 									<div class='hidden-phone visible-desktop btn-group'>
 									
@@ -88,6 +144,7 @@
 										<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="icon-lock" title="无权限"></i></span>
 										</c:if>
 										<div class="inline position-relative">
+										<a class='btn btn-mini btn-warning' onclick="openClose('${var.category_ID}',this,${vs.index })" >展开</a>
 										<button class="btn btn-mini btn-info" data-toggle="dropdown"><i class="icon-cog icon-only"></i></button>
 										<ul class="dropdown-menu dropdown-icon-only dropdown-light pull-right dropdown-caret dropdown-close">
 											<c:if test="${QX.edit == 1 }">

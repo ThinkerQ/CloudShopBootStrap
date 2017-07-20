@@ -64,7 +64,7 @@
 		<script src="static/js/ace.min.js"></script>
 		
     	<script type="text/javascript" src="plugins/webuploader/webuploader.js"></script>
-    	<script type="text/javascript" src="/plugins/webuploader/upload.js"></script>
+    	<script type="text/javascript" src="plugins/webuploader/upload.js"></script>
 		
 		<script type="text/javascript">
 		$(top.hangge());

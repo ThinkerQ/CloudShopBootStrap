@@ -60,7 +60,7 @@
 				<td><input type="text" name="name" id="name" value="${pd.name}" maxlength="32" placeholder="这里输入分类名称" title="分类名称"/></td>
 			</tr>
 			<tr>
-				<td style="width:70px;text-align: right;padding-top: 13px;">上一级分类:</td>
+				<td style="width:70px;text-align: right;padding-top: 13px;">上级分类:</td>
 				<td>
 					<select class="chzn-select" name="parentId" id="parentId" data-placeholder="请选择上一级" style="vertical-align:top;"  title="上一级">
 						<option value="0">一级分类</option>
@@ -69,6 +69,10 @@
 						</c:forEach>
 					</select>
 				</td>
+			</tr>
+			<tr>
+				<td style="width:70px;text-align: right;padding-top: 13px;">排序:</td>
+				<td><input type="text" name=categoryOrder id="categoryOrder" value="${pd.categoryOrder}" maxlength="32" placeholder="这里输入排序" title="分类名称"/></td>
 			</tr>
 			<tr>
 				<td style="text-align: center;" colspan="10">

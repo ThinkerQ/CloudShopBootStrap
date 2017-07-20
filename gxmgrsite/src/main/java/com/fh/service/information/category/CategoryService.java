@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 
 @Service("categoryService")
@@ -69,6 +70,10 @@ public class CategoryService {
 	*/
 	public List<PageData> parentList() throws Exception {
 		return (List<PageData>)dao.findForList("CategoryMapper.parentList",null);
+	}
+
+	public List<Map<String, Object>> selectByParentId(String parentId) throws Exception {
+		return (List<Map<String, Object>>) dao.findForList("CategoryMapper.selectByParentId", parentId);
 	}
 }
 

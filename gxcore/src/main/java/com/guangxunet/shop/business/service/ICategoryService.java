@@ -3,6 +3,7 @@ package com.guangxunet.shop.business.service;
 import java.util.List;
 import java.util.Map;
 
+import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.business.domain.Category;
 
 /** 
@@ -21,7 +22,7 @@ public interface ICategoryService {
 	/**
 	 * 一级商品类目列表
 	 */
-	List<Category> categoryOneListAll();
+	List<Category> selectCategoryOneListAll();
 
 	/**
 	 * 根据父级id查询二级类目
@@ -43,6 +44,14 @@ public interface ICategoryService {
 	 * @return
 	 */
 	int updateByPrimaryKey(Map<String, Object> params);
+	
+	/**
+	 * 获取某一级类目
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public PageData getCategoryById(PageData pd) throws Exception;
 
 	
 }

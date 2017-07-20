@@ -5,7 +5,7 @@
 	
 	<!-- 新增-->
 	<insert id="save" parameterType="pd" useGeneratedKeys="true" keyProperty="category_ID">
-		insert into category(name,parentId,createDate) values (#{name},#{parentId},#{createDate})
+		insert into category(name,parentId,createDate,category_order) values (#{name},#{parentId},#{createDate},#{categoryOrder})
 	</insert>
 
 	<!-- 删除-->
@@ -22,7 +22,8 @@
 			set 
 				name = #{name} ,
 				parentId = #{parentId} ,
-				createDate=#{createDate}
+				category_order = #{categoryOrder},
+				update_date=#{updateDate}
 			where
 				category_ID = #{category_ID}
 	</update>
@@ -31,10 +32,12 @@
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
 		select 
+			category_ID,
 			name,
 			parentId,
 			createDate,
-			category_ID
+			update_date as "updateDate",
+			category_order as "categoryOrder"
 		from 
 			category
 		where 
@@ -51,6 +54,25 @@
 		where 	a.parentId = 0
 	</select>
 	
+	<!-- 查询子级商品类目 -->
+	<select id="selectByParentId" resultType="pd">
+		SELECT
+			cg.category_ID as "id",
+			cg. NAME AS "name",
+			cg.parentId AS "parentId",
+			cg.category_order AS "categoryOrder",
+			date_format(cg.createDate, '%Y-%m-%d') AS "createDate",
+			date_format(cg.update_date, '%Y-%m-%d') AS "updateDate",
+			cg2. NAME AS "parentName"
+		FROM
+			category cg
+		LEFT JOIN category cg2 ON cg.parentId = cg2.category_ID
+		WHERE
+			cg.parentId = #{parentId}
+		ORDER BY
+			cg.category_order
+	</select>
+	
 	<!-- 列表(全部) -->
 	<select id="listAll" parameterType="pd" resultType="pd">
 		select
@@ -63,7 +85,7 @@
 		where 	a.parentId != 0
 	</select>
 
-	<select id="datalistPage" parameterType="page" resultType="pd">
+	<!-- <select id="datalistPage" parameterType="page" resultType="pd">
 		select
 				a.name,
 				a.parentId,b.name as parentName,
@@ -72,6 +94,19 @@
 		from
 				category a LEFT JOIN category b ON a.parentId = b.category_ID
 		where 	a.parentId != 0
+	</select> -->
+	
+	<!-- 查询根级目录 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select 
+			name,
+			parentId,
+			createDate,
+			category_order as "categoryOrder",
+			category_ID
+	    from category
+	    where parentId = "0"
+	    order by category_order
 	</select>
 
 	<!-- 批量删除 -->
