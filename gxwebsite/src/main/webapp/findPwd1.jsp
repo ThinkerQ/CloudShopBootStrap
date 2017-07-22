@@ -46,14 +46,15 @@
 				$(element).closest("div.form-group").removeClass("has-error");
 			},
 		});
+		
 		$("#loginForm").ajaxForm({
 			success:function(data){
 				if(data.success){
 					if (data.result.isExist) {
 						/* $.messager.confirm("提示","验证通过，点击进入下一步",function(){
-							window.location.href="/Login/findPwd2.screen?"+"phoneNumber=18211674995";
+							window.location.href="/FindPassword/findPwd2.screen?"+"phoneNumber=18211674995";
 						}); */
-							window.location.href="/Login/findPwd2.screen?"+"phoneNumber=18211674995";
+							window.location.href="/FindPassword/findPwd2.screen?"+"phoneNumber="+data.result.mobile;
 					}else{
 						$.messager.popup("非注册用户！");
 					}
@@ -91,7 +92,7 @@
 	
 	<!-- 网页内容 --> 
 	<div class="container">  
-		<form id="loginForm" class="form-horizontal el-login-form" action="/Register/checkUserByPhoneNumber.screen" method="post" >
+		<form id="loginForm" class="form-horizontal el-login-form" action="/FindPassword/checkUserByPhoneNumber.screen" method="post" >
 			<p class="h4" style="margin: 10px 10px 20px 110px;color:#999;">找回密码  <font color="blue">1.输入手机号</font>  2.输入验证码    3.设置密码</p> 
 			<div class="form-group">
 				<label class="control-label col-sm-2">手机号</label>

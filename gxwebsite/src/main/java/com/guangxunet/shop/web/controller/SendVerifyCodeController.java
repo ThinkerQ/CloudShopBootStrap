@@ -1,6 +1,9 @@
 package com.guangxunet.shop.web.controller;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,8 +87,10 @@ public class SendVerifyCodeController {
 			LoggerUtil.info("=======================入参===phone="+phoneNumber + ",code="+verifyCode);
 			boolean isVerifyCode = verifyCodeService.verifyCode(phoneNumber, verifyCode);
 			LoggerUtil.info("=======================验证结果===" + verifyCode);
-			
+			Map<String,Object> resultMap = new HashMap<String,Object>();
+			resultMap.put("phoneNumber", phoneNumber);
 			result = new JsonResult(isVerifyCode, "验证通过");
+			result.setResult(resultMap);			
 		} catch (Exception e) {
 			result = new JsonResult(e.getMessage());
 		}

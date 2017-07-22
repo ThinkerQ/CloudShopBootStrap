@@ -65,38 +65,6 @@ public class RegisterController {
     }
 
     /**
-     * 检查手机号是否已经被注册
-     * @param username
-     * @return
-     */
-    @RequestMapping("/checkUserByPhoneNumber.screen")
-    @ResponseBody
-    public JsonResult checkUserPhoneNumberExist(String mobile){
-    	JsonResult result = null;
-    	
-    	try {
-			//验证手机号
-			if (StringUtils.isEmpty(mobile)) {
-				throw new RuntimeException("手机号为空！");
-			}
-			//手机号规则校验
-			if (!PhoneFormatCheckUtils.isChinaPhoneLegal(mobile)) {
-				throw new RuntimeException("手机号不符合规则，仅支持大陆手机号注册！");
-			}
-			
-			boolean exist = logininfoService.checkUserPhoneNumberExist(mobile);
-			Map<String,Object> resultMap = new HashMap<String,Object>();
-			resultMap.put("isExist", exist);
-			
-			result = new JsonResult(true,"调用成功！");
-			result.setResult(resultMap);
-		} catch (Exception e) {
-			result = new JsonResult(false,e.getMessage());
-		}  
-		return result;
-    }
-    
-    /**
      * 检查手机号是否被注册
      * @param mobile
      * @return Boolean
@@ -107,47 +75,6 @@ public class RegisterController {
     	Boolean isMobile = PhoneFormatCheckUtils.isChinaPhoneLegal(mobile);//手机号合法性校验
     	
     	return !logininfoService.checkUserPhoneNumberExist(mobile);
-    }
-    
-    /**
-     * 重置密码
-     * @param phoneNumber
-     * @param newPassword
-     */
-    @RequestMapping("/resetPassword.screen")
-    @ResponseBody
-    public JsonResult resetPassword(String phoneNumber,String newPassword){
-    	JsonResult result = null;
-        try {
-        	//验证手机号
-			if (StringUtils.isEmpty(phoneNumber)) {
-				throw new RuntimeException("手机号为空！");
-			}
-			
-			if (StringUtils.isEmpty(newPassword)) {
-				throw new RuntimeException("请输入新密码！");
-			}
-			
-        	//手机号是否为已注册用户
-        	boolean numberExist = logininfoService.checkUserPhoneNumberExist(phoneNumber);
-        	if (!numberExist) {
-        		throw new RuntimeException("非注册用户！");
-    		}
-        	
-        	if (StringUtils.isEmpty(newPassword)) {
-        		throw new RuntimeException("请填写新密码！");
-			}
-        	
-        	//修改用户密码
-        	logininfoService.resetPassword(phoneNumber,newPassword);
-        	
-			result = new JsonResult(true,"密码重置成功！");
-        } catch (Exception e) {
-            result  = new JsonResult(e.getMessage());
-            e.printStackTrace();
-        }
-    	
-    	return result;
     }
     
 

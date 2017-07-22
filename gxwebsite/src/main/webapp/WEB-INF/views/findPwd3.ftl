@@ -118,7 +118,7 @@
 	
 	<!-- 网页内容 --> 
 	<div class="container">  
-		<form id="loginForm" class="form-horizontal el-login-form" action="/Register/resetPassword.screen" method="post" >
+		<form id="loginForm" class="form-horizontal el-login-form" action="/FindPassword/resetPassword.screen" method="post" >
 			<p class="h4" style="margin: 10px 10px 20px 110px;color:#999;">${phoneNumber} 找回密码  1.输入手机号 2.输入验证码    <font color="blue">3.设置密码</font></p> 
 			<div class="form-group">
 				<label class="control-label col-sm-2">输入新密码</label>

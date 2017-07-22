@@ -70,30 +70,4 @@ public class LoginInfoController {
 		return result;
 	}
 	
-	/**
-	 * 忘记密码第二步：跳转到输入验证码页面
-	 * @param phoneNumber
-	 * @param model
-	 * @return
-	 * @throws Exception 
-	 */
-	@RequestMapping("/findPwd2.screen")
-	public String findPwd2(String phoneNumber,Model model) throws Exception{
-		model.addAttribute("phoneNumber", phoneNumber);
-		verifyCodeService.sendVerifyCode(phoneNumber);
-		return "findPwd2";
-	}
-	
-	/**
-	 * 忘记密码第三步：跳转到重置密码页面
-	 * @param phoneNumber
-	 * @param model
-	 * @return
-	 * @throws Exception 
-	 */
-	@RequestMapping("/findPwd3.screen")
-	public String findPwd3(String phoneNumber,Model model) throws Exception{
-		model.addAttribute("phoneNumber", phoneNumber);
-		return "findPwd3";
-	}
 }

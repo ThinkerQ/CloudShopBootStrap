@@ -49,9 +49,9 @@
 			success:function(data){
 				if(data.success){
 						/* $.messager.confirm("提示","短信验证码正确，下一步重新设置密码",function(){
-							window.location.href="/Login/findPwd3.screen?"+"phoneNumber=18211674995";
+							window.location.href="/FindPassword/findPwd3.screen?"+"phoneNumber=18211674995";
 						}); */
-							window.location.href="/Login/findPwd3.screen?"+"phoneNumber=18211674995";
+							window.location.href="/FindPassword/findPwd3.screen?"+"phoneNumber="+data.result.phoneNumber;
 				}else{
 					$.messager.popup(data.message);
 				}
