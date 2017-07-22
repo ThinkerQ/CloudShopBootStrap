@@ -92,8 +92,8 @@
 					 	<select class="chzn-select" name="field2" id="field2" data-placeholder="请选择" style="vertical-align:top;width: 120px;">
 							<option value=""></option>
 							<option value="">全部</option>
-							<option value="">1</option>
-							<option value="">2</option>
+							<option value="">一级类目</option>
+							<option value="1">二级类目</option>
 					  	</select>
 					</td>
 					<td style="vertical-align:top;"><button class="btn btn-mini btn-light" onclick="search();"  title="检索"><i id="nav-search-icon" class="icon-search"></i></button></td>
@@ -134,7 +134,14 @@
 								</td>
 								<td class='center' style="width: 30px;">${vs.index+1}</td>
 										<td class="center">${var.name}</td>
-										<td class="center"><span class="label label-success arrowed">根级目录</span></td>
+										<td class="center">
+											<c:if test="${var.parentId == 0}">
+												<span class="label label-success arrowed">根级目录</span>
+											</c:if>
+											<c:if test="${var.parentId != 0}">
+												<span class="label label-success arrowed">${var.parentName}</span>
+											</c:if>
+										</td>
 										<td class="center"><fmt:formatDate value="${var.createDate}" pattern="yyyy-MM-dd"/></td>
 										<td class="center">${var.categoryOrder}</td>
 								<td style="width: 30px;" class="center">

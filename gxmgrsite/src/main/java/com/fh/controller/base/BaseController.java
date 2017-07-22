@@ -7,10 +7,10 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fh.util.Logger;
-import com.fh.util.UuidUtil;
 import com.guangxunet.shop.base.system.Page;
 import com.guangxunet.shop.base.system.PageData;
+import com.guangxunet.shop.base.util.Logger;
+import com.guangxunet.shop.base.util.UuidUtil;
 
 public class BaseController { 
 	

@@ -103,13 +103,15 @@ public class CategoryController extends BaseController {
 	 */
 	@RequestMapping(value="/list")
 	public ModelAndView list(Page page){
-		logBefore(logger, "列表Category");
+		logBefore(logger, "-------page:"+page);
 		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		try{
 			pd = this.getPageData();
+			logger.info("pd----"+pd);
 			page.setPd(pd);
+			logger.info("----page2----"+page);
 			List<PageData> varList = categoryService.list(page);	//列出Category列表
 			logger.info("----------一级商品类目---"+varList);
 			mv.setViewName("information/category/category_list");

@@ -99,14 +99,28 @@
 	<!-- 查询根级目录 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">
 		select 
-			name,
-			parentId,
-			createDate,
-			category_order as "categoryOrder",
-			category_ID
-	    from category
-	    where parentId = "0"
-	    order by category_order
+			cg.name,
+			cg.parentId,
+			cg.createDate,
+			cg.category_order as "categoryOrder",
+			cg2.name as "parentName",
+			cg.category_ID
+	    from category cg left join category cg2 on cg.parentId = cg2.category_ID
+	    <where> 
+	     <if test="pd.field2==null or pd.field2==''">
+	    	cg.parentId = "0"
+	     </if>
+	     <if test="pd.field1!=null and pd.field1!=''">
+	        AND cg.name like concat('%',#{pd.field1},'%')
+	     </if>
+	     <if test="pd.lastLoginStart!=null and pd.lastLoginStart!=''">
+	        AND cg.createDate  &gt;#{pd.lastLoginStart}
+	     </if>
+	     <if test="pd.lastLoginEnd!=null and pd.lastLoginStart!=''">
+	        AND cg.createDate  &lt;#{pd.lastLoginEnd}
+	     </if>
+	    </where>
+	    order by cg.category_order
 	</select>
 
 	<!-- 批量删除 -->
