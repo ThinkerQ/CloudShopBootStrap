@@ -218,5 +218,12 @@ public class Page {
 	public void setPd(PageData pd) {
 		this.pd = pd;
 	}
+
+	@Override
+	public String toString() {
+		return "Page [showCount=" + showCount + ", totalPage=" + totalPage + ", totalResult=" + totalResult
+				+ ", currentPage=" + currentPage + ", currentResult=" + currentResult + ", entityOrField="
+				+ entityOrField + ", pageStr=" + pageStr + ", pd=" + pd + "]";
+	}
 	
 }

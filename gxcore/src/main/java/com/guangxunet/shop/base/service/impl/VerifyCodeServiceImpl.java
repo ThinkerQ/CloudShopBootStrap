@@ -86,7 +86,7 @@ public class VerifyCodeServiceImpl implements IVerifyCodeService {
         LoggerUtil.info("===验证手机验证码==session中VO="+vc);
         
         if (vc == null) {
-        	throw new RuntimeException("未曾向该手机号发送验证码！");
+        	throw new RuntimeException("未曾向该手机号发送验证码或验证码已失效！");
 		}
         
         if (!vc.getPhoneNumber().equals(phoneNumber)) {
