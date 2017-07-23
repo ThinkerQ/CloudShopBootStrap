@@ -5,14 +5,15 @@
 	
 	<!-- 新增-->
 	<insert id="save" parameterType="pd" useGeneratedKeys="true" keyProperty="category_ID">
-		insert into category(name,parentId,createDate,category_order) values (#{name},#{parentId},#{createDate},#{categoryOrder})
+		insert into category(name,parentId,createDate,update_date,category_order) values (#{name},#{parentId},#{createDate},#{updateDate},#{categoryOrder})
 	</insert>
 
 	<!-- 删除-->
 	<delete id="delete" parameterType="pd">
 		delete from category
 		where 
-			category_ID = #{category_ID}
+		category_ID = #{category_ID}
+		OR parentId = #{category_ID}
 	</delete>
 	
 	
@@ -102,14 +103,24 @@
 			cg.name,
 			cg.parentId,
 			cg.createDate,
+			cg.update_date as "updateDate",
 			cg.category_order as "categoryOrder",
 			cg2.name as "parentName",
 			cg.category_ID
 	    from category cg left join category cg2 on cg.parentId = cg2.category_ID
 	    <where> 
-	     <if test="pd.field2==null or pd.field2==''">
+	    <!--全部类目2 -->
+	    
+	    <!--一级类目 -->
+	     <if test="pd.field2==null or pd.field2=='' or pd.field2==0">
 	    	cg.parentId = "0"
 	     </if>
+	    <!--二级类目 -->
+	     <if test="pd.field2==1">
+	    	cg.parentId != "0"
+	     </if>
+	    
+	    
 	     <if test="pd.field1!=null and pd.field1!=''">
 	        AND cg.name like concat('%',#{pd.field1},'%')
 	     </if>
@@ -128,6 +139,10 @@
 		delete from category
 		where 
 			category_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+		OR parentId IN
 		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
                  #{item}
 		</foreach>

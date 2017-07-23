@@ -41,7 +41,7 @@
 							html += "<td class='center'>"+this.parentName+"</td>";
 							html += "<td class='center'>"+this.createDate+"</td>";
 							html += "<td class='center'>"+this.categoryOrder+"</td>";
-							html += "<td><a class='btn btn-mini btn-info' title='编辑' onclick='edit(\""+this.id+"\")'><i class='icon-edit'></i></a> <a class='btn btn-mini btn-danger' title='删除' onclick='delmenu(\""+this.MENU_ID+"\",false)'><i class='icon-trash'></i></a></td>";
+							html += "<td><a class='btn btn-mini btn-info' title='编辑' onclick='edit(\""+this.id+"\")'><i class='icon-edit'></i></a> <a class='btn btn-mini btn-danger' title='删除' onclick='del(\""+this.id+"\")'><i class='icon-trash'></i></a></td>";
 							html += "</tr>";
 							$("#tempTr"+categoryId).before(html);
 						});
@@ -82,7 +82,7 @@
 				<tr>
 					<td>
 						<span class="input-icon">
-							<input autocomplete="off" id="nav-search-input" type="text" name="field1" value="" placeholder="这里输入关键词" />
+							<input autocomplete="off" id="nav-search-input" type="text" name="field1" value="${pd.field1}" placeholder="这里输入关键词" />
 							<i id="nav-search-icon" class="icon-search"></i>
 						</span>
 					</td>
@@ -91,9 +91,9 @@
 					<td style="vertical-align:top;"> 
 					 	<select class="chzn-select" name="field2" id="field2" data-placeholder="请选择" style="vertical-align:top;width: 120px;">
 							<option value=""></option>
-							<option value="">全部</option>
-							<option value="">一级类目</option>
-							<option value="1">二级类目</option>
+							<option value="2" <c:if test="${pd.field2==2}">selected</c:if>>全部</option>
+							<option value="0" <c:if test="${pd.field2==0}">selected</c:if>>一级类目</option>
+							<option value="1" <c:if test="${pd.field2==1}">selected</c:if>>二级类目</option>
 					  	</select>
 					</td>
 					<td style="vertical-align:top;"><button class="btn btn-mini btn-light" onclick="search();"  title="检索"><i id="nav-search-icon" class="icon-search"></i></button></td>
@@ -115,7 +115,7 @@
 						<th class="center">序号</th>
 						<th class="center">分类名称</th>
 						<th class="center">上一级</th>
-						<th class="center">创建时间</th>
+						<th class="center">更新时间</th>
 						<th class="center">排序</th>
 						<th class="center">操作</th>
 					</tr>
@@ -136,13 +136,13 @@
 										<td class="center">${var.name}</td>
 										<td class="center">
 											<c:if test="${var.parentId == 0}">
-												<span class="label label-success arrowed">根级目录</span>
+												<span class="label label-important arrowed-in">根级目录</span>
 											</c:if>
 											<c:if test="${var.parentId != 0}">
 												<span class="label label-success arrowed">${var.parentName}</span>
 											</c:if>
 										</td>
-										<td class="center"><fmt:formatDate value="${var.createDate}" pattern="yyyy-MM-dd"/></td>
+										<td class="center"><fmt:formatDate value="${var.updateDate}" pattern="yyyy-MM-dd"/></td>
 										<td class="center">${var.categoryOrder}</td>
 								<td style="width: 30px;" class="center">
 									<div class='hidden-phone visible-desktop btn-group'>
@@ -193,7 +193,7 @@
 					<a class="btn btn-small btn-success" onclick="add();">新增</a>
 					</c:if>
 					<c:if test="${QX.del == 1 }">
-					<a class="btn btn-small btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除" ><i class='icon-trash'></i></a>
+					<a class="btn btn-small btn-danger" onclick="makeAll('确定要删除选中的数据吗?其子级类目将一并被删除!');" title="批量删除" ><i class='icon-trash'></i></a>
 					</c:if>
 				</td>
 				<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
@@ -263,7 +263,7 @@
 		
 		//删除
 		function del(Id){
-			bootbox.confirm("确定要删除吗?", function(result) {
+			bootbox.confirm("确定要删除吗?其子级类目将一并被删除！", function(result) {
 				if(result) {
 					top.jzts();
 					var url = "<%=basePath%>category/delete.do?category_ID="+Id+"&tm="+new Date().getTime();
@@ -273,6 +273,8 @@
 				}
 			});
 		}
+		
+		
 		
 		//修改
 		function edit(Id){
@@ -352,7 +354,7 @@
 						
 						return;
 					}else{
-						if(msg == '确定要删除选中的数据吗?'){
+						if(msg == '确定要删除选中的数据吗?其子级类目将一并被删除!'){
 							top.jzts();
 							$.ajax({
 								type: "POST",
@@ -377,6 +379,7 @@
 		function toExcel(){
 			window.location.href='<%=basePath%>category/excel.do';
 		}
+		
 		</script>
 		
 	</body>

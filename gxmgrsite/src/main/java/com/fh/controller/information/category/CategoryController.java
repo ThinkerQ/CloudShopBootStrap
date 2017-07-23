@@ -56,6 +56,7 @@ public class CategoryController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("createDate", new Date());	//创建时间
+		pd.put("updateDate", new Date());	//创建时间
 		categoryService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
