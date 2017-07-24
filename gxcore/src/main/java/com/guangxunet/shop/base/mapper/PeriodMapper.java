@@ -1,16 +1,16 @@
 package com.guangxunet.shop.base.mapper;
 
-import com.guangxunet.shop.base.domain.Period;
+import com.guangxunet.shop.business.domain.T_Period;
 import java.util.List;
 
 public interface PeriodMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(Period record);
+    int insert(T_Period record);
 
-    Period selectByPrimaryKey(Long id);
+    T_Period selectByPrimaryKey(Long id);
 
-    List<Period> selectAll();
+    List<T_Period> selectAll();
 
-    int updateByPrimaryKey(Period record);
+    int updateByPrimaryKey(T_Period record);
 }

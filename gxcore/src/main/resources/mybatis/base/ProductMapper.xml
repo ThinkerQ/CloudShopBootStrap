@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.guangxunet.shop.base.mapper.ProductMapper" >
-  <resultMap id="BaseResultMap" type="com.guangxunet.shop.base.domain.Product" >
+  <resultMap id="BaseResultMap" type="com.guangxunet.shop.business.domain.Product" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="categoryId" property="categoryId" jdbcType="BIGINT" />
     <result column="firstName" property="firstName" jdbcType="VARCHAR" />
@@ -15,7 +15,7 @@
     delete from product
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.guangxunet.shop.base.domain.Product" useGeneratedKeys="true" keyProperty="id" >
+  <insert id="insert" parameterType="com.guangxunet.shop.business.domain.Product" useGeneratedKeys="true" keyProperty="id" >
     insert into product (categoryId, firstName, secondName, 
       littlePath, bigPath, time, 
       status)
@@ -23,7 +23,7 @@
       #{littlePath,jdbcType=VARCHAR}, #{bigPath,jdbcType=VARCHAR}, #{time,jdbcType=DATE}, 
       #{status,jdbcType=INTEGER})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.guangxunet.shop.base.domain.Product" >
+  <update id="updateByPrimaryKey" parameterType="com.guangxunet.shop.business.domain.Product" >
     update product
     set categoryId = #{categoryId,jdbcType=BIGINT},
       firstName = #{firstName,jdbcType=VARCHAR},

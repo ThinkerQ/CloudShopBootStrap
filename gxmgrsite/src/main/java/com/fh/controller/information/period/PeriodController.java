@@ -1,20 +1,16 @@
-package com.fh.controller.${packageName}.${objectNameLower};
+package com.fh.controller.information.period;
 
-import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
+import com.fh.controller.base.BaseController;
+import com.fh.service.information.period.PeriodService;
+import com.fh.util.AppUtil;
+import com.fh.util.Jurisdiction;
+import com.fh.util.ObjectExcelView;
+import com.guangxunet.shop.base.system.Page;
+import com.guangxunet.shop.base.system.PageData;
+import com.guangxunet.shop.base.util.Const;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -23,50 +19,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fh.controller.base.BaseController;
-import com.fh.entity.Page;
-import com.fh.util.AppUtil;
-import com.fh.util.ObjectExcelView;
-import com.fh.util.Const;
-import com.fh.util.PageData;
-import com.fh.util.Tools;
-import com.fh.util.Jurisdiction;
-import com.fh.service.${packageName}.${objectNameLower}.${objectName}Service;
+import javax.annotation.Resource;
+import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /** 
- * 类名称：${objectName}Controller
+ * 类名称：PeriodController
  * 创建人：FH 
- * 创建时间：${nowDate?string("yyyy-MM-dd")}
+ * 创建时间：2017-07-24
  */
 @Controller
-@RequestMapping(value="/${objectNameLower}")
-public class ${objectName}Controller extends BaseController {
+@RequestMapping(value="/period")
+public class PeriodController extends BaseController {
 	
-	String menuUrl = "${objectNameLower}/list.do"; //菜单地址(权限用)
-	@Resource(name="${objectNameLower}Service")
-	private ${objectName}Service ${objectNameLower}Service;
+	String menuUrl = "period/list.do"; //菜单地址(权限用)
+	@Resource(name="periodService")
+	private PeriodService periodService;
 	
 	/**
 	 * 新增
 	 */
 	@RequestMapping(value="/save")
 	public ModelAndView save() throws Exception{
-		logBefore(logger, "新增${objectName}");
+		logBefore(logger, "新增Period");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		//pd.put("${objectNameLower}_ID", this.get32UUID());	//主键
-<#list fieldList as var>
-	<#if var[3] == "否">
-		<#if var[1] == 'Date'>
-		pd.put("${var[0]}", new Date());	//${var[2]}
-		<#else>
-		pd.put("${var[0]}", "${var[4]?replace("无","")}");	//${var[2]}
-		</#if>
-	</#if>
-</#list>
-		${objectNameLower}Service.save(pd);
+		//pd.put("period_ID", this.get32UUID());	//主键
+		pd.put("createTime", new Date());	//创建时间
+		pd.put("status", 1);	//状态
+		periodService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
@@ -77,12 +62,12 @@ public class ${objectName}Controller extends BaseController {
 	 */
 	@RequestMapping(value="/delete")
 	public void delete(PrintWriter out){
-		logBefore(logger, "删除${objectName}");
+		logBefore(logger, "删除Period");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return;} //校验权限
 		PageData pd = new PageData();
 		try{
 			pd = this.getPageData();
-			${objectNameLower}Service.delete(pd);
+			periodService.delete(pd);
 			out.write("success");
 			out.close();
 		} catch(Exception e){
@@ -96,12 +81,12 @@ public class ${objectName}Controller extends BaseController {
 	 */
 	@RequestMapping(value="/edit")
 	public ModelAndView edit() throws Exception{
-		logBefore(logger, "修改${objectName}");
+		logBefore(logger, "修改Period");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		${objectNameLower}Service.edit(pd);
+		periodService.edit(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
@@ -112,15 +97,15 @@ public class ${objectName}Controller extends BaseController {
 	 */
 	@RequestMapping(value="/list")
 	public ModelAndView list(Page page){
-		logBefore(logger, "列表${objectName}");
+		logBefore(logger, "列表Period");
 		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		try{
 			pd = this.getPageData();
 			page.setPd(pd);
-			List<PageData>	varList = ${objectNameLower}Service.list(page);	//列出${objectName}列表
-			mv.setViewName("${packageName}/${objectNameLower}/${objectNameLower}_list");
+			List<PageData>	varList = periodService.list(page);	//列出Period列表
+			mv.setViewName("information/period/period_list");
 			mv.addObject("varList", varList);
 			mv.addObject("pd", pd);
 			mv.addObject(Const.SESSION_QX,this.getHC());	//按钮权限
@@ -135,12 +120,12 @@ public class ${objectName}Controller extends BaseController {
 	 */
 	@RequestMapping(value="/goAdd")
 	public ModelAndView goAdd(){
-		logBefore(logger, "去新增${objectName}页面");
+		logBefore(logger, "去新增Period页面");
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		try {
-			mv.setViewName("${packageName}/${objectNameLower}/${objectNameLower}_edit");
+			mv.setViewName("information/period/period_edit");
 			mv.addObject("msg", "save");
 			mv.addObject("pd", pd);
 		} catch (Exception e) {
@@ -154,13 +139,13 @@ public class ${objectName}Controller extends BaseController {
 	 */
 	@RequestMapping(value="/goEdit")
 	public ModelAndView goEdit(){
-		logBefore(logger, "去修改${objectName}页面");
+		logBefore(logger, "去修改Period页面");
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		try {
-			pd = ${objectNameLower}Service.findById(pd);	//根据ID读取
-			mv.setViewName("${packageName}/${objectNameLower}/${objectNameLower}_edit");
+			pd = periodService.findById(pd);	//根据ID读取
+			mv.setViewName("information/period/period_edit");
 			mv.addObject("msg", "edit");
 			mv.addObject("pd", pd);
 		} catch (Exception e) {
@@ -175,7 +160,7 @@ public class ${objectName}Controller extends BaseController {
 	@RequestMapping(value="/deleteAll")
 	@ResponseBody
 	public Object deleteAll() {
-		logBefore(logger, "批量删除${objectName}");
+		logBefore(logger, "批量删除Period");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "dell")){return null;} //校验权限
 		PageData pd = new PageData();		
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -185,7 +170,7 @@ public class ${objectName}Controller extends BaseController {
 			String DATA_IDS = pd.getString("DATA_IDS");
 			if(null != DATA_IDS && !"".equals(DATA_IDS)){
 				String ArrayDATA_IDS[] = DATA_IDS.split(",");
-				${objectNameLower}Service.deleteAll(ArrayDATA_IDS);
+				periodService.deleteAll(ArrayDATA_IDS);
 				pd.put("msg", "ok");
 			}else{
 				pd.put("msg", "no");
@@ -206,7 +191,7 @@ public class ${objectName}Controller extends BaseController {
 	 */
 	@RequestMapping(value="/excel")
 	public ModelAndView exportExcel(){
-		logBefore(logger, "导出${objectName}到excel");
+		logBefore(logger, "导出Period到excel");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;}
 		ModelAndView mv = new ModelAndView();
 		PageData pd = new PageData();
@@ -214,21 +199,29 @@ public class ${objectName}Controller extends BaseController {
 		try{
 			Map<String,Object> dataMap = new HashMap<String,Object>();
 			List<String> titles = new ArrayList<String>();
-	<#list fieldList as var>
-			titles.add("${var[2]}");	//${var_index+1}
-	</#list>
+			titles.add("期数");	//1
+			titles.add("获奖用户");	//2
+			titles.add("需要人次");	//3
+			titles.add("商品");	//4
+			titles.add("已投人次");	//5
+			titles.add("幸运号码");	//6
+			titles.add("创建时间");	//7
+			titles.add("揭晓时间");	//8
+			titles.add("状态");	//9
 			dataMap.put("titles", titles);
-			List<PageData> varOList = ${objectNameLower}Service.listAll(pd);
+			List<PageData> varOList = periodService.listAll(pd);
 			List<PageData> varList = new ArrayList<PageData>();
 			for(int i=0;i < varOList.size();i++){
 				PageData vpd = new PageData();
-				<#list fieldList as var>
-						<#if var[1] == 'Integer'>
-							vpd.put("var${var_index+1}", varOList.get(i).get("${var[0]}").toString());	//${var_index+1}
-						<#else>
-							vpd.put("var${var_index+1}", varOList.get(i).getString("${var[0]}"));	//${var_index+1}
-						</#if>
-				</#list>
+							vpd.put("var1", varOList.get(i).get("periodNumber").toString());	//1
+							vpd.put("var2", varOList.get(i).get("prizeUserId").toString());	//2
+							vpd.put("var3", varOList.get(i).get("needCount").toString());	//3
+							vpd.put("var4", varOList.get(i).get("productId").toString());	//4
+							vpd.put("var5", varOList.get(i).get("alreadyCount").toString());	//5
+							vpd.put("var6", varOList.get(i).get("prizeNumber").toString());	//6
+							vpd.put("var7", varOList.get(i).getString("createTime"));	//7
+							vpd.put("var8", varOList.get(i).getString("prizeTime"));	//8
+							vpd.put("var9", varOList.get(i).get("status").toString());	//9
 				varList.add(vpd);
 			}
 			dataMap.put("varList", varList);

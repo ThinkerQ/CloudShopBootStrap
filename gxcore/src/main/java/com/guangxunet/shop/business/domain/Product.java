@@ -1,4 +1,4 @@
-package com.guangxunet.shop.base.domain;
+package com.guangxunet.shop.business.domain;
 
 import lombok.Getter;
 import lombok.Setter;

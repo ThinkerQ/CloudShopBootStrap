@@ -1,6 +1,6 @@
 package com.guangxunet.shop.base.mapper;
 
-import com.guangxunet.shop.base.domain.Product;
+import com.guangxunet.shop.business.domain.Product;
 import java.util.List;
 
 public interface ProductMapper {

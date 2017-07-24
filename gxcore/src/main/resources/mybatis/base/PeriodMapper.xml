@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.guangxunet.shop.base.mapper.PeriodMapper" >
-  <resultMap id="BaseResultMap" type="com.guangxunet.shop.base.domain.Period" >
+  <resultMap id="BaseResultMap" type="com.guangxunet.shop.business.domain.T_Period" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="periodNumber" property="periodNumber" jdbcType="BIGINT" />
     <result column="prizeUserId" property="prizeUserId" jdbcType="BIGINT" />
@@ -18,7 +18,7 @@
     delete from period
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.guangxunet.shop.base.domain.Period" useGeneratedKeys="true" keyProperty="id" >
+  <insert id="insert" parameterType="com.guangxunet.shop.business.domain.T_Period" useGeneratedKeys="true" keyProperty="id" >
     insert into period (periodNumber, prizeUserId, needCount, 
       alreadyCount, surplusCount, numberId, 
       productId, createTime, prizeTime, 
@@ -28,7 +28,7 @@
       #{productId,jdbcType=BIGINT}, #{createTime,jdbcType=DATE}, #{prizeTime,jdbcType=DATE}, 
       #{status,jdbcType=INTEGER})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.guangxunet.shop.base.domain.Period" >
+  <update id="updateByPrimaryKey" parameterType="com.guangxunet.shop.business.domain.T_Period" >
     update period
     set periodNumber = #{periodNumber,jdbcType=BIGINT},
       prizeUserId = #{prizeUserId,jdbcType=BIGINT},

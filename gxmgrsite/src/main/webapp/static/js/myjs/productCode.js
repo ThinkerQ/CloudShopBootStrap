@@ -82,7 +82,6 @@
 	
 	//保存编辑属性
 	function saveD(){
-		
 		var dname = $("#dname").val(); 	 		 //属性名
 		var dtype = $("#dtype").val(); 	 		 //类型
 		var dbz	  = $("#dbz").val();   	 		 //备注
@@ -100,7 +99,7 @@
 			$("#dname").focus();
 			return false;
 		}else{
-			dname = dname.toUpperCase();		//转化为大写
+			//dname = dname.toUpperCase();		//转化为大写
 			if(isSame(dname)){
 				var headstr = dname.substring(0,1);
 				var pat = new RegExp("^[0-9]+$");

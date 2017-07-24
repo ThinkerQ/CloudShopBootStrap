@@ -5,40 +5,40 @@
 	
 	<!-- 新增-->
 	<insert id="save" parameterType="pd">
-		insert into "${tabletop}${objectNameUpper}"(
+		insert into "${tabletop}${objectNameLower}"(
 	<#list fieldList as var>
 			"${var[0]}",	
 	</#list>
-			"${objectNameUpper}_ID"
+			"${objectNameLower}_ID"
 		) values (
 	<#list fieldList as var>
 			${r"#{"}${var[0]}${r"}"},	
 	</#list>
-			${r"#{"}${objectNameUpper}_ID${r"}"}
+			${r"#{"}${objectNameLower}_ID${r"}"}
 		)
 	</insert>
 	
 	
 	<!-- 删除-->
 	<delete id="delete" parameterType="pd">
-		delete from "${tabletop}${objectNameUpper}"
+		delete from "${tabletop}${objectNameLower}"
 		where 
-			"${objectNameUpper}_ID" = ${r"#{"}${objectNameUpper}_ID${r"}"}
+			"${objectNameLower}_ID" = ${r"#{"}${objectNameLower}_ID${r"}"}
 	</delete>
 	
 	
 	<!-- 修改 -->
 	<update id="edit" parameterType="pd">
-		update  "${tabletop}${objectNameUpper}"
+		update  "${tabletop}${objectNameLower}"
 			set 
 	<#list fieldList as var>
 			<#if var[3] == "是">
 				"${var[0]}" = ${r"#{"}${var[0]}${r"}"},	
 			</#if>
 	</#list>
-			"${objectNameUpper}_ID" = "${objectNameUpper}_ID"
+			"${objectNameLower}_ID" = "${objectNameLower}_ID"
 			where 
-				"${objectNameUpper}_ID" = ${r"#{"}${objectNameUpper}_ID${r"}"}
+				"${objectNameLower}_ID" = ${r"#{"}${objectNameLower}_ID${r"}"}
 	</update>
 	
 	
@@ -48,11 +48,11 @@
 	<#list fieldList as var>
 			"${var[0]}",	
 	</#list>
-			"${objectNameUpper}_ID"
+			"${objectNameLower}_ID"
 		from 
-			"${tabletop}${objectNameUpper}"
+			"${tabletop}${objectNameLower}"
 		where 
-			"${objectNameUpper}_ID" = ${r"#{"}${objectNameUpper}_ID${r"}"}
+			"${objectNameLower}_ID" = ${r"#{"}${objectNameLower}_ID${r"}"}
 	</select>
 	
 	
@@ -62,9 +62,9 @@
 		<#list fieldList as var>
 				a."${var[0]}",	
 		</#list>
-				a."${objectNameUpper}_ID"
+				a."${objectNameLower}_ID"
 		from 
-				"${tabletop}${objectNameUpper}" a
+				"${tabletop}${objectNameLower}" a
 	</select>
 	
 	<!-- 列表(全部) -->
@@ -73,16 +73,16 @@
 		<#list fieldList as var>
 				a."${var[0]}",	
 		</#list>
-				a."${objectNameUpper}_ID"
+				a."${objectNameLower}_ID"
 		from 
-				"${tabletop}${objectNameUpper}" a
+				"${tabletop}${objectNameLower}" a
 	</select>
 	
 	<!-- 批量删除 -->
 	<delete id="deleteAll" parameterType="String">
-		delete from "${tabletop}${objectNameUpper}"
+		delete from "${tabletop}${objectNameLower}"
 		where 
-			"${objectNameUpper}_ID" in
+			"${objectNameLower}_ID" in
 		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
                  ${r"#{item}"}
 		</foreach>
