@@ -28,20 +28,20 @@
 				<tr>
 					<td>
 						<span class="input-icon">
-							<input autocomplete="off" id="nav-search-input" type="text" name="field1" value="" placeholder="这里输入关键词" />
+							<input autocomplete="off" id="nav-search-input" type="text" name="keyword" value="${pd.keyword}" placeholder="这里输入关键词" />
 							<i id="nav-search-icon" class="icon-search"></i>
 						</span>
 					</td>
-					<td><input class="span10 date-picker" name="lastLoginStart" id="lastLoginStart" value="${pd.lastLoginStart}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="开始日期"/></td>
-					<td><input class="span10 date-picker" name="lastLoginEnd" id="lastLoginEnd" value="${pd.lastLoginEnd}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="结束日期"/></td>
+					<td><input class="span10 date-picker" name="beginDate" id="beginDate" value="${pd.beginDate}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="开始日期"/></td>
+					<td><input class="span10 date-picker" name="endDate" id="endDate" value="${pd.endDate}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="结束日期"/></td>
 					<td style="vertical-align:top;"> 
-					 	<select class="chzn-select" name="field2" id="field2" data-placeholder="请选择" style="vertical-align:top;width: 120px;">
-							<option value=""></option>
+					 	<select class="chzn-select" name="status" id="status" data-placeholder="请选择" style="vertical-align:top;width: 120px;">
 							<option value="">全部</option>
-							<option value="">1</option>
-							<option value="">2</option>
+							<option value="1">未揭晓</option>
+							<option value="2">已揭晓</option>
 					  	</select>
 					</td>
+					<td><a class="btn btn-small btn-success" onclick="resetValue();">重置</a></td>
 					<td style="vertical-align:top;"><button class="btn btn-mini btn-light" onclick="search();"  title="检索"><i id="nav-search-icon" class="icon-search"></i></button></td>
 					<c:if test="${QX.cha == 1 }">
 					<td style="vertical-align:top;"><a class="btn btn-mini btn-light" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="icon-download-alt"></i></a></td>
@@ -92,7 +92,10 @@
 										<td>${var.prizeNumber}</td>
 										<td>${var.createTime}</td>
 										<td>${var.prizeTime}</td>
-										<td>${var.status}</td>
+								<td style="width: 60px;" class="center">
+									<c:if test="${var.status == '0' }"><span class="label label-important arrowed-in">停用</span></c:if>
+									<c:if test="${var.status == '1' }"><span class="label label-success arrowed">正常</span></c:if>
+								</td>
 								<td style="width: 30px;" class="center">
 									<div class='hidden-phone visible-desktop btn-group'>
 									
@@ -179,6 +182,13 @@
 		<script type="text/javascript">
 		
 		$(top.hangge());
+
+		function resetValue() {
+			$("#keyword").val('');
+			$("#beginDate").val('');
+			$("#endDate").val('');
+			$("#status").val('');
+		}
 		
 		//检索
 		function search(){

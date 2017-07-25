@@ -84,7 +84,13 @@
 			</tr>
 			<tr>
 				<td style="width:70px;text-align: right;padding-top: 13px;">商品:</td>
-				<td><input type="number" name="productId" id="productId" value="${pd.productId}" maxlength="32" placeholder="这里输入商品" title="商品"/></td>
+				<td>
+					<select class="chzn-select" name="productId" id="productId" data-placeholder="请选择商品" style="vertical-align:top;"  title="商品">
+						<c:forEach items="${productList}" var="va">
+							<option value="${va.product_ID}" <c:if test="${va.product_ID == pd.productId }">selected</c:if>>${va.firstName }</option>
+						</c:forEach>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td style="text-align: center;" colspan="10">

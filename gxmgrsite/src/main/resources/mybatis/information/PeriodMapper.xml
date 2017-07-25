@@ -58,6 +58,20 @@
         	<include refid="selectSql"/>
 		from
 				T_period a LEFT JOIN product p ON p.product_ID=a.productId
+		<where>
+			<if test="pd.beginDate != null and pd.beginDate != ''">
+				AND a.createTime &gt;= #{pd.beginDate}
+			</if>
+			<if test="pd.endDate != null and pd.endDate != ''">
+				AND a.createTime &lt;= #{pd.endDate}
+			</if>
+			<if test="pd.status != null and pd.status != ''">
+				AND status = #{pd.status}
+			</if>
+			<if test="pd.keyword != null and pd.keyword != ''">
+				AND a.periodNumber LIKE CONCAT('%', #{pd.keyword},'%')
+			</if>
+		</where>
 	</select>
 	
 	<!-- 列表(全部) -->

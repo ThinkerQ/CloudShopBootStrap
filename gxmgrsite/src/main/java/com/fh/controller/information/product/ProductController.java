@@ -7,6 +7,7 @@ import com.fh.util.*;
 import com.guangxunet.shop.base.system.Page;
 import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.base.util.Const;
+import com.guangxunet.shop.base.util.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -131,6 +132,22 @@ public class ProductController extends BaseController {
 		PageData pd = new PageData();
 		try{
 			pd = this.getPageData();
+			String keyword = pd.getString("keyword");
+			if(StringUtils.hasLength(keyword)){
+				pd.put("keyword",keyword);
+			}
+			String beginDate = pd.getString("beginDate");
+			if(StringUtils.hasLength(beginDate)){
+				pd.put("beginDate",beginDate);
+			}
+			String endDate = pd.getString("endDate");
+			if(StringUtils.hasLength(endDate)){
+				pd.put("endDate",endDate);
+			}
+			String status = pd.getString("status");
+			if(StringUtils.hasLength(status)){
+				pd.put("status",status);
+			}
 			page.setPd(pd);
 			List<PageData>	varList = productService.list(page);	//列出Product列表
 			mv.setViewName("information/product/product_list");
@@ -171,7 +188,7 @@ public class ProductController extends BaseController {
 	public ModelAndView goEdit(){
 		logBefore(logger, "去修改Product页面");
 		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
+		PageData pd = null;
 		pd = this.getPageData();
 		try {
 			pd = productService.findById(pd);	//根据ID读取

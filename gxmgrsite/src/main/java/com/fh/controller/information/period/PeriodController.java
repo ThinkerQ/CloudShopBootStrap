@@ -2,12 +2,14 @@ package com.fh.controller.information.period;
 
 import com.fh.controller.base.BaseController;
 import com.fh.service.information.period.PeriodService;
+import com.fh.service.information.product.ProductService;
 import com.fh.util.AppUtil;
 import com.fh.util.Jurisdiction;
 import com.fh.util.ObjectExcelView;
 import com.guangxunet.shop.base.system.Page;
 import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.base.util.Const;
+import com.guangxunet.shop.base.util.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -37,6 +39,8 @@ public class PeriodController extends BaseController {
 	String menuUrl = "period/list.do"; //菜单地址(权限用)
 	@Resource(name="periodService")
 	private PeriodService periodService;
+	@Resource(name="productService")
+	private ProductService productService;
 	
 	/**
 	 * 新增
@@ -46,8 +50,7 @@ public class PeriodController extends BaseController {
 		logBefore(logger, "新增Period");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
-		pd = this.getPageData();
+		PageData pd = this.getPageData();
 		//pd.put("period_ID", this.get32UUID());	//主键
 		pd.put("createTime", new Date());	//创建时间
 		pd.put("status", 1);	//状态
@@ -64,7 +67,7 @@ public class PeriodController extends BaseController {
 	public void delete(PrintWriter out){
 		logBefore(logger, "删除Period");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return;} //校验权限
-		PageData pd = new PageData();
+		PageData pd = null;
 		try{
 			pd = this.getPageData();
 			periodService.delete(pd);
@@ -84,7 +87,7 @@ public class PeriodController extends BaseController {
 		logBefore(logger, "修改Period");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
+		PageData pd = null;
 		pd = this.getPageData();
 		periodService.edit(pd);
 		mv.addObject("msg","success");
@@ -100,9 +103,25 @@ public class PeriodController extends BaseController {
 		logBefore(logger, "列表Period");
 		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
+		PageData pd = null;
 		try{
 			pd = this.getPageData();
+			String keyword = pd.getString("keyword");
+			if(StringUtils.hasLength(keyword)){
+				pd.put("keyword",keyword);
+			}
+			String beginDate = pd.getString("beginDate");
+			if(StringUtils.hasLength(beginDate)){
+				pd.put("beginDate",beginDate);
+			}
+			String endDate = pd.getString("endDate");
+			if(StringUtils.hasLength(endDate)){
+				pd.put("endDate",endDate);
+			}
+			String status = pd.getString("status");
+			if(StringUtils.hasLength(status)){
+				pd.put("status",status);
+			}
 			page.setPd(pd);
 			List<PageData>	varList = periodService.list(page);	//列出Period列表
 			mv.setViewName("information/period/period_list");
@@ -122,10 +141,12 @@ public class PeriodController extends BaseController {
 	public ModelAndView goAdd(){
 		logBefore(logger, "去新增Period页面");
 		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
+		PageData pd = null;
 		pd = this.getPageData();
 		try {
+			List<PageData> productList = productService.listAll(pd);
 			mv.setViewName("information/period/period_edit");
+			mv.addObject("productList", productList);
 			mv.addObject("msg", "save");
 			mv.addObject("pd", pd);
 		} catch (Exception e) {
@@ -145,7 +166,9 @@ public class PeriodController extends BaseController {
 		pd = this.getPageData();
 		try {
 			pd = periodService.findById(pd);	//根据ID读取
+			List<PageData> productList = productService.listAll(pd);
 			mv.setViewName("information/period/period_edit");
+			mv.addObject("productList", productList);
 			mv.addObject("msg", "edit");
 			mv.addObject("pd", pd);
 		} catch (Exception e) {

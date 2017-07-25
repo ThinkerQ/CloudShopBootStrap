@@ -57,6 +57,20 @@
 				<include refid="selectSql"/>
 		from
 				product a LEFT JOIN category c ON a.categoryId = c.category_ID
+		<where>
+			<if test="pd.beginDate != null and pd.beginDate != ''">
+				AND a.createTime &gt;= #{pd.beginDate}
+			</if>
+			<if test="pd.endDate != null and pd.endDate != ''">
+				AND a.createTime &lt;= #{pd.endDate}
+			</if>
+			<if test="pd.status != null and pd.status != ''">
+				AND a.status = #{pd.status}
+			</if>
+			<if test="pd.keyword != null and pd.keyword != ''">
+				AND a.firstName LIKE CONCAT('%', #{pd.keyword},'%')
+			</if>
+		</where>
 	</select>
 
     <!-- 列表(全部) -->

@@ -54,8 +54,7 @@ public class ${objectName}Controller extends BaseController {
 		logBefore(logger, "新增${objectName}");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
-		pd = this.getPageData();
+		PageData pd = this.getPageData();
 		//pd.put("${objectNameLower}_ID", this.get32UUID());	//主键
 <#list fieldList as var>
 	<#if var[3] == "否">
@@ -79,7 +78,7 @@ public class ${objectName}Controller extends BaseController {
 	public void delete(PrintWriter out){
 		logBefore(logger, "删除${objectName}");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return;} //校验权限
-		PageData pd = new PageData();
+		PageData pd = null;
 		try{
 			pd = this.getPageData();
 			${objectNameLower}Service.delete(pd);
@@ -99,7 +98,7 @@ public class ${objectName}Controller extends BaseController {
 		logBefore(logger, "修改${objectName}");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
+		PageData pd = null;
 		pd = this.getPageData();
 		${objectNameLower}Service.edit(pd);
 		mv.addObject("msg","success");
@@ -115,9 +114,25 @@ public class ${objectName}Controller extends BaseController {
 		logBefore(logger, "列表${objectName}");
 		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
+		PageData pd = null;
 		try{
 			pd = this.getPageData();
+			String keyword = pd.getString("keyword");
+			if(StringUtils.hasLength(keyword)){
+			pd.put("keyword",keyword);
+			}
+			String beginDate = pd.getString("beginDate");
+			if(StringUtils.hasLength(beginDate)){
+			pd.put("beginDate",beginDate);
+			}
+			String endDate = pd.getString("endDate");
+			if(StringUtils.hasLength(endDate)){
+			pd.put("endDate",endDate);
+			}
+			String status = pd.getString("status");
+			if(StringUtils.hasLength(status)){
+			pd.put("status",status);
+			}
 			page.setPd(pd);
 			List<PageData>	varList = ${objectNameLower}Service.list(page);	//列出${objectName}列表
 			mv.setViewName("${packageName}/${objectNameLower}/${objectNameLower}_list");
@@ -137,7 +152,7 @@ public class ${objectName}Controller extends BaseController {
 	public ModelAndView goAdd(){
 		logBefore(logger, "去新增${objectName}页面");
 		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
+		PageData pd = null;
 		pd = this.getPageData();
 		try {
 			mv.setViewName("${packageName}/${objectNameLower}/${objectNameLower}_edit");
@@ -156,7 +171,7 @@ public class ${objectName}Controller extends BaseController {
 	public ModelAndView goEdit(){
 		logBefore(logger, "去修改${objectName}页面");
 		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
+		PageData pd = null;
 		pd = this.getPageData();
 		try {
 			pd = ${objectNameLower}Service.findById(pd);	//根据ID读取
@@ -177,7 +192,7 @@ public class ${objectName}Controller extends BaseController {
 	public Object deleteAll() {
 		logBefore(logger, "批量删除${objectName}");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "dell")){return null;} //校验权限
-		PageData pd = new PageData();		
+		PageData pd = null;
 		Map<String,Object> map = new HashMap<String,Object>();
 		try {
 			pd = this.getPageData();
@@ -209,7 +224,7 @@ public class ${objectName}Controller extends BaseController {
 		logBefore(logger, "导出${objectName}到excel");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;}
 		ModelAndView mv = new ModelAndView();
-		PageData pd = new PageData();
+		PageData pd = null;
 		pd = this.getPageData();
 		try{
 			Map<String,Object> dataMap = new HashMap<String,Object>();
