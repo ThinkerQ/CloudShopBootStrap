@@ -1,13 +1,16 @@
 package com.fh.controller.information.product;
 
-import com.fh.controller.base.BaseController;
-import com.guangxunet.shop.business.service.information.category.CategoryService;
-import com.guangxunet.shop.business.service.information.product.ProductService;
-import com.fh.util.*;
-import com.guangxunet.shop.base.system.Page;
-import com.guangxunet.shop.base.system.PageData;
-import com.guangxunet.shop.base.util.Const;
-import com.guangxunet.shop.base.util.StringUtils;
+import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -21,11 +24,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
-import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import com.fh.controller.base.BaseController;
+import com.fh.util.DelAllFile;
+import com.fh.util.Jurisdiction;
+import com.fh.util.ObjectExcelView;
+import com.fh.util.Watermark;
+import com.guangxunet.shop.base.system.DateUtil;
+import com.guangxunet.shop.base.system.Page;
+import com.guangxunet.shop.base.system.PageData;
+import com.guangxunet.shop.base.util.Const;
+import com.guangxunet.shop.base.util.FileUpload;
+import com.guangxunet.shop.base.util.StringUtils;
+import com.guangxunet.shop.business.service.information.category.CategoryService;
+import com.guangxunet.shop.business.service.information.product.ProductService;
+import com.guangxunet.shop.business.util.AppUtil;
+import com.guangxunet.shop.business.util.PathUtil;
 
 /** 
  * 类名称：ProductController

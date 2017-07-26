@@ -155,7 +155,6 @@
 				<label class="control-label col-sm-2">手机号</label>
 				<div class="col-sm-10">
 					<input type="text" autocomplete="off" name="mobile" class="form-control" id="mobile"/>
-					<button id="sendVerifyCode" class="btn btn-success" type="button" autocomplate="off">发送验证码</button>
 					<p class="help-block">手机号为11位大陆手机号</p>
 				</div>
 			</div>
@@ -163,6 +162,7 @@
 				<label class="control-label col-sm-2">验证码</label>
 				<div class="col-sm-10">
 					<input type="text" autocomplete="off" name="verifycode" class="form-control" id="verifycode"/>
+					<button id="sendVerifyCode" class="btn btn-success" type="button" autocomplate="off">发送验证码</button>
 					<p class="help-block">输入验证码</p>
 				</div>
 			</div>

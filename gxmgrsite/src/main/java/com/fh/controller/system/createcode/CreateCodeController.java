@@ -1,13 +1,23 @@
 package com.fh.controller.system.createcode;
 
-import com.fh.controller.base.BaseController;
-import com.fh.util.*;
-import com.guangxunet.shop.base.system.PageData;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletResponse;
-import java.util.*;
+import com.fh.controller.base.BaseController;
+import com.fh.util.DelAllFile;
+import com.fh.util.FileDownload;
+import com.fh.util.FileZip;
+import com.fh.util.Freemarker;
+import com.guangxunet.shop.base.system.PageData;
+import com.guangxunet.shop.business.util.PathUtil;
  
 /** 
  * 类名称：FreemarkerController

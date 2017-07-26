@@ -17,9 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fh.controller.base.BaseController;
 import com.fh.service.system.dictionaries.DictionariesService;
 import com.fh.service.system.menu.MenuService;
-import com.fh.util.AppUtil;
 import com.guangxunet.shop.base.system.Page;
 import com.guangxunet.shop.base.system.PageData;
+import com.guangxunet.shop.business.util.AppUtil;
 /** 
  * 类名称：DictionariesController
  * 创建人：FH

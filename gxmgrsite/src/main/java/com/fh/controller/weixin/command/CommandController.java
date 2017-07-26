@@ -24,13 +24,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fh.controller.base.BaseController;
 import com.fh.service.weixin.command.CommandService;
-import com.fh.util.AppUtil;
 import com.fh.util.Jurisdiction;
 import com.fh.util.ObjectExcelView;
 import com.guangxunet.shop.base.system.Page;
 import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.base.util.Const;
 import com.guangxunet.shop.base.util.Tools;
+import com.guangxunet.shop.business.util.AppUtil;
 
 /** 
  * 类名称：CommandController

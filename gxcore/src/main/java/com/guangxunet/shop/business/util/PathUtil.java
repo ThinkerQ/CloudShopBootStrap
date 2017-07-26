@@ -1,4 +1,4 @@
-package com.fh.util;
+package com.guangxunet.shop.business.util;
 
 import java.io.File;
 

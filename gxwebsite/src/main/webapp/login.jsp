@@ -52,7 +52,7 @@
 			success:function(data){
 				if(data.success){
 					$.messager.confirm("提示","登陆成功，点击确定进入个人中心",function(){
-						window.location.href="/personal.do";
+						window.location.href="Login/personal.do";
 					});
 				}else{
 					$.messager.popup(data.message);

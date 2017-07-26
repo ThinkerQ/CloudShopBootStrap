@@ -19,13 +19,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fh.controller.base.BaseController;
 import com.fh.service.system.appuser.AppuserService;
 import com.fh.service.system.user.UserService;
-import com.fh.util.AppUtil;
 import com.fh.util.SmsUtil;
 import com.fh.util.Watermark;
 import com.fh.util.mail.SimpleMailSender;
 import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.base.util.Const;
 import com.guangxunet.shop.base.util.Tools;
+import com.guangxunet.shop.business.util.AppUtil;
 
 /** 
  * 类名称：HeadController

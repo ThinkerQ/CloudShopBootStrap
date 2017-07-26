@@ -41,16 +41,31 @@
 	</mvc:interceptors>   
 
 	<!--freemarker视图解析器dvvd-->
-	<bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-		<property name="cache" value="true"/><!--是否使用缓存-->
-		<property name="suffix" value=".ftl"/><!--视图后缀-->
-		<property name="contentType" value="text/html;charset=UTF-8"></property><!--配置视图的输出HTML的contentType-->
-		<property name="exposeSessionAttributes" value="true"/><!--是否让model自动把session中的attribute导入进去:把session中的Attribute全部暴露到modle中-->
+	<!-- <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="cache" value="true"/>是否使用缓存
+		<property name="suffix" value=".ftl"/>视图后缀
+		<property name="contentType" value="text/html;charset=UTF-8"></property>配置视图的输出HTML的contentType
+		<property name="exposeSessionAttributes" value="true"/>是否让model自动把session中的attribute导入进去:把session中的Attribute全部暴露到modle中
+	</bean> -->
+	
+	<!-- 配置SpringMVC的视图解析器 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<property name="suffix" value=".jsp"/>
 	</bean>
 
 	<!--处理上传解析器-->
-	<!-- <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="1000000000"/>
-	</bean> -->
+	<!-- 上传拦截，如最大上传值及最小上传值 -->
+	  <bean id="multipartResolver"   class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >   
+		  <property name="maxUploadSize">    
+	          <value>104857600</value>    
+	       </property>   
+	        <property name="maxInMemorySize">    
+	            <value>4096</value>    
+	        </property>   
+	         <property name="defaultEncoding">    
+	            <value>utf-8</value>    
+	        </property> 
+    </bean>
 	
 </beans>

@@ -1,4 +1,4 @@
-package com.fh.util;
+package com.guangxunet.shop.base.util;
 
 import java.io.File;
 import java.io.IOException;

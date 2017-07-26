@@ -9,6 +9,8 @@
     <result column="usertype" property="userType" jdbcType="VARCHAR" />
     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="userImgUrl" property="userImgUrl" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickName" jdbcType="VARCHAR" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from logininfo
@@ -29,23 +31,36 @@
       email = #{email,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select id, state, username, password,usertype,mobile,email
+  
+  <update id="updateUserImgById" parameterType="pd">
+    update logininfo
+    set 
+      userImgUrl = #{userImgUrl}
+    where id = #{id}
+  </update>
+  
+  
+  <sql id="fieldSql">
+	id, state, username, password,usertype,mobile,email,userImgUrl,nickname
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultType="com.guangxunet.shop.base.domain.Logininfo" parameterType="pd" >
+    select <include refid="fieldSql"/>
     from logininfo
     where id = #{id,jdbcType=BIGINT}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, state, username, password,usertype,mobile,email
+    select <include refid="fieldSql"/>
     from logininfo
   </select>
 
   <select id="login" resultMap="BaseResultMap">
-    select id, state, username, password,usertype,mobile,email
+    select <include refid="fieldSql"/>
     from logininfo
     WHERE mobile = #{mobile} AND password = #{password} AND usertype = #{userType}
   </select>
   <select id="supervisorLogin" resultMap="BaseResultMap">
-    select id, state, username, password,usertype,mobile,email
+    select <include refid="fieldSql"/>
     from logininfo
     WHERE username = #{username} AND password = #{password} AND usertype = #{userType}
   </select>

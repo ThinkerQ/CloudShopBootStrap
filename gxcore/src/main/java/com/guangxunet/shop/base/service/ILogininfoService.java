@@ -1,7 +1,10 @@
 package com.guangxunet.shop.base.service;
 
 
+import java.util.List;
+
 import com.guangxunet.shop.base.domain.Logininfo;
+import com.guangxunet.shop.base.system.PageData;
 
 /**core登陆相关服务
  * Created by Administrator on 2016/9/30.
@@ -57,4 +60,16 @@ public interface ILogininfoService {
      * @param newPassword
      */
 	int resetPassword(String phoneNumber, String newPassword);
+
+	/**
+	 * 根据id获取用户信息
+	 * @param loginList
+	 * @return
+	 */
+	List<Logininfo> selectByPrimaryKey(PageData pd);
+
+	/*
+	 * 根据用户id更新用户头像
+	 */
+	int updateUserImgById(PageData pd);
 }

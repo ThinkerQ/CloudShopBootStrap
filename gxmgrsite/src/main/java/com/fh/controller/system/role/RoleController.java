@@ -22,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fh.controller.base.BaseController;
 import com.fh.service.system.menu.MenuService;
 import com.fh.service.system.role.RoleService;
-import com.fh.util.AppUtil;
 import com.fh.util.Jurisdiction;
 import com.fh.util.RightsHelper;
 import com.guangxunet.shop.base.system.Menu;
@@ -31,6 +30,7 @@ import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.base.system.Role;
 import com.guangxunet.shop.base.util.Const;
 import com.guangxunet.shop.base.util.Tools;
+import com.guangxunet.shop.business.util.AppUtil;
 
 import net.sf.json.JSONArray;
 /** 

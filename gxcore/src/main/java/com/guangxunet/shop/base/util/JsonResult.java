@@ -28,4 +28,11 @@ public class JsonResult {
     public JsonResult(String msg){
         this.message = msg;
     }
+
+	public JsonResult(Boolean success, String message, Object result) {
+		super();
+		this.success = success;
+		this.message = message;
+		this.result = result;
+	}
 }

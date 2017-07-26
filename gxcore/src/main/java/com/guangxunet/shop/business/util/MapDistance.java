@@ -1,4 +1,4 @@
-package com.fh.util;
+package com.guangxunet.shop.business.util;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,12 +1,17 @@
 package com.fh.controller.information.pictures;
 
-import com.fh.controller.base.BaseController;
-import com.guangxunet.shop.business.service.information.pictures.PicturesService;
-import com.fh.util.*;
-import com.guangxunet.shop.base.system.Page;
-import com.guangxunet.shop.base.system.PageData;
-import com.guangxunet.shop.base.util.Const;
-import com.guangxunet.shop.base.util.Tools;
+import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -20,12 +25,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import com.fh.controller.base.BaseController;
+import com.fh.util.DelAllFile;
+import com.fh.util.Jurisdiction;
+import com.fh.util.ObjectExcelView;
+import com.fh.util.Watermark;
+import com.guangxunet.shop.base.system.DateUtil;
+import com.guangxunet.shop.base.system.Page;
+import com.guangxunet.shop.base.system.PageData;
+import com.guangxunet.shop.base.util.Const;
+import com.guangxunet.shop.base.util.FileUpload;
+import com.guangxunet.shop.base.util.Tools;
+import com.guangxunet.shop.business.service.information.pictures.PicturesService;
+import com.guangxunet.shop.business.util.AppUtil;
+import com.guangxunet.shop.business.util.PathUtil;
 
 /** 
  * 类名称：PicturesController
@@ -56,6 +69,8 @@ public class PicturesController extends BaseController {
 			if (null != file && !file.isEmpty()) {
 				String filePath = PathUtil.getClasspath() + Const.FILEPATHIMG + ffile;		//文件上传路径
 				fileName = FileUpload.fileUp(file, filePath, this.get32UUID());				//执行上传
+				logger.info("-----save--------filePath:"+filePath);
+				logger.info("-------------fileName:"+fileName);
 			}else{
 				System.out.println("上传失败");
 			}

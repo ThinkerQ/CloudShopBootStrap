@@ -2,6 +2,8 @@ package com.guangxunet.shop.base.mapper;
 
 
 import com.guangxunet.shop.base.domain.Logininfo;
+import com.guangxunet.shop.base.system.PageData;
+
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,7 +13,7 @@ public interface LogininfoMapper {
 
     int insert(Logininfo record);
 
-    Logininfo selectByPrimaryKey(Long id);
+    List<Logininfo> selectByPrimaryKey(PageData pd);
 
     int updateByPrimaryKey(Logininfo record);
 
@@ -33,4 +35,11 @@ public interface LogininfoMapper {
      * @param newPassword
      */
 	int resetPassword(@Param("phoneNumber")String phoneNumber, @Param("newPassword")String newPassword);
+	
+	/**
+	 * 更新用户头像
+	 * @param pd
+	 * @return
+	 */
+	int updateUserImgById(PageData pd);
 }

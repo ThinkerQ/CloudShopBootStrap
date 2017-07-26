@@ -6,6 +6,7 @@ import com.guangxunet.shop.base.domain.Logininfo;
 import com.guangxunet.shop.base.mapper.IpLogMapper;
 import com.guangxunet.shop.base.mapper.LogininfoMapper;
 import com.guangxunet.shop.base.service.ILogininfoService;
+import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.base.util.BidConst;
 import com.guangxunet.shop.base.util.MD5;
 import com.guangxunet.shop.base.util.StringUtils;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**登陆相关实现
  * Created by Administrator on 2016/9/30.
@@ -127,5 +129,15 @@ public class LogininfoServiceImpl implements ILogininfoService{
 	@Override
 	public int resetPassword(String phoneNumber, String newPassword) {
 		return logininfoMapper.resetPassword(phoneNumber,MD5.encode(newPassword));
+	}
+
+	@Override
+	public List<Logininfo> selectByPrimaryKey(PageData pd) {
+		return logininfoMapper.selectByPrimaryKey(pd);
+	}
+
+	@Override
+	public int updateUserImgById(PageData pd) {
+		return logininfoMapper.updateUserImgById(pd);
 	}
 }

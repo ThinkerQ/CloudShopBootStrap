@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fh.controller.base.BaseController;
 import com.fh.service.system.appuser.AppuserService;
-import com.fh.util.AppUtil;
 import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.base.util.Tools;
+import com.guangxunet.shop.business.util.AppUtil;
 
 
 /**

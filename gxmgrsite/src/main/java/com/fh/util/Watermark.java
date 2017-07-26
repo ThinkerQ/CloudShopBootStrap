@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import com.guangxunet.shop.base.util.Const;
 import com.guangxunet.shop.base.util.Tools;
+import com.guangxunet.shop.business.util.PathUtil;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
