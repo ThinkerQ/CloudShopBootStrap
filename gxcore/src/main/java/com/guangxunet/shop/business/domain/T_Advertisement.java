@@ -14,9 +14,8 @@ public class T_Advertisement extends BaseDomain{
 	private String title;//标题
 	private String location;//位置
 	private String resolution;//分辨率
-	private String fileSize;//建议文件大小
-	private String fileFormat;//文件格式:
-	private String adsurl;//链接
+	private String detailUrl;//点图片详情链接
+	private String adsurl;//图片路径
 	private String description;//描述
 	private Date createTime;//创建时间
 	private Integer status;//状态

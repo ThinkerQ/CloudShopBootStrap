@@ -62,9 +62,8 @@
 						<th>所在位置</th>
 						<th>标题</th>
 						<th>分辨率</th>
-						<th>建议文件大小</th>
-						<th>文件格式</th>
 						<th>广告链接</th>
+						<th>图片路径</th>
 						<th>创建时间</th>
 						<th>广告描述</th>
 						<th>状态</th>
@@ -87,8 +86,7 @@
 										<td>${var.location}</td>
 										<td>${var.title}</td>
 										<td>${var.resolution}</td>
-										<td>${var.fileSize}</td>
-										<td>${var.fileFormat}</td>
+										<td>${var.detailUrl}</td>
 										<td>${var.adsurl}</td>
 										<td>${var.createTime}</td>
 										<td>${var.description}</td>

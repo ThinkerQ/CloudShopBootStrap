@@ -110,8 +110,7 @@ public class AdvertisementController extends BaseController {
 			@RequestParam(value="no",required=false) String no,
 			@RequestParam(value="location",required=false) String location,
 			@RequestParam(value="resolution",required=false) String resolution,
-			@RequestParam(value="fileSize",required=false) String fileSize,
-			@RequestParam(value="fileFormat",required=false) String fileFormat,
+			@RequestParam(value="detailUrl",required=false) String detailUrl,
 			@RequestParam(value="description",required=false) String description,
 			@RequestParam(value="advertisement_ID",required=false) String advertisement_ID,
 			@RequestParam(value="tpz",required=false) String tpz
@@ -125,8 +124,7 @@ public class AdvertisementController extends BaseController {
 			pd.put("no", no);	//
 			pd.put("location", location);	//
 			pd.put("resolution", resolution);	//
-			pd.put("fileSize", fileSize);	//
-			pd.put("fileFormat", fileFormat);	//
+			pd.put("detailUrl", detailUrl);	//
 			pd.put("description", description);	//
 			pd.put("advertisement_ID", advertisement_ID);	//
 			
@@ -279,9 +277,8 @@ public class AdvertisementController extends BaseController {
 			titles.add("广告条编号");	//1
 			titles.add("所在位置");	//2
 			titles.add("分辨率");	//3
-			titles.add("建议文件大小");	//4
-			titles.add("文件格式");	//5
 			titles.add("广告链接");	//6
+			titles.add("图片路径");	//5
 			titles.add("广告描述");	//7
 			titles.add("创建时间");	//8
 			titles.add("状态");	//9
@@ -294,8 +291,7 @@ public class AdvertisementController extends BaseController {
 							vpd.put("var1", varOList.get(i).getString("no"));	//1
 							vpd.put("var2", varOList.get(i).getString("location"));	//2
 							vpd.put("var3", varOList.get(i).getString("resolution"));	//3
-							vpd.put("var4", varOList.get(i).getString("fileSize"));	//4
-							vpd.put("var5", varOList.get(i).getString("fileFormat"));	//5
+							vpd.put("var5", varOList.get(i).getString("detailUrl"));	//5
 							vpd.put("var6", varOList.get(i).getString("adsurl"));	//6
 							vpd.put("var7", varOList.get(i).getString("description"));	//7
 							vpd.put("var8", varOList.get(i).getString("createTime"));	//8

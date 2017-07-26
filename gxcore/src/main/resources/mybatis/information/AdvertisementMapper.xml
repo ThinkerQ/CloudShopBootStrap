@@ -23,8 +23,7 @@
 				no = #{no}	,	
 				location = #{location}	,	
 				resolution = #{resolution}	,	
-				fileSize = #{fileSize}	,	
-				fileFormat = #{fileFormat}	,	
+				detailUrl = #{detailUrl}	,	
 				adsurl = #{adsurl}	,	
 				description = #{description}	,	
 				title = #{title}	
@@ -39,8 +38,7 @@
 			no,
 			location,
 			resolution,
-			fileSize,
-			fileFormat,
+			detailUrl,
 			adsurl,
 			description,
 			createTime,
@@ -64,7 +62,7 @@
 	</select>
 
     <sql id="selectSql">
-        	a.no,a.location,a.resolution,a.fileSize,a.fileFormat,a.adsurl,a.description,a.createTime,a.status,a.title,a.advertisement_ID
+        	a.no,a.location,a.resolution,a.detailUrl,a.adsurl,a.description,a.createTime,a.status,a.title,a.advertisement_ID
 	</sql>
 
     <!-- 列表 -->

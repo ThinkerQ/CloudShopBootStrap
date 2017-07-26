@@ -75,30 +75,20 @@
 			$("#resolution").focus();
 			return false;
 		}
-		if($("#fileSize").val()==""){
-			$("#fileSize").tips({
+		if($("#detailUrl").val()==""){
+			$("#detailUrl").tips({
 				side:3,
-	            msg:'请输入建议文件大小',
+	            msg:'请输入广告详情链接',
 	            bg:'#AE81FF',
 	            time:2
 	        });
-			$("#fileSize").focus();
-			return false;
-		}
-		if($("#fileFormat").val()==""){
-			$("#fileFormat").tips({
-				side:3,
-	            msg:'请输入文件格式',
-	            bg:'#AE81FF',
-	            time:2
-	        });
-			$("#fileFormat").focus();
+			$("#detailUrl").focus();
 			return false;
 		}
 		if($("#adsurl").val()==""){
 			$("#adsurl").tips({
 				side:3,
-	            msg:'请输入广告链接',
+	            msg:'请输入上传图片',
 	            bg:'#AE81FF',
 	            time:2
 	        });
@@ -181,12 +171,8 @@
 				<td><input type="text" name="resolution" id="resolution" value="${pd.resolution}" maxlength="32" placeholder="这里输入分辨率" title="分辨率"/></td>
 			</tr>
 			<tr>
-				<td style="width:70px;text-align: right;padding-top: 13px;">建议文件大小:</td>
-				<td><input type="text" name="fileSize" id="fileSize" value="${pd.fileSize}" maxlength="32" placeholder="这里输入建议文件大小" title="建议文件大小"/></td>
-			</tr>
-			<tr>
-				<td style="width:70px;text-align: right;padding-top: 13px;">文件格式:</td>
-				<td><input type="text" name="fileFormat" id="fileFormat" value="${pd.fileFormat}" maxlength="32" placeholder="这里输入文件格式" title="文件格式"/></td>
+				<td style="width:70px;text-align: right;padding-top: 13px;">广告链接:</td>
+				<td><input type="text" name="detailUrl" id="detailUrl" value="${pd.detailUrl}" maxlength="32" placeholder="这里输入广告链接" title="广告链接"/></td>
 			</tr>
 			<tr>
 				<th>广告图片:</th>

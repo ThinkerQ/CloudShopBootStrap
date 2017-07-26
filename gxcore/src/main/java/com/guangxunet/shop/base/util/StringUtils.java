@@ -7,7 +7,7 @@ import java.io.UnsupportedEncodingException;
  */
 public class StringUtils {
     public static boolean hasLength(String string){
-        return string!=null && !"".equals(string);
+        return string!=null && !"".equals(string.trim());
     }
     
     /**
