@@ -1,15 +1,13 @@
 package com.fh.service.system.user;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
-import com.fh.dao.DaoSupport;
 import com.guangxunet.shop.base.system.Page;
 import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.base.system.User;
+import com.guangxunet.shop.business.dao.DaoSupport;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 
 @Service("userService")

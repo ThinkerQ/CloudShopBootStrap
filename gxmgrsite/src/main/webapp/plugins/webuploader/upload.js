@@ -139,7 +139,7 @@
             return;
         }
 
-        
+        var serverUrl = $("#serverUrl").val();
         var locat = (window.location+'').split('/'); 
     	if('pictures'== locat[3]){locat =  locat[0]+'//'+locat[2];}else{locat =  locat[0]+'//'+locat[2]+'/'+locat[3];};
         uploader = WebUploader.create({
@@ -156,7 +156,7 @@
             chunked: false,
             chunkSize: 512 * 1024,
             //server: 'http://127.0.0.1:8080/pictures/save.do',
-            server: locat+'/pictures/save.do',
+            server: locat+serverUrl,
             //runtimeOrder: 'flash',
 
             accept: {

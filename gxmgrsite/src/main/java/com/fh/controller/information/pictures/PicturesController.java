@@ -1,17 +1,12 @@
 package com.fh.controller.information.pictures;
 
-import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
+import com.fh.controller.base.BaseController;
+import com.guangxunet.shop.business.service.information.pictures.PicturesService;
+import com.fh.util.*;
+import com.guangxunet.shop.base.system.Page;
+import com.guangxunet.shop.base.system.PageData;
+import com.guangxunet.shop.base.util.Const;
+import com.guangxunet.shop.base.util.Tools;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -25,20 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fh.controller.base.BaseController;
-import com.fh.service.information.pictures.PicturesService;
-import com.fh.util.AppUtil;
-import com.fh.util.DateUtil;
-import com.fh.util.DelAllFile;
-import com.fh.util.FileUpload;
-import com.fh.util.Jurisdiction;
-import com.fh.util.ObjectExcelView;
-import com.fh.util.PathUtil;
-import com.fh.util.Watermark;
-import com.guangxunet.shop.base.system.Page;
-import com.guangxunet.shop.base.system.PageData;
-import com.guangxunet.shop.base.util.Const;
-import com.guangxunet.shop.base.util.Tools;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /** 
  * 类名称：PicturesController
@@ -157,10 +144,8 @@ public class PicturesController extends BaseController {
 	public ModelAndView list(Page page){
 		logBefore(logger, "列表Pictures");
 		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
+		PageData pd = this.getPageData();
 		try{
-			pd = this.getPageData();
-			
 			String KEYW = pd.getString("keyword");
 			
 			if(null != KEYW && !"".equals(KEYW)){
@@ -187,8 +172,7 @@ public class PicturesController extends BaseController {
 	public ModelAndView goAdd(){
 		logBefore(logger, "去新增Pictures页面");
 		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
-		pd = this.getPageData();
+		PageData pd = this.getPageData();
 		try {
 			mv.setViewName("information/pictures/pictures_add");
 			mv.addObject("pd", pd);
@@ -205,8 +189,7 @@ public class PicturesController extends BaseController {
 	public ModelAndView goEdit(){
 		logBefore(logger, "去修改Pictures页面");
 		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
-		pd = this.getPageData();
+		PageData pd = this.getPageData();
 		try {
 			pd = picturesService.findById(pd);	//根据ID读取
 			mv.setViewName("information/pictures/pictures_edit");
@@ -225,7 +208,7 @@ public class PicturesController extends BaseController {
 	@ResponseBody
 	public Object deleteAll() {
 		logBefore(logger, "批量删除Pictures");
-		PageData pd = new PageData();		
+		PageData pd = null;
 		Map<String,Object> map = new HashMap<String,Object>();
 		try {
 			pd = this.getPageData();
@@ -264,8 +247,7 @@ public class PicturesController extends BaseController {
 	public ModelAndView exportExcel(){
 		logBefore(logger, "导出Pictures到excel");
 		ModelAndView mv = new ModelAndView();
-		PageData pd = new PageData();
-		pd = this.getPageData();
+		PageData pd = this.getPageData();
 		try{
 			Map<String,Object> dataMap = new HashMap<String,Object>();
 			List<String> titles = new ArrayList<String>();
@@ -303,8 +285,7 @@ public class PicturesController extends BaseController {
 	public void deltp(PrintWriter out) {
 		logBefore(logger, "删除图片");
 		try{
-			PageData pd = new PageData();
-			pd = this.getPageData();
+			PageData pd = this.getPageData();
 			String PATH = pd.getString("PATH");													 		//图片路径
 			DelAllFile.delFolder(PathUtil.getClasspath()+ Const.FILEPATHIMG + pd.getString("PATH")); 	//删除图片
 			if(PATH != null){

@@ -45,8 +45,8 @@
                         <span class="percentage"></span>
                     </div><div class="info"></div>
                     <div class="btns">
-                    	<!-- 上传服务的地址配置 -->
-						<input type="hidden" id="serverUrl" value="/pictures/save.do">
+						<!-- 上传服务的地址配置 -->
+						<input type="hidden" id="serverUrl" value="/advertisement/save.do">
                         <div id="filePicker2"></div><div class="uploadBtn">开始上传</div>
                     </div>
                 </div>

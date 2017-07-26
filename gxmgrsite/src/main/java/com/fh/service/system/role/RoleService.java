@@ -1,14 +1,12 @@
 package com.fh.service.system.role;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
-import com.fh.dao.DaoSupport;
 import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.base.system.Role;
+import com.guangxunet.shop.business.dao.DaoSupport;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @Service("roleService")
 public class RoleService{

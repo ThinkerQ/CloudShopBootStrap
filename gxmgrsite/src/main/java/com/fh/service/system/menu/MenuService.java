@@ -1,14 +1,12 @@
 package com.fh.service.system.menu;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
-import com.fh.dao.DaoSupport;
 import com.guangxunet.shop.base.system.Menu;
 import com.guangxunet.shop.base.system.PageData;
+import com.guangxunet.shop.business.dao.DaoSupport;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @Service("menuService")
 public class MenuService{

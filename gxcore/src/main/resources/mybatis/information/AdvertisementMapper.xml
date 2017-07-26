@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AdvertisementMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd" useGeneratedKeys="true" keyProperty="advertisement_ID">
+		insert into T_advertisement(adsurl,createTime,status)
+		values (#{adsurl},#{createTime},#{status})
+	</insert>
+
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from T_advertisement
+		where 
+			advertisement_ID = #{advertisement_ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  T_advertisement
+			set 
+				no = #{no}	,	
+				location = #{location}	,	
+				resolution = #{resolution}	,	
+				fileSize = #{fileSize}	,	
+				fileFormat = #{fileFormat}	,	
+				adsurl = #{adsurl}	,	
+				description = #{description}	,	
+				title = #{title}	
+			where
+				advertisement_ID = #{advertisement_ID}
+	</update>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			no,
+			location,
+			resolution,
+			fileSize,
+			fileFormat,
+			adsurl,
+			description,
+			createTime,
+			status,
+			title,
+			advertisement_ID
+		from 
+			T_advertisement
+		where 
+			advertisement_ID = #{advertisement_ID}
+	</select>
+	
+	<!-- 批量获取 -->
+	<select id="getAllById" parameterType="String" resultType="pd">
+		select adsurl from T_advertisement
+		where 
+			advertisement_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</select>
+
+    <sql id="selectSql">
+        	a.no,a.location,a.resolution,a.fileSize,a.fileFormat,a.adsurl,a.description,a.createTime,a.status,a.title,a.advertisement_ID
+	</sql>
+
+    <!-- 列表 -->
+    <select id="datalistPage" parameterType="page" resultType="pd">
+		select
+        	<include refid="selectSql"/>
+		from
+				T_advertisement a
+		<where>
+			<if test="pd.beginDate != null and pd.beginDate != ''">
+				AND a.createTime &gt;= #{pd.beginDate}
+			</if>
+			<if test="pd.endDate != null and pd.endDate != ''">
+				AND a.createTime &lt;= #{pd.endDate}
+			</if>
+			<if test="pd.status != null and pd.status != ''">
+				AND a.status = #{pd.status}
+			</if>
+			<if test="pd.keyword != null and pd.keyword != ''">
+				AND (
+					a.location LIKE CONCAT('%', #{pd.keyword},'%')
+				or	a.title LIKE CONCAT('%', #{pd.keyword},'%')
+				)
+			</if>
+		</where>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+        <include refid="selectSql"/>
+		from
+				T_advertisement a
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from T_advertisement
+		where 
+			advertisement_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+	<!-- 删除图片 -->
+	<update id="delTp" parameterType="pd">
+		update  T_advertisement
+			set 
+				adsurl	= ''
+			where 
+				advertisement_ID = #{advertisement_ID}
+	</update>
+	
+</mapper>

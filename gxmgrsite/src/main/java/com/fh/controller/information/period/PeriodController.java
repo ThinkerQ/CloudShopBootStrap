@@ -1,8 +1,8 @@
 package com.fh.controller.information.period;
 
 import com.fh.controller.base.BaseController;
-import com.fh.service.information.period.PeriodService;
-import com.fh.service.information.product.ProductService;
+import com.guangxunet.shop.business.service.information.period.PeriodService;
+import com.guangxunet.shop.business.service.information.product.ProductService;
 import com.fh.util.AppUtil;
 import com.fh.util.Jurisdiction;
 import com.fh.util.ObjectExcelView;

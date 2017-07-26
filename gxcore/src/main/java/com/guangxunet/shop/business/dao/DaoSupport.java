@@ -1,14 +1,13 @@
-package com.fh.dao;
-
-import java.util.List;
-
-import javax.annotation.Resource;
+package com.guangxunet.shop.business.dao;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @Repository("daoSupport")
 public class DaoSupport implements DAO {

@@ -1,6 +1,6 @@
-package com.fh.service.information.category;
+package com.guangxunet.shop.business.service.information.category;
 
-import com.fh.dao.DaoSupport;
+import com.guangxunet.shop.business.dao.DaoSupport;
 import com.guangxunet.shop.base.system.Page;
 import com.guangxunet.shop.base.system.PageData;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.fh.service.weixin.command;
+package com.guangxunet.shop.business.service.information.advertisement;
 
 import com.guangxunet.shop.base.system.Page;
 import com.guangxunet.shop.base.system.PageData;
@@ -9,8 +9,8 @@ import javax.annotation.Resource;
 import java.util.List;
 
 
-@Service("commandService")
-public class CommandService {
+@Service("advertisementService")
+public class AdvertisementService {
 
 	@Resource(name = "daoSupport")
 	private DaoSupport dao;
@@ -19,56 +19,61 @@ public class CommandService {
 	* 新增
 	*/
 	public void save(PageData pd)throws Exception{
-		dao.save("CommandMapper.save", pd);
+		dao.save("AdvertisementMapper.save", pd);
 	}
 	
 	/*
 	* 删除
 	*/
 	public void delete(PageData pd)throws Exception{
-		dao.delete("CommandMapper.delete", pd);
+		dao.delete("AdvertisementMapper.delete", pd);
 	}
 	
 	/*
 	* 修改
 	*/
 	public void edit(PageData pd)throws Exception{
-		dao.update("CommandMapper.edit", pd);
+		dao.update("AdvertisementMapper.edit", pd);
 	}
 	
 	/*
 	*列表
 	*/
 	public List<PageData> list(Page page)throws Exception{
-		return (List<PageData>)dao.findForList("CommandMapper.datalistPage", page);
+		return (List<PageData>)dao.findForList("AdvertisementMapper.datalistPage", page);
 	}
 	
 	/*
 	*列表(全部)
 	*/
 	public List<PageData> listAll(PageData pd)throws Exception{
-		return (List<PageData>)dao.findForList("CommandMapper.listAll", pd);
+		return (List<PageData>)dao.findForList("AdvertisementMapper.listAll", pd);
 	}
 	
 	/*
 	* 通过id获取数据
 	*/
 	public PageData findById(PageData pd)throws Exception{
-		return (PageData)dao.findForObject("CommandMapper.findById", pd);
+		return (PageData)dao.findForObject("AdvertisementMapper.findById", pd);
 	}
 	
 	/*
 	* 批量删除
 	*/
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
-		dao.delete("CommandMapper.deleteAll", ArrayDATA_IDS);
+		dao.delete("AdvertisementMapper.deleteAll", ArrayDATA_IDS);
+	}
+
+	public List<PageData> getAllById(String[] arrayDATA_IDS) throws Exception {
+		return (List<PageData>)dao.findForList("AdvertisementMapper.getAllById", arrayDATA_IDS);
 	}
 	
 	/*
-	* 匹配关键词
+	* 删除图片
 	*/
-	public PageData findByKw(PageData pd)throws Exception{
-		return (PageData)dao.findForObject("CommandMapper.findByKw", pd);
+	public void delTp(PageData pd)throws Exception{
+		dao.update("AdvertisementMapper.delTp", pd);
 	}
+	
 }
 

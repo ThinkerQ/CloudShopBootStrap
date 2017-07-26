@@ -1,4 +1,4 @@
-package com.fh.dao;
+package com.guangxunet.shop.business.dao;
 
 public interface DAO {
 	

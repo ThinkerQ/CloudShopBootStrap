@@ -1,14 +1,13 @@
 package com.fh.controller.information.category;
 
 import com.fh.controller.base.BaseController;
-import com.fh.service.information.category.CategoryService;
+import com.guangxunet.shop.business.service.information.category.CategoryService;
 import com.fh.util.AppUtil;
 import com.fh.util.Jurisdiction;
 import com.fh.util.ObjectExcelView;
 import com.guangxunet.shop.base.system.Page;
 import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.base.util.Const;
-import com.guangxunet.shop.business.domain.Category;
 
 import net.sf.json.JSONArray;
 
