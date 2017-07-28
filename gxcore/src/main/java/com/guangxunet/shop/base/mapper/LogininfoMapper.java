@@ -42,4 +42,11 @@ public interface LogininfoMapper {
 	 * @return
 	 */
 	int updateUserImgById(PageData pd);
+	
+	/**
+	 * 根据用户手机号查询用户
+	 * @param phoneNumber
+	 * @return
+	 */
+	Logininfo getUserByMobile(String phoneNumber);
 }

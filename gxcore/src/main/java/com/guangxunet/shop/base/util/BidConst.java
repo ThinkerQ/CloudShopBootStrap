@@ -25,5 +25,10 @@ public class BidConst {
     /**
      * 获取图片路径前缀
      */
-    public static final String GET_IMAGES_PATH = "http:106.15.46.108:8081/";
+    public static final String GET_IMAGES_PATH = "/uploadFiles/uploadImgs/";
+    
+    /**
+     * 修改密码链接有效期1分钟
+     */
+	public static final int VERIFY_EMAIL_DAY = 1;
 }

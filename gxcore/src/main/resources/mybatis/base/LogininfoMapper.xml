@@ -10,7 +10,6 @@
     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="userImgUrl" property="userImgUrl" jdbcType="VARCHAR" />
-    <result column="nickname" property="nickName" jdbcType="VARCHAR" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from logininfo
@@ -41,7 +40,7 @@
   
   
   <sql id="fieldSql">
-	id, state, username, password,usertype,mobile,email,userImgUrl,nickname
+	id, state, username, usertype,mobile,email,userImgUrl
   </sql>
   
   <select id="selectByPrimaryKey" resultType="com.guangxunet.shop.base.domain.Logininfo" parameterType="pd" >
@@ -52,6 +51,11 @@
   <select id="selectAll" resultMap="BaseResultMap" >
     select <include refid="fieldSql"/>
     from logininfo
+  </select>
+  <select id="getUserByMobile" resultMap="BaseResultMap" >
+    select <include refid="fieldSql"/>
+    from logininfo
+    WHERE mobile = #{phoneNumber}
   </select>
 
   <select id="login" resultMap="BaseResultMap">

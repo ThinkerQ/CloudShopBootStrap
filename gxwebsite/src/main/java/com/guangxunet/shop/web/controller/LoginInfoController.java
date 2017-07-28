@@ -52,29 +52,31 @@ public class LoginInfoController extends BaseController{
 	public JsonResult login(String mobile, String password, HttpServletRequest request){
 		JsonResult result = null;
 		
-		//非空检验
-		if (StringUtils.isEmpty(mobile)) {
-			throw new RuntimeException("手机号为空！");
-		}
-		
-		if (StringUtils.isEmpty(password)) {
-			throw new RuntimeException("密码为空！");
-		}
-		
-		//登录校验
-		Logininfo login = iLogininfoService.login(mobile, password, request.getRemoteAddr(), Logininfo.USER_NORMAL);
-		
-		if (login == null) {
-			result = new JsonResult("手机号或密码错误，请重试！");
-		}else{
-			Logininfo current = UserContext.getCurrent();
-			Map<String,Object> userInfo = new HashMap<String,Object>();
-			userInfo.put("UId", current.getId());
-			userInfo.put("userName", current.getUsername());
-			userInfo.put("mobile", current.getMobile());
-			userInfo.put("userType", current.getUserType());
-			result = new JsonResult(true,"登录成功！");
-			result.setResult(userInfo);
+		try {
+			//非空检验
+			if (StringUtils.isEmpty(mobile)) {
+				throw new RuntimeException("手机号为空！");
+			}
+			if (StringUtils.isEmpty(password)) {
+				throw new RuntimeException("密码为空！");
+			}
+			//登录校验
+			Logininfo login = iLogininfoService.login(mobile, password, request.getRemoteAddr(), Logininfo.USER_NORMAL);
+			logger.info("----登陆用户信息---"+login);
+			if (login == null) {
+				result = new JsonResult("手机号或密码错误，请重试！");
+			} else {
+				/*Logininfo current = UserContext.getCurrent();
+				Map<String, Object> userInfo = new HashMap<String, Object>();
+				userInfo.put("UId", current.getId());
+				userInfo.put("userName", current.getUsername());
+				userInfo.put("mobile", current.getMobile());
+				userInfo.put("userType", current.getUserType());*/
+				result = new JsonResult(true, "登录成功！");
+				result.setResult(login);
+			} 
+		} catch (Exception e) {
+			result = new JsonResult(e.getMessage());
 		}
 		return result;
 	}

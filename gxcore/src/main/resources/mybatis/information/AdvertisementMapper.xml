@@ -62,7 +62,7 @@
 	</select>
 
     <sql id="selectSql">
-        	a.no,a.location,a.resolution,a.detailUrl,a.adsurl,a.description,a.createTime,a.status,a.title,a.advertisement_ID
+        	a.no,a.location,a.resolution,a.detailUrl,a.adsurl,a.description,date_format(a.createTime, '%Y-%m-%d') AS "createTime",a.status,a.title,a.advertisement_ID
 	</sql>
 
     <!-- 列表 -->

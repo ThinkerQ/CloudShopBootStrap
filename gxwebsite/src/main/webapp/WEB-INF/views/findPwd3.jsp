@@ -126,6 +126,7 @@
 				<div class="col-sm-10">
 					<input type="text" id="newPassword" autocomplete="off" name="newPassword" class="form-control"  placeholder="请输入新密码"/>
 					<input type="hidden" id="phoneNumber"  name="phoneNumber" autocomplete="off"" class="form-control"  value="${phoneNumber}"/>
+					<input type="hidden" id="uuid"  name="uuid" autocomplete="off"" class="form-control"  value="${uuid}"/>
 				</div> 
 			</div>
 			<div class="form-gorup">

@@ -15,6 +15,8 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.guangxunet.shop.base.system.DateUtil;
 
 public class Tools {
@@ -251,6 +253,17 @@ public class Tools {
 		return "";
 	}
 	
+	/**
+	 * 获取项目的根路径
+	 * 如：http://localhost:8080/
+	 * @param request
+	 * @return
+	 */
+	public static String getBasePath(HttpServletRequest request){
+		String path = request.getContextPath();
+		String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+		return basePath;
+	}
 	
 	public static void main(String[] args) {
 		System.out.println(getRandomNum());

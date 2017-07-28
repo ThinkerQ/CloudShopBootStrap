@@ -52,7 +52,7 @@
 						/* $.messager.confirm("提示","短信验证码正确，下一步重新设置密码",function(){
 							window.location.href="/FindPassword/findPwd3.screen?"+"phoneNumber=18211674995";
 						}); */
-							window.location.href="/FindPassword/findPwd3.screen?"+"phoneNumber="+data.result.phoneNumber;
+							window.location.href="/FindPassword/findPwd3.screen?"+"phoneNumber="+data.result.phoneNumber+"&uuid="+data.result.uuid;
 				}else{
 					$.messager.popup(data.message);
 				}
@@ -87,7 +87,7 @@
 	
 	<!-- 网页内容 --> 
 	<div class="container">  
-		<form id="loginForm" class="form-horizontal el-login-form" action="/SendVerifyCode/verifyCode.screen" method="post" >
+		<form id="loginForm" class="form-horizontal el-login-form" action="/FindPassword/verifyCode.screen" method="post" >
 			<p class="h4" style="margin: 10px 10px 20px 110px;color:#999;">${phoneNumber} 找回密码  1.输入手机号  <font color="blue"> 2.输入验证码</font>   3.设置密码</p> 
 			<div class="form-group">
 				<label class="control-label col-sm-2">验证码</label>

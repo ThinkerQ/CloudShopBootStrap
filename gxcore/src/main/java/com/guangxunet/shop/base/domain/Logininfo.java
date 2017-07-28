@@ -21,6 +21,5 @@ public class Logininfo {
     private String mobile;
     private String email;
     private String userImgUrl;
-    private String nickName;
     private int userType = USER_NORMAL;//用户类型：区分是前台用户还是后台用户,默认是普通用户
 }

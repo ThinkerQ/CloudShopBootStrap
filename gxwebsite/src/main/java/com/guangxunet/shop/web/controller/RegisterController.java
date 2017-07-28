@@ -72,6 +72,10 @@ public class RegisterController {
     @RequestMapping("/checkUserByPhoneNumberIsExist.screen")
     @ResponseBody
     public Boolean checkUserPhoneNumberIsExist(String mobile){
+    	if (StringUtils.isEmpty(mobile)) {
+			return false;
+		}
+    	
     	Boolean isMobile = PhoneFormatCheckUtils.isChinaPhoneLegal(mobile);//手机号合法性校验
     	
     	return !logininfoService.checkUserPhoneNumberExist(mobile);
