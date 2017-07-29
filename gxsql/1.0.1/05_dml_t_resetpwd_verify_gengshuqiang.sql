@@ -1,0 +1,1 @@
+alter table t_resetpwd_verify add effect_flag varchar(32) DEFAULT 'Y' comment '是否有效 Y：有效 N：无效';

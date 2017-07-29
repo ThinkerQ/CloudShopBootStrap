@@ -127,7 +127,7 @@ public class VerifyCodeServiceImpl implements IVerifyCodeService {
         
         // 发送短信
         //sendMessageByThisSystem(phoneNumber, code);//使用本系统模拟发送验证码
-        this.batchPublishSMSMessage(phoneNumber,code);//通过阿里云短信服务发送验证码
+//        this.batchPublishSMSMessage(phoneNumber,code);//通过阿里云短信服务发送验证码
             
     }
 

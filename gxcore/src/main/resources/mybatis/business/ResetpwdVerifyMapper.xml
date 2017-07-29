@@ -24,6 +24,13 @@
       uuid = #{uuid,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <update id="updateEffectFlagByUUID" parameterType="com.guangxunet.shop.business.domain.ResetpwdVerify" >
+    update t_resetpwd_verify
+    set effect_flag = #{effectFlag}
+    where uuid = #{uuid}
+  </update>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select id, user_id, send_time, uuid
     from t_resetpwd_verify
@@ -33,6 +40,7 @@
     select id, user_id, send_time, uuid
     from t_resetpwd_verify
     where uuid = #{uuid}
+    and effect_flag = 'Y'
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, user_id, send_time, uuid

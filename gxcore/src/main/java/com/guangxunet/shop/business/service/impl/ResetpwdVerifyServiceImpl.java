@@ -93,12 +93,15 @@ public class ResetpwdVerifyServiceImpl implements IResetpwdVerifyService {
     		throw new RuntimeException("非注册用户！");
 		}
 		
-		ResetpwdVerify rv = resetpwdVerifyMapper.selectByUUID(uuid);
+		ResetpwdVerify rv = resetpwdVerifyMapper.selectByUUID(uuid);//检查自检表中是否存在的记录
 		
 		//如果有（已验证过可修改密码），且在有效期之内
 		if (rv!=null && DateUtil.getBetweenSecond(new Date(),rv.getSendTime()) <=  BidConst.VERIFY_EMAIL_DAY *60){
 		    //修改密码
 			 logininfoMapper.resetPassword(phoneNumber,MD5.encode(newPassword));
+			 //修改校验标识为无效
+			 rv.setEffectFlag("N");
+			 resetpwdVerifyMapper.updateEffectFlagByUUID(rv);
 		}else{
 			throw new RuntimeException("修改链接有误或已超时，请重试！");
 		}

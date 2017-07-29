@@ -15,5 +15,8 @@ public class ResetpwdVerify extends BaseDomain{
     private Date sendTime;
 
     private String uuid;
+    
+    private String effectFlag;
+    
 
 }

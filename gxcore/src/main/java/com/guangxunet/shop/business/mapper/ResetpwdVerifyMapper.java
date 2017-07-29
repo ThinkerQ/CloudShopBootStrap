@@ -15,4 +15,11 @@ public interface ResetpwdVerifyMapper {
     List<ResetpwdVerify> selectAll();
 
     int updateByPrimaryKey(ResetpwdVerify record);
+
+    
+    /**
+     * 将密码重置校验表中的记录设置为无效
+     * @param uuid
+     */
+	void updateEffectFlagByUUID(ResetpwdVerify resetpwdVerify);
 }
