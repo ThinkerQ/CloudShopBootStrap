@@ -48,7 +48,7 @@
 			//上传成功之后的回调
 			onUploadSuccess:function(file,data,response){
 				//data = $.evalJSON(data);
-				$("#uploadImg2").attr("src","<%=basePath%>uploadFiles/uploadImgs/"+data);
+				$("#uploadImg2").attr("src","<%=basePath%>uploadFiles/uploadImgs/"+data.result.userImgUrluserImgUrl);
 				$("#littleImgUrl").val(data);
 			}
 
@@ -127,7 +127,7 @@
 			 	
 		 	<a href="javascript:;" id="uploadBtn1" >上传图片</a></p> 
 			用户ID：${current.id} </p> 
-			昵称：${current.nickName}</p>
+			昵称：${current.username}</p>
 			手机号码：${current.mobile}</p>
 	</div>
 	

@@ -46,6 +46,16 @@ public class RegisterController {
         		throw new RuntimeException("两次输入的密码不一致，请重新输入！");
 			}
         	
+        	Boolean isMobile = PhoneFormatCheckUtils.isChinaPhoneLegal(mobile);//手机号合法性校验
+        	if (!isMobile) {
+        		throw new RuntimeException("仅支持大陆手机号，请检查手机号是否输入有误！");
+			}
+        	
+        	Boolean isExist = logininfoService.checkUserPhoneNumberExist(mobile);
+        	if (isExist) {
+        		throw new RuntimeException("该手机号已被注册！");
+			}
+        	
         	//校验短信验证码是否正确
         	boolean isCodePoss = iVerifyCodeService.verifyCode(mobile,verifycode);
         	if (!isCodePoss) {

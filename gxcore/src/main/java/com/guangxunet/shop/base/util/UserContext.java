@@ -22,6 +22,14 @@ public class UserContext {
 		return ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest().getSession();
 	}
 
+	/**
+	 * 由于安卓端每次访问没有自动携带sessionId导致session无法保持，所以后端返回一个sessionId给安卓端，每次请求都带上
+	 * @return
+	 */
+	public static String getSessionId(){
+		return ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest().getSession().getId();
+	}
+	
 	public static void putCurrent(Logininfo loginInfo) {
 		getSession().setAttribute(LOGININFO_IN_SESSION,loginInfo);
 	}

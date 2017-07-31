@@ -120,7 +120,7 @@ public class FindPasswordController extends BaseController{
 		try {
 			LoggerUtil.info("=======================入参===phone="+phoneNumber + ",code="+verifyCode);
 			boolean isVerifyCode = verifyCodeService.verifyCode(phoneNumber, verifyCode);
-			LoggerUtil.info("=======================验证结果===" + verifyCode);
+			LoggerUtil.info("=======================验证结果===" + isVerifyCode);
 			
 			/**
 			 *如果验证通过，往数据库插入一条记录，记录该用户修改密码的行为，返回一个UUID给用户.

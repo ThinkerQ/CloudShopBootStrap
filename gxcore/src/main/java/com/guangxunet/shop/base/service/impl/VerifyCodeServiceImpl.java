@@ -6,7 +6,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Date;
-import java.util.UUID;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,10 @@ import com.guangxunet.shop.base.util.DateUtils;
 import com.guangxunet.shop.base.util.LoggerUtil;
 import com.guangxunet.shop.base.util.PhoneFormatCheckUtils;
 import com.guangxunet.shop.base.util.UserContext;
+import com.guangxunet.shop.base.util.UuidUtil;
 import com.guangxunet.shop.base.vo.VerifyCodeVO;
+import com.guangxunet.shop.business.domain.VerifyCode;
+import com.guangxunet.shop.business.service.ITVerifyCodeService;
 
 /**验证码服务实现类
  * Created by King on 2016/10/11.  
@@ -38,6 +42,8 @@ import com.guangxunet.shop.base.vo.VerifyCodeVO;
 public class VerifyCodeServiceImpl implements IVerifyCodeService {
 	@Autowired
     private ILogininfoService logininfoService;
+	@Autowired
+	private ITVerifyCodeService tVerifyCodeService;
 	
     @Value("${sms.url}")//简单值注入方式：属性文件中配置了url=http://localhost:8082/send.do
     private String url;
@@ -82,8 +88,13 @@ public class VerifyCodeServiceImpl implements IVerifyCodeService {
 			throw new RuntimeException("验证码为空！");
 		}
     	
-        VerifyCodeVO vc =UserContext.getVerifyCode();
-        LoggerUtil.info("===验证手机验证码==session中VO="+vc);
+        //VerifyCodeVO vc =UserContext.getVerifyCode();
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("phoneNumber", phoneNumber);
+		params.put("code", verifyCode);
+		VerifyCode vc = tVerifyCodeService.selectByPhoneNumber(params);
+        
+        LoggerUtil.info("===从数据表中获取手机验证码==vc="+vc);
         
         if (vc == null) {
         	throw new RuntimeException("未曾向该手机号发送验证码或验证码已失效！");
@@ -98,7 +109,7 @@ public class VerifyCodeServiceImpl implements IVerifyCodeService {
 		}
         
         if (DateUtils.getBetweenSecond(vc.getSendTime(),new Date()) > BidConst.SEND_VERIFY_EXPIRY_DATE) {
-        	throw new RuntimeException("验证码已过期!");
+        	throw new RuntimeException("验证码已过期,有效期120s!");
 		}
         
        boolean isSend =  vc!=null//发过短信
@@ -113,21 +124,43 @@ public class VerifyCodeServiceImpl implements IVerifyCodeService {
     /**
      * 发送短信验证码：用于注册
      */
-    public void sendVerifyCode(String phoneNumber) throws Exception{
+   /* public void sendVerifyCode(String phoneNumber) throws Exception{
     	//0.发送前校验：
     	this.validateBeforeSend(phoneNumber); 
         
         //1.生成一个验证码
-        String code = UUID.randomUUID().toString().substring(0, 4);
+//      String code = UUID.randomUUID().toString().substring(0, 4);
+        String code = UuidUtil.createRandomVcode();
         LoggerUtil.info("验证码是 "+code+"，打死也不能告诉别人哦！【阿里巴巴】");
         
         VerifyCodeVO vo = new VerifyCodeVO(code, phoneNumber, new Date());
         //把验证码vo对象放到session中
         UserContext.putVerifyCode(vo);
-        
+        LoggerUtil.info("--------------存放vo到session--"+UserContext.getVerifyCode());
         // 发送短信
         //sendMessageByThisSystem(phoneNumber, code);//使用本系统模拟发送验证码
 //        this.batchPublishSMSMessage(phoneNumber,code);//通过阿里云短信服务发送验证码
+            
+    }*/
+    
+    /**
+     * 发送短信验证码：验证码记录表中
+     */
+     public void sendVerifyCode(String phoneNumber) throws Exception{
+    	//0.发送前校验：
+    	this.validateBeforeSend(phoneNumber); 
+        
+        //1.生成一个验证码
+        String code = UuidUtil.createRandomVcode();
+        LoggerUtil.info("验证码是 "+code+"，打死也不能告诉别人哦！【阿里巴巴】");
+        
+        VerifyCode vo = new VerifyCode(code, phoneNumber, new Date());
+        //把验证码vo对象放到表中
+        tVerifyCodeService.insert(vo);
+        
+        // 发送短信
+        //sendMessageByThisSystem(phoneNumber, code);//使用本系统模拟发送验证码
+        this.batchPublishSMSMessage(phoneNumber,code);//通过阿里云短信服务发送验证码
             
     }
 

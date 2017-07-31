@@ -4,6 +4,8 @@ package com.guangxunet.shop.web.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,13 +15,14 @@ import com.guangxunet.shop.base.service.ILogininfoService;
 import com.guangxunet.shop.base.service.IVerifyCodeService;
 import com.guangxunet.shop.base.util.JsonResult;
 import com.guangxunet.shop.base.util.LoggerUtil;
+import com.guangxunet.shop.base.util.UserContext;
 
 /**发送验证码控制器
  * Created by King on 2016/10/11.
  */
 @Controller
 @RequestMapping("SendVerifyCode")
-public class SendVerifyCodeController {
+public class SendVerifyCodeController extends BaseController{
     @Autowired
     private IVerifyCodeService verifyCodeService;
     @Autowired
@@ -32,7 +35,7 @@ public class SendVerifyCodeController {
      */
     @RequestMapping("/sendVerifyCode.screen")
     @ResponseBody
-    public JsonResult sendVerifyCode(String phoneNumber){
+    public JsonResult sendVerifyCode(HttpServletRequest request,String phoneNumber){
         JsonResult result = null;
         try {
 	        	//手机号是否为已注册用户
@@ -41,8 +44,14 @@ public class SendVerifyCodeController {
 	        		throw new RuntimeException("手机号已被注册！");
 	    		}
 	        	
+	        	String sessionId = request.getSession().getId();//由于安卓端每次访问没有自动携带sessionId导致session无法保持，所以后端返回一个sessionId给安卓端，每次请求都带上
+	        	logger.info("----sessionId="+sessionId);
+	        	
 				verifyCodeService.sendVerifyCode(phoneNumber);
-				result = new JsonResult(true,"发送成功");
+				Map<String,Object> resultmap  = new HashMap<String,Object>();
+	            resultmap.put("JSESSIONID", UserContext.getSessionId());
+				
+				result = new JsonResult(true,"发送成功",resultmap);
         } catch (Exception e) {
             result  = new JsonResult(e.getMessage());
         }

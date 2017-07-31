@@ -169,7 +169,8 @@ public class LoginInfoController extends BaseController{
 	@RequestMapping(value="/editUserImage")
 	@ResponseBody
 	public Object editUserImage(@RequestParam(required=false) MultipartFile file){
-		PageData pd = this.getPageData();;
+		PageData pd = this.getPageData();
+		JsonResult result = null;
 		logger.info("-------------editUserImage.do-----pd="+pd);
 		String  ffile = DateUtil.getDays(), fileName = "";
 		if (null != file && !file.isEmpty()) {
@@ -177,16 +178,18 @@ public class LoginInfoController extends BaseController{
 			fileName = FileUpload.fileUp(file, filePath, this.get32UUID());				//执行上传
 			logger.info("-------------filePath-----"+filePath);
 			logger.info("-------------fileName-----"+fileName);
+			String fullPath = ffile+ "/"+fileName;
 			
-			pd.put("userImgUrl", ffile+ "/"+fileName);
+			pd.put("userImgUrl",fullPath);
 			//更新用户表头像文件名
 			iLogininfoService.updateUserImgById(pd);
-			
+			result = new JsonResult(true,"用户头像上传成功！",pd);
 		}else{
+			result = new JsonResult(false,"上传失败！");
 			logger.info("-------------editUserImage.do-----上传失败");
 		}
 		
-		return ffile+ "/"+fileName;
+		return result;
 	} 
 	
 }

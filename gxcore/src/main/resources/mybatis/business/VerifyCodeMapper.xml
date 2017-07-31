@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guangxunet.shop.business.mapper.VerifyCodeMapper" >
+  <resultMap id="BaseResultMap" type="com.guangxunet.shop.business.domain.VerifyCode" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_verify_code
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.guangxunet.shop.business.domain.VerifyCode" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_verify_code (phone_number, send_time, code
+      )
+    values (#{phoneNumber,jdbcType=VARCHAR}, #{sendTime,jdbcType=TIMESTAMP}, #{code,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.guangxunet.shop.business.domain.VerifyCode" >
+    update t_verify_code
+    set phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      send_time = #{sendTime,jdbcType=TIMESTAMP},
+      code = #{code,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <sql id="selectSql">
+        	id as "id", phone_number as "phoneNumber", send_time as "sendTime", code as "code"
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select <include refid="selectSql"/>
+    from t_verify_code
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByPhoneNumber" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select <include refid="selectSql"/>
+    from t_verify_code
+    where phone_number = #{phoneNumber}
+    and code = #{code}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select <include refid="selectSql"/>
+    from t_verify_code
+  </select>
+</mapper>
