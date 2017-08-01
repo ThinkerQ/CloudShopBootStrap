@@ -44,8 +44,9 @@ public class SendVerifyCodeController extends BaseController{
 	        		throw new RuntimeException("手机号已被注册！");
 	    		}
 	        	
-	        	String sessionId = request.getSession().getId();//由于安卓端每次访问没有自动携带sessionId导致session无法保持，所以后端返回一个sessionId给安卓端，每次请求都带上
-	        	logger.info("----sessionId="+sessionId);
+	        	//注释原因：由于安卓端session丢失，弃用session  GENGSHUQIANG 
+//	        	String sessionId = request.getSession().getId();//由于安卓端每次访问没有自动携带sessionId导致session无法保持，所以后端返回一个sessionId给安卓端，每次请求都带上
+//	        	logger.info("----sessionId="+sessionId);
 	        	
 				verifyCodeService.sendVerifyCode(phoneNumber);
 				Map<String,Object> resultmap  = new HashMap<String,Object>();

@@ -13,7 +13,7 @@ import java.util.Date;
 @Setter
 @Getter
 @ToString
-public class VerifyCodeVO {
+public class VerifyCodeVO2 {
     private String code;//验证码
     private String phoneNumber;//手机号
     private Date sendTime;//发送时间
@@ -22,10 +22,10 @@ public class VerifyCodeVO {
     public String getContent(){
         return "您的验证码是：" + code + " , 有效时间为：60 秒。【中国强子国际】";
     }
-    public VerifyCodeVO() {
+    public VerifyCodeVO2() {
     }
 
-    public VerifyCodeVO(String code, String phoneNumber, Date sendTime) {
+    public VerifyCodeVO2(String code, String phoneNumber, Date sendTime) {
         this.code = code;
         this.phoneNumber = phoneNumber;
         this.sendTime = sendTime;

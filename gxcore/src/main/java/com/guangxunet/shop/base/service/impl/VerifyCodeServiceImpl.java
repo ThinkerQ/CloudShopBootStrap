@@ -31,7 +31,6 @@ import com.guangxunet.shop.base.util.LoggerUtil;
 import com.guangxunet.shop.base.util.PhoneFormatCheckUtils;
 import com.guangxunet.shop.base.util.UserContext;
 import com.guangxunet.shop.base.util.UuidUtil;
-import com.guangxunet.shop.base.vo.VerifyCodeVO;
 import com.guangxunet.shop.business.domain.VerifyCode;
 import com.guangxunet.shop.business.service.ITVerifyCodeService;
 
@@ -89,15 +88,16 @@ public class VerifyCodeServiceImpl implements IVerifyCodeService {
 		}
     	
         //VerifyCodeVO vc =UserContext.getVerifyCode();
-		Map<String,Object> params = new HashMap<String,Object>();
+		/*Map<String,Object> params = new HashMap<String,Object>();
 		params.put("phoneNumber", phoneNumber);
 		params.put("code", verifyCode);
-		VerifyCode vc = tVerifyCodeService.selectByPhoneNumber(params);
-        
+		VerifyCode vc = tVerifyCodeService.selectByPhoneNumber(params);*/
+		
+		VerifyCode vc = tVerifyCodeService.selectCurrentCodeByPhoneNumber(phoneNumber);
         LoggerUtil.info("===从数据表中获取手机验证码==vc="+vc);
         
         if (vc == null) {
-        	throw new RuntimeException("未曾向该手机号发送验证码或验证码已失效！");
+        	throw new RuntimeException("未发送过验证码至该号码，请核实手机号是否正确！");
 		}
         
         if (!vc.getPhoneNumber().equals(phoneNumber)) {
@@ -109,7 +109,7 @@ public class VerifyCodeServiceImpl implements IVerifyCodeService {
 		}
         
         if (DateUtils.getBetweenSecond(vc.getSendTime(),new Date()) > BidConst.SEND_VERIFY_EXPIRY_DATE) {
-        	throw new RuntimeException("验证码已过期,有效期120s!");
+        	throw new RuntimeException("验证码已过期,有效期120秒!");
 		}
         
        boolean isSend =  vc!=null//发过短信
@@ -171,7 +171,7 @@ public class VerifyCodeServiceImpl implements IVerifyCodeService {
      * @param code
      */
 	private void sendMessageByThisSystem(String phoneNumber, String code) {
-		VerifyCodeVO vo;
+		VerifyCode vo;
 		try {
 		    // 创建一个URL对象
 		    URL url = new URL(this.url);
@@ -197,7 +197,7 @@ public class VerifyCodeServiceImpl implements IVerifyCodeService {
 		    if (response.startsWith("success")) {
 		        // 发送成功
 		        // 把手机号码,验证码,发送时间装配到VO中并保存到session
-		        vo = new VerifyCodeVO(code, phoneNumber, new Date());
+		        vo = new VerifyCode(code, phoneNumber, new Date());
 		        //把vo放到session中
 		        UserContext.putVerifyCode(vo);
 		    } else {
@@ -224,10 +224,11 @@ public class VerifyCodeServiceImpl implements IVerifyCodeService {
     		throw new RuntimeException("手机号不正确！");
 		}
     	
-    	
-    	
     	//3.发送时间间隔不可超出限制
-        VerifyCodeVO vo = UserContext.getVerifyCode();
+//      VerifyCodeVO vo = UserContext.getVerifyCode();//从session中获取当前用户发送的短信验证码
+        VerifyCode vo = tVerifyCodeService.selectCurrentCodeByPhoneNumber(phoneNumber);
+        LoggerUtil.info("------短信验证码发送前校验发送间隔是否在60s内----vo="+vo);
+        
     	if (vo != null && DateUtils.getBetweenSecond(vo.getSendTime(), new Date()) <= BidConst.SEND_VERIFY_INTERVAL) {
     		throw new RuntimeException("发送过于频繁，每分钟只可获取一次验证码!");
     	}

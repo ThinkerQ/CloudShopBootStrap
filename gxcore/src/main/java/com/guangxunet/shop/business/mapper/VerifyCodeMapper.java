@@ -1,9 +1,9 @@
 package com.guangxunet.shop.business.mapper;
 
-import com.guangxunet.shop.base.vo.VerifyCodeVO;
-import com.guangxunet.shop.business.domain.VerifyCode;
 import java.util.List;
 import java.util.Map;
+
+import com.guangxunet.shop.business.domain.VerifyCode;
 
 public interface VerifyCodeMapper {
     int deleteByPrimaryKey(Integer id);
@@ -22,4 +22,11 @@ public interface VerifyCodeMapper {
      * @return
      */
     VerifyCode selectByPhoneNumber(Map<String, Object> params);
+    
+    /**
+     * 根据手机号获取最近发送的验证码
+     * @param phoneNumber
+     * @return
+     */
+	VerifyCode selectCurrentCodeByPhoneNumber(String phoneNumber);
 }

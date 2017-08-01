@@ -5,7 +5,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.guangxunet.shop.base.vo.VerifyCodeVO;
 import com.guangxunet.shop.business.domain.VerifyCode;
 import com.guangxunet.shop.business.mapper.VerifyCodeMapper;
 import com.guangxunet.shop.business.service.ITVerifyCodeService;
@@ -35,6 +34,11 @@ public class TVerifyCodeServiceImpl implements ITVerifyCodeService {
 	@Override
 	public VerifyCode selectByPhoneNumber(Map<String, Object> params) {
 		return verifyCodeMapper.selectByPhoneNumber(params);
+	}
+
+	@Override
+	public VerifyCode selectCurrentCodeByPhoneNumber(String phoneNumber) {
+		return verifyCodeMapper.selectCurrentCodeByPhoneNumber(phoneNumber);
 	}
 
 }

@@ -41,6 +41,14 @@
     where phone_number = #{phoneNumber}
     and code = #{code}
   </select>
+  
+  <select id="selectCurrentCodeByPhoneNumber" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select <include refid="selectSql"/>
+    from t_verify_code  
+	where send_time=(select max(send_time) from t_verify_code where phone_number = #{phoneNumber})
+	and phone_number = #{phoneNumber}
+  </select>
+  
   <select id="selectAll" resultMap="BaseResultMap" >
     select <include refid="selectSql"/>
     from t_verify_code

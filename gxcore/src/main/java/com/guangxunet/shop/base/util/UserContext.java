@@ -7,7 +7,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.guangxunet.shop.base.domain.Logininfo;
-import com.guangxunet.shop.base.vo.VerifyCodeVO;
+import com.guangxunet.shop.business.domain.VerifyCode;
 
 /** 
 * @author 作者 E-mail: King
@@ -38,11 +38,11 @@ public class UserContext {
         return (Logininfo) getSession().getAttribute(LOGININFO_IN_SESSION);
     }
 	
-	public static VerifyCodeVO getVerifyCode() {
-        return (VerifyCodeVO) getSession().getAttribute(VERIFYCODE_IN_SESSION);
+	public static VerifyCode getVerifyCode() {
+        return (VerifyCode) getSession().getAttribute(VERIFYCODE_IN_SESSION);
     }
 	
-	public static void putVerifyCode(VerifyCodeVO codeVO){
+	public static void putVerifyCode(VerifyCode codeVO){
         getSession().setAttribute(VERIFYCODE_IN_SESSION,codeVO);
     }
 	
