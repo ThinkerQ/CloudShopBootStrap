@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -53,19 +54,26 @@ public class AdvertisementController extends BaseController {
 	@Resource(name="advertisementService")
 	private AdvertisementService advertisementService;
 	
+	@Value("${common.images.path}")
+	private String commonImagesPath;//公共图片存放路径
+	
 	/**
 	 * 新增
 	 */
 	@RequestMapping(value="/save")
 	@ResponseBody
 	public Object save(@RequestParam(required=false) MultipartFile file) throws Exception{
-		logBefore(logger, "新增Advertisement");
+		logger.info("-------------------save.do--新增Advertisement---begin");
 		Map<String,String> map = new HashMap<String,String>();
 		String  ffile = DateUtil.getDays(), fileName = "";
 		PageData pd = new PageData();
 		if(Jurisdiction.buttonJurisdiction(menuUrl, "add")){
+			logger.info("-------------------save.do--inner1---begin");
 			if (null != file && !file.isEmpty()) {
-				String filePath = PathUtil.getClasspath() + Const.FILEPATHIMG + ffile;		//文件上传路径
+				logger.info("-------------------save.do--inner2---begin");
+				String filePath = commonImagesPath + ffile;		//文件上传路径
+				logger.info("-------------------filePath-="+filePath);
+				logger.info("-------------------getClassResources-="+PathUtil.getClassResources());
 				fileName = FileUpload.fileUp(file, filePath, this.get32UUID());				//执行上传
 			}else{
 				System.out.println("上传失败");
@@ -76,6 +84,7 @@ public class AdvertisementController extends BaseController {
 			pd.put("status", "1");	//状态
 			//加水印
 			Watermark.setWatemark(PathUtil.getClasspath() + Const.FILEPATHIMG + ffile + "/" + fileName);
+//			Watermark.setWatemark(commonImagesPath + ffile + "/" + fileName);
 			advertisementService.save(pd);
 		}
 		map.put("result", "ok");
@@ -93,6 +102,7 @@ public class AdvertisementController extends BaseController {
 		try{
 			pd = this.getPageData();
 			DelAllFile.delFolder(PathUtil.getClasspath()+ Const.FILEPATHIMG + pd.getString("adsurl")); //删除图片
+//			DelAllFile.delFolder(commonImagesPath + pd.getString("adsurl")); //删除图片
 			advertisementService.delete(pd);
 			out.write("success");
 			out.close();
@@ -135,12 +145,14 @@ public class AdvertisementController extends BaseController {
 			String  ffile = DateUtil.getDays(), fileName = "";
 			if (null != file && !file.isEmpty()) {
 				String filePath = PathUtil.getClasspath() + Const.FILEPATHIMG + ffile;		//文件上传路径
+//				String filePath = commonImagesPath + ffile;		//文件上传路径
 				fileName = FileUpload.fileUp(file, filePath, this.get32UUID());				//执行上传
 				pd.put("adsurl", ffile + "/" + fileName);				//路径
 			}else{
 				pd.put("adsurl", tpz);
 			}
 			Watermark.setWatemark(PathUtil.getClasspath() + Const.FILEPATHIMG + ffile + "/" + fileName);//加水印
+//			Watermark.setWatemark(commonImagesPath + ffile + "/" + fileName);//加水印
 			advertisementService.edit(pd);
 		}
 		
@@ -247,6 +259,7 @@ public class AdvertisementController extends BaseController {
 				//删除图片
 				for(int i=0;i<pathList.size();i++){
 					DelAllFile.delFolder(PathUtil.getClasspath()+ Const.FILEPATHIMG + pathList.get(i).getString("adsurl"));
+//					DelAllFile.delFolder(commonImagesPath + pathList.get(i).getString("adsurl"));
 				}
 				advertisementService.deleteAll(ArrayDATA_IDS);
 				pd.put("msg", "ok");
@@ -319,6 +332,7 @@ public class AdvertisementController extends BaseController {
 			PageData pd = this.getPageData();
 			String PATH = pd.getString("adsurl");													 		//图片路径
 			DelAllFile.delFolder(PathUtil.getClasspath()+ Const.FILEPATHIMG + pd.getString("adsurl")); 	//删除图片
+//			DelAllFile.delFolder(commonImagesPath + pd.getString("adsurl")); 	//删除图片
 			if(PATH != null){
 				advertisementService.delTp(pd);																//删除数据中图片数据
 			}	

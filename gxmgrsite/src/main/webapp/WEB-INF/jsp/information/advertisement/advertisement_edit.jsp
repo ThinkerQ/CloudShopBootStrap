@@ -4,6 +4,7 @@
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	String commonImagesPath = "http://images.gengshuqiang.com/";
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -181,7 +182,8 @@
 					<input type="file" id="tp" name="tp" onchange="fileType(this)"/>
 					</c:if>
 					<c:if test="${pd != null && pd.adsurl != '' && pd.adsurl != null }">
-						<a href="<%=basePath%>uploadFiles/uploadImgs/${pd.adsurl}" target="_blank"><img src="<%=basePath%>uploadFiles/uploadImgs/${pd.adsurl}" width="210"/></a>
+<%-- 						<a href="<%=basePath%>uploadFiles/uploadImgs/${pd.adsurl}" target="_blank"><img src="<%=basePath%>uploadFiles/uploadImgs/${pd.adsurl}" width="210"/></a> --%>
+						<a href="<%=commonImagesPath%>${pd.adsurl}" target="_blank"><img src="<%=commonImagesPath%>${pd.adsurl}" width="210"/></a>
 						<input type="button" class="btn btn-mini btn-danger" value="删除" onclick="delP('${pd.adsurl}','${pd.advertisement_ID}');" />
 						<input type="hidden" name="tpz" id="tpz" value="${pd.adsurl }"/>
 					</c:if>
