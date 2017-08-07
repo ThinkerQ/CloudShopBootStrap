@@ -24,7 +24,6 @@ import com.guangxunet.shop.base.util.Const;
 import com.guangxunet.shop.base.util.FileUpload;
 import com.guangxunet.shop.base.util.JsonResult;
 import com.guangxunet.shop.base.util.UserContext;
-import com.guangxunet.shop.business.util.AppUtil;
 import com.guangxunet.shop.business.util.CollectionUtil;
 import com.guangxunet.shop.business.util.PathUtil;
 

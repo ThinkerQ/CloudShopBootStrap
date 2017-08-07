@@ -83,8 +83,8 @@ public class AdvertisementController extends BaseController {
 			pd.put("createTime", new Date());	//创建时间
 			pd.put("status", "1");	//状态
 			//加水印
-			Watermark.setWatemark(PathUtil.getClasspath() + Const.FILEPATHIMG + ffile + "/" + fileName);
-//			Watermark.setWatemark(commonImagesPath + ffile + "/" + fileName);
+//			Watermark.setWatemark(PathUtil.getClasspath() + Const.FILEPATHIMG + ffile + "/" + fileName);
+			Watermark.setWatemark(commonImagesPath + ffile + "/" + fileName);
 			advertisementService.save(pd);
 		}
 		map.put("result", "ok");
@@ -101,8 +101,8 @@ public class AdvertisementController extends BaseController {
 		PageData pd = null;
 		try{
 			pd = this.getPageData();
-			DelAllFile.delFolder(PathUtil.getClasspath()+ Const.FILEPATHIMG + pd.getString("adsurl")); //删除图片
-//			DelAllFile.delFolder(commonImagesPath + pd.getString("adsurl")); //删除图片
+//			DelAllFile.delFolder(PathUtil.getClasspath()+ Const.FILEPATHIMG + pd.getString("adsurl")); //删除图片
+			DelAllFile.delFolder(commonImagesPath + pd.getString("adsurl")); //删除图片
 			advertisementService.delete(pd);
 			out.write("success");
 			out.close();
@@ -144,15 +144,15 @@ public class AdvertisementController extends BaseController {
 			if(null == tpz){tpz = "";}
 			String  ffile = DateUtil.getDays(), fileName = "";
 			if (null != file && !file.isEmpty()) {
-				String filePath = PathUtil.getClasspath() + Const.FILEPATHIMG + ffile;		//文件上传路径
-//				String filePath = commonImagesPath + ffile;		//文件上传路径
+//				String filePath = PathUtil.getClasspath() + Const.FILEPATHIMG + ffile;		//文件上传路径
+				String filePath = commonImagesPath + ffile;		//文件上传路径
 				fileName = FileUpload.fileUp(file, filePath, this.get32UUID());				//执行上传
 				pd.put("adsurl", ffile + "/" + fileName);				//路径
 			}else{
 				pd.put("adsurl", tpz);
 			}
-			Watermark.setWatemark(PathUtil.getClasspath() + Const.FILEPATHIMG + ffile + "/" + fileName);//加水印
-//			Watermark.setWatemark(commonImagesPath + ffile + "/" + fileName);//加水印
+//			Watermark.setWatemark(PathUtil.getClasspath() + Const.FILEPATHIMG + ffile + "/" + fileName);//加水印
+			Watermark.setWatemark(commonImagesPath + ffile + "/" + fileName);//加水印
 			advertisementService.edit(pd);
 		}
 		
@@ -258,8 +258,8 @@ public class AdvertisementController extends BaseController {
 				pathList = advertisementService.getAllById(ArrayDATA_IDS);
 				//删除图片
 				for(int i=0;i<pathList.size();i++){
-					DelAllFile.delFolder(PathUtil.getClasspath()+ Const.FILEPATHIMG + pathList.get(i).getString("adsurl"));
-//					DelAllFile.delFolder(commonImagesPath + pathList.get(i).getString("adsurl"));
+//					DelAllFile.delFolder(PathUtil.getClasspath()+ Const.FILEPATHIMG + pathList.get(i).getString("adsurl"));
+					DelAllFile.delFolder(commonImagesPath + pathList.get(i).getString("adsurl"));
 				}
 				advertisementService.deleteAll(ArrayDATA_IDS);
 				pd.put("msg", "ok");
@@ -331,8 +331,8 @@ public class AdvertisementController extends BaseController {
 		try{
 			PageData pd = this.getPageData();
 			String PATH = pd.getString("adsurl");													 		//图片路径
-			DelAllFile.delFolder(PathUtil.getClasspath()+ Const.FILEPATHIMG + pd.getString("adsurl")); 	//删除图片
-//			DelAllFile.delFolder(commonImagesPath + pd.getString("adsurl")); 	//删除图片
+//			DelAllFile.delFolder(PathUtil.getClasspath()+ Const.FILEPATHIMG + pd.getString("adsurl")); 	//删除图片
+			DelAllFile.delFolder(commonImagesPath + pd.getString("adsurl")); 	//删除图片
 			if(PATH != null){
 				advertisementService.delTp(pd);																//删除数据中图片数据
 			}	
@@ -355,5 +355,9 @@ public class AdvertisementController extends BaseController {
 	public void initBinder(WebDataBinder binder){
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(format,true));
+	}
+	
+	public void test(){
+		logger.info("-----------------test--------------");
 	}
 }

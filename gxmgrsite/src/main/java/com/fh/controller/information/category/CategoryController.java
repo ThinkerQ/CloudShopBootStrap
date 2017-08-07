@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import net.sf.json.JSONArray;
 import com.fh.controller.base.BaseController;
 import com.fh.util.Jurisdiction;
 import com.fh.util.ObjectExcelView;
@@ -34,8 +35,6 @@ import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.base.util.Const;
 import com.guangxunet.shop.business.service.information.category.CategoryService;
 import com.guangxunet.shop.business.util.AppUtil;
-
-import net.sf.json.JSONArray;
 
 /** 
  * 类名称：CategoryController
