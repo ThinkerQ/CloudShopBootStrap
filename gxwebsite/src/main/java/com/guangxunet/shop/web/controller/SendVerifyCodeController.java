@@ -16,6 +16,7 @@ import com.guangxunet.shop.base.service.IVerifyCodeService;
 import com.guangxunet.shop.base.util.JsonResult;
 import com.guangxunet.shop.base.util.LoggerUtil;
 import com.guangxunet.shop.base.util.UserContext;
+import com.guangxunet.shop.web.controller.base.BaseController;
 
 /**发送验证码控制器
  * Created by King on 2016/10/11.

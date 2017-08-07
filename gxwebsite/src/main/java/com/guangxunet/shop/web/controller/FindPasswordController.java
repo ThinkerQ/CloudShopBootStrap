@@ -16,6 +16,7 @@ import com.guangxunet.shop.base.util.JsonResult;
 import com.guangxunet.shop.base.util.LoggerUtil;
 import com.guangxunet.shop.base.util.PhoneFormatCheckUtils;
 import com.guangxunet.shop.business.service.IResetpwdVerifyService;
+import com.guangxunet.shop.web.controller.base.BaseController;
 
 import shaded.org.apache.commons.lang3.StringUtils;
 

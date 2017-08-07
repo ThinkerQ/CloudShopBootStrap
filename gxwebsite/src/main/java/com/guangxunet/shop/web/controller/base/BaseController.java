@@ -1,4 +1,4 @@
-package com.guangxunet.shop.web.controller;
+package com.guangxunet.shop.web.controller.base;
 
 
 import javax.servlet.http.HttpServletRequest;

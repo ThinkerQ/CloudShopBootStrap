@@ -26,6 +26,7 @@ import com.guangxunet.shop.base.util.JsonResult;
 import com.guangxunet.shop.base.util.UserContext;
 import com.guangxunet.shop.business.util.CollectionUtil;
 import com.guangxunet.shop.business.util.PathUtil;
+import com.guangxunet.shop.web.controller.base.BaseController;
 
 /** 
 * @author 作者 E-mail: King
