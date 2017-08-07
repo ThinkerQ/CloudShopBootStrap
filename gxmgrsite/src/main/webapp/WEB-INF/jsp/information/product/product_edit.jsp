@@ -107,6 +107,7 @@
 		$("#zhongxin").hide();
 		$("#zhongxin2").show();
 	}
+	
 	function categorySelect() {
 		top.jzts();
 		var diag = new top.Dialog();
@@ -122,6 +123,19 @@
 			diag.close();
 		};
 		diag.show();
+	}
+	
+	//删除图片
+	function delP(PATH,product_ID){
+		 if(confirm("确定要删除图片？")){
+			var url = "pictures/deltp.do?PATH="+PATH+"&product_ID="+product_ID+"&guid="+new Date().getTime();
+			$.get(url,function(data){
+				if(data=="success"){
+					alert("删除成功!");
+					document.location.reload();
+				}
+			});
+		} 
 	}
 
 </script>
@@ -167,7 +181,7 @@
 					</c:if>
 					<c:if test="${pd != null && pd.littleImgUrl != '' && pd.littleImgUrl != null }">
 						<a href="<%=basePath%>uploadFiles/uploadImgs/${pd.littleImgUrl}" target="_blank"><img src="<%=basePath%>uploadFiles/uploadImgs/${pd.littleImgUrl}" style="width:100px;width:160px;"/></a>
-						<input type="button" class="btn btn-mini btn-danger" value="删除" onclick="delP('${pd.littleImgUrl}');" />
+						<input type="button" class="btn btn-mini btn-danger" value="删除" onclick="delP('${pd.littleImgUrl}','${pd.product_ID}');" />
 					</c:if>
 					<input type="hidden" name="littleImgUrl" id="littleImgUrl" value="${pd.littleImgUrl }"/>
 				</td>
@@ -182,7 +196,7 @@
 					</c:if>
 					<c:if test="${pd != null && pd.bigImgUrl != '' && pd.bigImgUrl != null }">
 						<a href="<%=basePath%>uploadFiles/uploadImgs/${pd.bigImgUrl}" target="_blank"><img src="<%=basePath%>uploadFiles/uploadImgs/${pd.bigImgUrl}" style="width:100px;width:160px;"/></a>
-						<input type="button" class="btn btn-mini btn-danger" value="删除" onclick="delP('${pd.bigImgUrl}');" />
+						<input type="button" class="btn btn-mini btn-danger" value="删除" onclick="delP('${pd.bigImgUrl}','${pd.product_ID}');" />
 					</c:if>
 					<input type="hidden" name="bigImgUrl" id="bigImgUrl" value="${pd.bigImgUrl }"/>
 				</td>
