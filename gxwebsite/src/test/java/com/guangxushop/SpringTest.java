@@ -71,6 +71,19 @@ public class SpringTest {
 		LoggerUtil.info("----------------varList="+varList);
 	}
 	
+	/**
+	 * 期数列表
+	 * @throws Exception
+	 */
+	@Test
+	public void testPeriodById() throws Exception {
+		PageData pd = new PageData();
+		pd.put("productId", "1");//最新
+		//列出Period列表
+		List<PageData> pageData = periodService.queryPeriodsByProductId(pd);
+		LoggerUtil.info("----------------varList="+pageData);
+	}
+	
 	
 	
 }

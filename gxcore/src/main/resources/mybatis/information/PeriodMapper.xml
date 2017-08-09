@@ -32,18 +32,18 @@
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
 		select 
-			periodNumber,
-			prizeUserId,
-			needCount,
-			productId,
-			alreadyCount,
-			prizeNumber,
-			date_format(a.createTime, '%Y-%m-%d') AS "createTime",
-			prizeTime,
-			status,
-			period_ID
+			periodNumber,prizeUserId,needCount,productId,alreadyCount,prizeNumber,date_format(a.createTime, '%Y-%m-%d') AS "createTime",prizeTime,status,period_ID
 		from 
 			T_period
+		where 
+			period_ID = #{period_ID}
+	</select>
+	
+	<select id="queryPeriodById" parameterType="pd" resultType="pd">
+		select 
+			a.period_ID,a.periodNumber,a.needCount,a.alreadyCount,a.status,b.product_ID,b.firstName,b.secondName,b.littleImgUrl,b.bigImgUrl
+		from 
+			T_period a LEFT JOIN product b ON b.product_ID=a.productId 
 		where 
 			period_ID = #{period_ID}
 	</select>
@@ -95,6 +95,16 @@
         <include refid="selectSql"/>
 		from
 				T_period a LEFT JOIN product p ON p.product_ID=a.productId
+	</select>
+	
+	<!-- 列表(通过商品id查询历史期数) -->
+	<select id="queryPeriodsByProductId" parameterType="pd" resultType="pd">
+		select
+        <include refid="selectSqlPeriod"/>
+		from
+				T_period 
+		where 
+			productId = #{productId}
 	</select>
 	
 	<!-- 列表（排序） by GENGSHUQIANG-->

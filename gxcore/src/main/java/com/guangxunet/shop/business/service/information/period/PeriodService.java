@@ -71,5 +71,18 @@ public class PeriodService {
 		return (List<PageData>) dao.findForList("PeriodMapper.listByOrder", pd);
 	}
 	
+	/**
+	 * 通过id查询期数详情
+	 */
+	public PageData queryPeriodById(PageData pd)throws Exception{
+		return (PageData)dao.findForObject("PeriodMapper.queryPeriodById", pd);
+	}
+
+	/**
+	 * 列表-通过productID获取往期揭晓
+	 */
+	public List<PageData> queryPeriodsByProductId(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("PeriodMapper.queryPeriodsByProductId", pd);
+	}
 }
 
