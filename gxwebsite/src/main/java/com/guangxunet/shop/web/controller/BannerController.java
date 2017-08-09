@@ -34,6 +34,10 @@ public class BannerController {
 	@Value("${gxshop.core.bannerLimitNumber}")
     private int bannerLimitNumber;
 	
+	@Value("${common.website.address}")
+	private String WEBSITEPATH;//website域名访问地址前缀
+	
+	
 	/**
 	 * 获取banner列表
 	 */
@@ -52,7 +56,7 @@ public class BannerController {
 			}
 			
 			for (PageData pageData : bannerList) {
-				String image = Const.FILEPATHIMG + pageData.getString("adsurl");
+				String image = WEBSITEPATH + pageData.getString("adsurl");
 				pageData.put("adsurl", image);
 			}
 			

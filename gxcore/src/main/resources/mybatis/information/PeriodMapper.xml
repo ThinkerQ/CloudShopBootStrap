@@ -38,7 +38,7 @@
 			productId,
 			alreadyCount,
 			prizeNumber,
-			createTime,
+			date_format(a.createTime, '%Y-%m-%d') AS "createTime",
 			prizeTime,
 			status,
 			period_ID
@@ -49,7 +49,18 @@
 	</select>
 
     <sql id="selectSql">
-        	a.period_ID,a.periodNumber,a.prizeUserId,a.needCount,a.alreadyCount,a.prizeNumber,a.createTime,a.prizeTime,a.status,a.productId,p.firstName
+        a.period_ID,
+		a.periodNumber,
+		a.prizeUserId,
+		a.needCount,
+		a.alreadyCount,
+		a.prizeNumber,
+		date_format(a.createTime, '%Y-%m-%d') AS "createTime",
+		date_format(a.prizeTime, '%Y-%m-%d') AS "prizeTime",
+		a.status,
+		a.productId,
+		p.firstName,
+		p.littleImgUrl
 	</sql>
 
     <!-- 列表 -->
@@ -74,12 +85,44 @@
 		</where>
 	</select>
 	
+	<sql id="selectSqlPeriod">
+		period_ID,periodNumber,prizeUserId,needCount,productId,alreadyCount,prizeNumber,createTime,prizeTime,status
+	</sql>
+	
 	<!-- 列表(全部) -->
 	<select id="listAll" parameterType="pd" resultType="pd">
 		select
         <include refid="selectSql"/>
 		from
 				T_period a LEFT JOIN product p ON p.product_ID=a.productId
+	</select>
+	
+	<!-- 列表（排序） by GENGSHUQIANG-->
+	<select id="listByOrder" parameterType="pd" resultType="pd">
+		select
+        <include refid="selectSql"/>
+		from T_period a LEFT JOIN product p ON p.product_ID=a.productId
+		<!-- 最热 -->
+		<if test="keyword=='hostEst'">
+	    	order by a.alreadyCount DESC
+	    </if>
+		<!-- 最快 -->
+		<if test="keyword=='fastEst'">
+	    	order by (a.alreadyCount/a.needCount) DESC
+	    </if>
+		<!-- 最新 -->
+		<if test="keyword=='newEst'">
+	    	order by a.createTime DESC
+	    </if>
+		<!-- 高价 -->
+		<if test="keyword=='hightPriceEst'">
+	    	order by a.needCount DESC
+	    </if>
+		<!-- 低价 -->
+		<if test="keyword=='lowPriceEst'">
+	    	order by a.needCount ASC
+	    </if>
+	     
 	</select>
 	
 	<!-- 批量删除 -->

@@ -63,6 +63,13 @@ public class PeriodService {
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("PeriodMapper.deleteAll", ArrayDATA_IDS);
 	}
+
+	/**
+	 * 列表-按条件排序
+	 */
+	public List<PageData> listByOrder(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("PeriodMapper.listByOrder", pd);
+	}
 	
 }
 
