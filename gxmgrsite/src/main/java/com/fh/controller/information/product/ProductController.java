@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -54,7 +55,8 @@ public class ProductController extends BaseController {
 	private ProductService productService;
 	@Resource(name="categoryService")
 	private CategoryService categoryService;
-
+	@Value("${common.images.path}")
+	private String commonImagesPath;//公共图片存放路径
 	/**
 	 * 上传
 	 */
@@ -69,16 +71,18 @@ public class ProductController extends BaseController {
 		PageData pd = new PageData();
 		if(Jurisdiction.buttonJurisdiction(menuUrl, "add")){
 			if (null != file && !file.isEmpty()) {
-				String filePath = PathUtil.getClasspath() + Const.FILEPATHIMG + ffile;		//文件上传路径
+//				String filePath = PathUtil.getClasspath() + Const.FILEPATHIMG + ffile;		//文件上传路径
+				String filePath = commonImagesPath + Const.PRODUCT_FILEPATHIMG + ffile;		//公共图片上传路径
 				fileName = FileUpload.fileUp(file, filePath, this.get32UUID());				//执行上传
 			}else{
 				System.out.println("上传失败");
 			}
 			//加水印
-			Watermark.setWatemark(PathUtil.getClasspath() + Const.FILEPATHIMG + ffile + "/" + fileName);
+//			Watermark.setWatemark(PathUtil.getClasspath() + Const.FILEPATHIMG + ffile + "/" + fileName);
+			Watermark.setWatemark(commonImagesPath + Const.PRODUCT_FILEPATHIMG + ffile + "/" + fileName);
 		}
 		map.put("imgPath", fileName);
-		return ffile+ "/"+fileName;
+		return Const.PRODUCT_FILEPATHIMG + ffile+ "/"+fileName;
 	}
 
 	/**
@@ -299,7 +303,8 @@ public class ProductController extends BaseController {
 			PageData pd = new PageData();
 			pd = this.getPageData();
 			String PATH = pd.getString("PATH");													 		//图片路径
-			DelAllFile.delFolder(PathUtil.getClasspath()+ Const.FILEPATHIMG + pd.getString("PATH")); 	//删除图片
+//			DelAllFile.delFolder(PathUtil.getClasspath()+ Const.FILEPATHIMG + pd.getString("PATH")); 	//删除图片
+			DelAllFile.delFolder(commonImagesPath + Const.PRODUCT_FILEPATHIMG + pd.getString("PATH")); 	//删除图片
 			out.write("success");
 			out.close();
 		}catch(Exception e){

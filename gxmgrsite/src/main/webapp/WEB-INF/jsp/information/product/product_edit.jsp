@@ -1,9 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="ss" uri="http://www.springframework.org/tags" %>
+<%@ page import="com.guangxunet.shop.base.util.Constants"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	
+	/* String commonImagesPath = "http://images.kaixinduobao.shop/"; */
+	String commonImagesPath = Constants.COMMON_WEBSITE_ADDRESS;
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -180,7 +185,8 @@
 						<a href="javascript:;" id="uploadBtn1" >上传图片</a>
 					</c:if>
 					<c:if test="${pd != null && pd.littleImgUrl != '' && pd.littleImgUrl != null }">
-						<a href="<%=basePath%>uploadFiles/uploadImgs/${pd.littleImgUrl}" target="_blank"><img src="<%=basePath%>uploadFiles/uploadImgs/${pd.littleImgUrl}" style="width:100px;width:160px;"/></a>
+						<%-- <a href="<%=basePath%>uploadFiles/uploadImgs/${pd.littleImgUrl}" target="_blank"><img src="<%=basePath%>uploadFiles/uploadImgs/${pd.littleImgUrl}" style="width:100px;width:160px;"/></a> --%>
+						<a href="<%=commonImagesPath%>${pd.littleImgUrl}" target="_blank"><img src="<%=commonImagesPath%>${pd.littleImgUrl}" style="width:100px;width:160px;"/></a>
 						<input type="button" class="btn btn-mini btn-danger" value="删除" onclick="delP('${pd.littleImgUrl}','${pd.product_ID}');" />
 					</c:if>
 					<input type="hidden" name="littleImgUrl" id="littleImgUrl" value="${pd.littleImgUrl }"/>
@@ -195,7 +201,8 @@
 						<a href="javascript:;" id="uploadBtn2" >上传正面</a>
 					</c:if>
 					<c:if test="${pd != null && pd.bigImgUrl != '' && pd.bigImgUrl != null }">
-						<a href="<%=basePath%>uploadFiles/uploadImgs/${pd.bigImgUrl}" target="_blank"><img src="<%=basePath%>uploadFiles/uploadImgs/${pd.bigImgUrl}" style="width:100px;width:160px;"/></a>
+						<%--<a href="<%=basePath%>uploadFiles/uploadImgs/${pd.bigImgUrl}" target="_blank"><img src="<%=basePath%>uploadFiles/uploadImgs/${pd.bigImgUrl}" style="width:100px;width:160px;"/></a> --%>
+						<a href="<%=commonImagesPath%>${pd.bigImgUrl}" target="_blank"><img src="<%=commonImagesPath%>${pd.bigImgUrl}" style="width:100px;width:160px;"/></a>
 						<input type="button" class="btn btn-mini btn-danger" value="删除" onclick="delP('${pd.bigImgUrl}','${pd.product_ID}');" />
 					</c:if>
 					<input type="hidden" name="bigImgUrl" id="bigImgUrl" value="${pd.bigImgUrl }"/>
@@ -253,7 +260,8 @@
 				//上传成功之后的回调
 				onUploadSuccess:function(file,data,response){
 					//data = $.evalJSON(data);
-					$("#uploadImg1").attr("src","<%=basePath%>/uploadFiles/uploadImgs/"+data);
+					<%-- $("#uploadImg1").attr("src","<%=basePath%>/uploadFiles/uploadImgs/"+data); --%>
+					$("#uploadImg1").attr("src","<%=commonImagesPath%>"+data);
 					$("#littleImgUrl").val(data);
 				}
 
@@ -273,7 +281,8 @@
 				//上传成功之后的回调
 				onUploadSuccess:function(file,data,response){
 					//data = $.evalJSON(data);
-					$("#uploadImg2").attr("src","<%=basePath%>/uploadFiles/uploadImgs/"+data);
+					<%-- $("#uploadImg2").attr("src","<%=basePath%>/uploadFiles/uploadImgs/"+data); --%>
+					$("#uploadImg2").attr("src","<%=commonImagesPath%>"+data);
 					$("#bigImgUrl").val(data);
 				}
 
