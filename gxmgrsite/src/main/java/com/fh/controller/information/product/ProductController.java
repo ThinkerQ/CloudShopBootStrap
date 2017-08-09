@@ -304,7 +304,8 @@ public class ProductController extends BaseController {
 			pd = this.getPageData();
 			String PATH = pd.getString("PATH");													 		//图片路径
 //			DelAllFile.delFolder(PathUtil.getClasspath()+ Const.FILEPATHIMG + pd.getString("PATH")); 	//删除图片
-			DelAllFile.delFolder(commonImagesPath + Const.PRODUCT_FILEPATHIMG + pd.getString("PATH")); 	//删除图片
+			logger.info("------删除图片---"+commonImagesPath + pd.getString("PATH"));
+			DelAllFile.delFolder(commonImagesPath + pd.getString("PATH")); 	//删除图片
 			out.write("success");
 			out.close();
 		}catch(Exception e){
