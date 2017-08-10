@@ -302,10 +302,19 @@ public class ProductController extends BaseController {
 		try{
 			PageData pd = new PageData();
 			pd = this.getPageData();
-			String PATH = pd.getString("PATH");													 		//图片路径
-//			DelAllFile.delFolder(PathUtil.getClasspath()+ Const.FILEPATHIMG + pd.getString("PATH")); 	//删除图片
+			String PATH1 = pd.getString("PATH1");
+			String PATH2 = pd.getString("PATH2");
+			String PATH = "";
+			if(StringUtils.hasLength(PATH1)){
+				PATH = PATH1;
+				productService.delTp1(pd);																//删除数据中图片数据
+			}
+			if(StringUtils.hasLength(PATH2)){
+				PATH = PATH2;
+				productService.delTp2(pd);																//删除数据中图片数据
+			}
 			logger.info("------删除图片---"+commonImagesPath + pd.getString("PATH"));
-			DelAllFile.delFolder(commonImagesPath + pd.getString("PATH")); 	//删除图片
+			DelAllFile.delFolder(commonImagesPath + PATH); 	//删除图片
 			out.write("success");
 			out.close();
 		}catch(Exception e){

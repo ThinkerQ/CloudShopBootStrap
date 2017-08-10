@@ -90,5 +90,23 @@
                  #{item}
 		</foreach>
 	</delete>
+	
+	<!-- 删除小图片 -->
+	<update id="delTp1" parameterType="pd">
+		update  product
+			set 
+				littleImgUrl	= ''
+			where 
+				product_ID = #{product_ID}
+	</update>
+	
+	<!-- 删除大图片 -->
+	<update id="delTp2" parameterType="pd">
+		update  product
+			set 
+				bigImgUrl	= ''
+			where 
+				product_ID = #{product_ID}
+	</update>
 
 </mapper>

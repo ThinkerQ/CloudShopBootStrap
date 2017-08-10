@@ -64,5 +64,18 @@ public class ProductService {
 		dao.delete("ProductMapper.deleteAll", ArrayDATA_IDS);
 	}
 	
+	/*
+	* 删除小图片
+	*/
+	public void delTp1(PageData pd)throws Exception{
+		dao.update("PicturesMapper.delTp1", pd);
+	}
+	
+	/*
+	 * 删除大图片
+	 */
+	public void delTp2(PageData pd)throws Exception{
+		dao.update("PicturesMapper.delTp2", pd);
+	}
 }
 
