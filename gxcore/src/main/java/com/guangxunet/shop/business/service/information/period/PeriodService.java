@@ -10,6 +10,7 @@ import java.util.List;
 
 
 @Service("periodService")
+@SuppressWarnings("unchecked")
 public class PeriodService {
 
 	@Resource(name = "daoSupport")
@@ -83,6 +84,13 @@ public class PeriodService {
 	 */
 	public List<PageData> queryPeriodsByProductId(PageData pd) throws Exception {
 		return (List<PageData>) dao.findForList("PeriodMapper.queryPeriodsByProductId", pd);
+	}
+
+	/**
+	 * 列表-通过商品分类Id获取商品期次列表
+	 */
+	public List<PageData> listByCategoryId(PageData pd) throws Exception{
+		return (List<PageData>) dao.findForList("PeriodMapper.listByCategoryId", pd);
 	}
 }
 

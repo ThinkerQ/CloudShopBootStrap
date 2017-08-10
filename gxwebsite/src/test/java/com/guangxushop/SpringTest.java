@@ -6,19 +6,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.guangxunet.shop.base.system.Page;
 import com.guangxunet.shop.base.system.PageData;
+import com.guangxunet.shop.base.util.JsonResult;
 import com.guangxunet.shop.base.util.LoggerUtil;
 import com.guangxunet.shop.base.util.UuidUtil;
 import com.guangxunet.shop.business.domain.VerifyCode;
 import com.guangxunet.shop.business.service.ITVerifyCodeService;
+import com.guangxunet.shop.business.service.information.category.CategoryService;
 import com.guangxunet.shop.business.service.information.period.PeriodService;
 
 /** 
@@ -35,6 +36,55 @@ public class SpringTest {
 	private ITVerifyCodeService tVerifyCodeService;
 	@Autowired
 	private PeriodService periodService;
+	@Autowired
+	private CategoryService categoryService;
+	
+	/**
+	 * 根据分类id获取商品期次列表
+	 */
+	@Test
+	public void testGetProductPeriodByCategoryId() throws Exception {
+		JsonResult result = null;
+		PageData pd = new PageData();
+		pd.put("productId", "47");
+		
+		try {
+			LoggerUtil.info("----------getFirstCategory---入参---pd="+pd);
+			//列出Period列表
+			List<PageData> varList = periodService.listByCategoryId(pd);
+			result = new JsonResult(true,"查询成功！",varList);
+		} catch (Exception e) {
+			result = new JsonResult(false,"查询异常！");
+			e.printStackTrace();
+			LoggerUtil.info("-----首页期数列表查询出现异常------"+e);
+		}
+		LoggerUtil.info("-----testGetProductPeriodByCategoryId------result="+result);
+		
+	}
+	
+	/*
+	 * 获取商品分类列表测试
+	 */
+	@Test
+	public void testCateGory() throws Exception {
+		JsonResult result = null;
+		PageData pd = new PageData();
+		pd.put("field2", null);
+		Page page = new Page();
+		page.setPd(pd);
+		
+		try {
+			LoggerUtil.info("----------getFirstCategory---入参---page="+page);
+			List<PageData> varList = categoryService.list(page); //列出Category列表
+			LoggerUtil.info("----------一级商品类目---" + varList);
+			result = new JsonResult(true,"获取商品分类列表成功!",varList);
+		} catch (Exception e) {
+			result = new JsonResult(false,"获取数据失败!");
+			LoggerUtil.error("---------获取父级商品分类异常--"+e.getMessage());
+			e.printStackTrace();
+		}
+		LoggerUtil.info("---result--"+result);
+	}
 	
 	@Test
 	public void VerifyCode(){

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,6 +26,8 @@ import com.guangxunet.shop.web.controller.base.BaseController;
 public class PeriodController extends BaseController{
 	@Resource(name="periodService")
 	private PeriodService periodService;
+	@Value("${common.website.address}")
+	private String commonImagesPath;//公共图片访问路径
 	
 	/**
 	 * 首页期数列表
@@ -45,6 +48,12 @@ public class PeriodController extends BaseController{
 			pd.put("keyword", keyword);
 			//列出Period列表
 			List<PageData> varList = periodService.listByOrder(pd);
+			
+			//补全图片访问域名
+			for (PageData pageData : varList) {
+				pageData.put("littleImgUrl", commonImagesPath + pageData.get("littleImgUrl"));
+			}
+			
 			result = new JsonResult(true,"查询成功！",varList);
 		} catch (Exception e) {
 			result = new JsonResult(false,"查询异常！");
