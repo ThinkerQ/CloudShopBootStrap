@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,6 +41,10 @@ public class LoginInfoController extends BaseController{
 	private ILogininfoService iLogininfoService;
 	@Autowired
     private IVerifyCodeService verifyCodeService;
+	@Value("${common.images.path}")
+	private String commonImagesPath;//公共图片存放路径
+	@Value("${common.website.address}")
+	private String commonWebsiteAddress;//公共图片访问路径
 	/**
 	 * 客户端用户登录
 	 * @param username
@@ -174,11 +179,12 @@ public class LoginInfoController extends BaseController{
 		logger.info("-------------editUserImage.do-----pd="+pd);
 		String  ffile = DateUtil.getDays(), fileName = "";
 		if (null != file && !file.isEmpty()) {
-			String filePath = PathUtil.getClasspath() + Const.FILEPATHIMG + ffile;		//文件上传路径
+//			String filePath = PathUtil.getClasspath() + Const.FILEPATHIMG + ffile;		//文件上传路径
+			String filePath = commonImagesPath + ffile;		//文件上传路径
 			fileName = FileUpload.fileUp(file, filePath, this.get32UUID());				//执行上传
 			logger.info("-------------filePath-----"+filePath);
 			logger.info("-------------fileName-----"+fileName);
-			String fullPath = ffile+ "/"+fileName;
+			String fullPath = commonWebsiteAddress + ffile+ "/"+fileName;
 			
 			pd.put("userImgUrl",fullPath);
 			//更新用户表头像文件名
