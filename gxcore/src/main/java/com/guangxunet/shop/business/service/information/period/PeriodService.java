@@ -92,5 +92,14 @@ public class PeriodService {
 	public List<PageData> listByCategoryId(PageData pd) throws Exception{
 		return (List<PageData>) dao.findForList("PeriodMapper.listByCategoryId", pd);
 	}
+	
+	/**
+	 * 获取获奖的用户和商品信息列表
+	 * @return
+	 * @throws Exception 
+	 */
+	public List<PageData> queryPrizedUserAndProduct() throws Exception {
+		return (List<PageData>) dao.findForList("PeriodMapper.queryPrizedUserAndProduct",null);
+	}
 }
 

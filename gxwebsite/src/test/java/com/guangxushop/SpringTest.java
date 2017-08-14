@@ -2,6 +2,7 @@ package com.guangxushop;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import com.guangxunet.shop.business.domain.VerifyCode;
 import com.guangxunet.shop.business.service.ITVerifyCodeService;
 import com.guangxunet.shop.business.service.information.category.CategoryService;
 import com.guangxunet.shop.business.service.information.period.PeriodService;
+import com.guangxunet.shop.business.util.CollectionUtil;
 
 /** 
 *@Title SpringTest.java 
@@ -38,6 +40,37 @@ public class SpringTest {
 	private PeriodService periodService;
 	@Autowired
 	private CategoryService categoryService;
+	
+	/**
+	 * 获奖用户列表
+	 * @throws Exception
+	 */
+	@Test
+	public void testPrizedUser() throws Exception {
+		JsonResult result = null;
+		try {
+			List<PageData> prizedUserList = periodService.queryPrizedUserAndProduct();
+			
+			if (CollectionUtil.isEmpty(prizedUserList)) {
+				result = new JsonResult(false,"花一元钱就有机会赢大奖,赶紧云购吧！",prizedUserList);
+			}else{
+				//拼接用户获奖信息
+				List<String> strList = new ArrayList<String>();
+				for (PageData pageData : prizedUserList) {
+					StringBuffer sb = new StringBuffer();
+					sb.append("恭喜:");
+					sb.append(pageData.getString("userName"));
+					sb.append("获得");
+					sb.append(pageData.getString("firstName"));
+					strList.add(sb.toString());
+				}
+				result = new JsonResult(true,"查询获奖的用户和商品信息成功！",strList);
+			}
+		} catch (Exception e) {
+			result = new JsonResult(false,"查询获奖用户和商品信息异常！");
+		}
+		System.out.println("--------------result="+result);
+	}
 	
 	/**
 	 * 根据分类id获取商品期次列表

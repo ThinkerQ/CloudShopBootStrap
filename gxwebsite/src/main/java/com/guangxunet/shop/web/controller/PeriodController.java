@@ -1,5 +1,6 @@
 package com.guangxunet.shop.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.base.util.JsonResult;
 import com.guangxunet.shop.business.service.information.period.PeriodService;
+import com.guangxunet.shop.business.util.CollectionUtil;
 import com.guangxunet.shop.web.controller.base.BaseController;
 
 /** 
@@ -105,6 +107,40 @@ public class PeriodController extends BaseController{
 		} catch (Exception e) {
 			result = new JsonResult(false,"查询历史期数queryHistoryPeriods异常！");
 			logger.error("-----查询历史期数queryHistoryPeriods异常------"+e);
+		}
+		return result;
+	}
+	
+	/**
+	 * 获取获奖的用户和商品信息列表
+	 * @return
+	 */
+	@RequestMapping("/queryPrizedUserAndProduct.screen")
+	@ResponseBody
+	public Object queryPrizedUserAndProduct(){
+		logBefore(logger, "获取获奖的用户和商品信息列表");
+		JsonResult result = null;
+		try {
+			List<PageData> prizedUserList = periodService.queryPrizedUserAndProduct();
+			
+			if (CollectionUtil.isEmpty(prizedUserList)) {
+				result = new JsonResult(false,"花一元钱就有机会赢大奖,赶紧云购吧！",prizedUserList);
+			}else{
+				//拼接用户获奖信息
+				List<String> strList = new ArrayList<String>();
+				for (PageData pageData : prizedUserList) {
+					StringBuffer sb = new StringBuffer();
+					sb.append("恭喜:");
+					sb.append(pageData.getString("userName"));
+					sb.append("获得");
+					sb.append(pageData.getString("firstName"));
+					strList.add(sb.toString());
+				}
+				result = new JsonResult(true,"查询获奖的用户和商品信息成功！",strList);
+			}
+		} catch (Exception e) {
+			result = new JsonResult(false,"查询获奖用户和商品信息异常！");
+			logger.error("-----查询获奖的用户和商品信息异常------"+e);
 		}
 		return result;
 	}
