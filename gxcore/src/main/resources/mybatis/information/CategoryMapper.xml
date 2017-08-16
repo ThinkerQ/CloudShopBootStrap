@@ -102,8 +102,8 @@
 		select 
 			cg.name,
 			cg.parentId,
-			date_format(cg.createDate, '%Y-%m-%d') AS "createDate",
-			date_format(cg.update_date, '%Y-%m-%d') AS "updateDate",
+			cg.createDate,
+			cg.update_date as "updateDate",
 			cg.category_order as "categoryOrder",
 			cg2.name as "parentName",
 			cg.category_ID
