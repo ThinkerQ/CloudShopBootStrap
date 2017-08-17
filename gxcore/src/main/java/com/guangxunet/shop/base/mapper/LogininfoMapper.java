@@ -49,4 +49,11 @@ public interface LogininfoMapper {
 	 * @return
 	 */
 	Logininfo getUserByMobile(String phoneNumber);
+
+	/**
+	 * 修改用户信息(根据用户id)
+	 * @param pd
+	 * @return
+	 */
+	int updateUserInfoById(PageData pd);
 }

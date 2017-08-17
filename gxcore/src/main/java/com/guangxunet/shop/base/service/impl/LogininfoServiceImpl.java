@@ -140,4 +140,9 @@ public class LogininfoServiceImpl implements ILogininfoService{
 	public int updateUserImgById(PageData pd) {
 		return logininfoMapper.updateUserImgById(pd);
 	}
+
+	@Override
+	public int updateUserInfoById(PageData pd) {
+		return logininfoMapper.updateUserInfoById(pd);
+	}
 }

@@ -72,4 +72,12 @@ public interface ILogininfoService {
 	 * 根据用户id更新用户头像
 	 */
 	int updateUserImgById(PageData pd);
+
+	/**
+	 * 修改用户信息(根据用户id)
+	 * @author GENGSHUQIANG
+	 * @param pd
+	 * @return
+	 */
+	int updateUserInfoById(PageData pd);
 }

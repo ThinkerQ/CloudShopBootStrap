@@ -1,5 +1,6 @@
 package com.guangxunet.shop.web.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -198,4 +199,39 @@ public class LoginInfoController extends BaseController{
 		return result;
 	} 
 	
+	/**
+	 * 修改用户信息(根据用户id)
+	 * userName 用户昵称
+	 * mobile 手机号码
+	 * id 用户id
+	 */
+	@RequestMapping(value="/updateUserInfoById.screen")
+	@ResponseBody
+	public Object updateUserInfoById() throws Exception{
+		logBefore(logger, "修改用户信息");
+		JsonResult result = null;
+		PageData pd = this.getPageData();
+		logger.info("-------------updateUserInfo.screen-----pd="+pd);
+		
+		try {
+			
+			String id = (String) pd.get("id");
+			
+			if (StringUtils.isEmpty(id)) {
+				throw new RuntimeException("用户id不能为空！");
+			}
+			
+			int count = iLogininfoService.updateUserInfoById(pd);
+			
+			if (count > 0) {
+				result = new JsonResult(true, "保存成功！");
+			} else {
+				result = new JsonResult(false, "保存失败！");
+			} 
+		} catch (Exception e) {
+			logger.error("---------保存用户信息出现异常-----e:"+e.getMessage());;
+			result = new JsonResult(false, e.getMessage());
+		}
+		return result;
+	}
 }

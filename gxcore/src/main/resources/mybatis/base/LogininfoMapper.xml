@@ -38,6 +38,15 @@
     where id = #{id}
   </update>
   
+  <!-- 根据用户id更新用户信息 GENGSHUQIANG -->
+  <update id="updateUserInfoById" parameterType="pd">
+	update logininfo
+    set 
+		username = #{userName},
+		mobile = #{mobile}
+    where id = #{id}
+  </update>
+  
   
   <sql id="fieldSql">
 	id, state, username, usertype,mobile,email,userImgUrl
