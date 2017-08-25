@@ -68,14 +68,14 @@ public class ProductService {
 	* 删除小图片
 	*/
 	public void delTp1(PageData pd)throws Exception{
-		dao.update("PicturesMapper.delTp1", pd);
+		dao.update("ProductMapper.delTp1", pd);
 	}
 	
 	/*
 	 * 删除大图片
 	 */
 	public void delTp2(PageData pd)throws Exception{
-		dao.update("PicturesMapper.delTp2", pd);
+		dao.update("ProductMapper.delTp2", pd);
 	}
 }
 

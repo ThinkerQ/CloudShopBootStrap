@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ShareOrderMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd" useGeneratedKeys="true" keyProperty="shareorder_ID">
+		insert into T_shareorder(userId,periodsId,comment,picture1,	picture2,picture3,isBlock,createTime) 
+		values (#{userId},#{periodsId},#{comment},{picture1},#{picture2},#{picture3},#{isBlock},#{createTime})
+	</insert>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  T_shareorder
+			set 
+				comment = #{comment}	,	
+				picture1 = #{picture1}	,	
+				picture2 = #{picture2}	,	
+				picture3 = #{picture3}	,	
+			where
+				shareorder_ID = #{shareorder_ID}
+	</update>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			userId,	periodsId,comment,	picture1,picture2,picture3,	isBlock,createTime,	shareorder_ID
+		from 
+			T_shareorder
+		where 
+			shareorder_ID = #{shareorder_ID}
+	</select>
+
+    <sql id="selectSql">
+
+        	a.userId,
+        	a.periodsId,
+        	a.comment,
+        	a.picture1,
+        	a.picture2,
+        	a.picture3,
+        	a.isBlock,
+        	a.createTime,
+            a.shareorder_ID
+	</sql>
+
+    <!-- 列表 -->
+    <select id="datalistPage" parameterType="page" resultType="pd">
+		select
+        	<include refid="selectSql"/>
+		from
+				T_shareorder a
+	</select>
+	
+</mapper>
