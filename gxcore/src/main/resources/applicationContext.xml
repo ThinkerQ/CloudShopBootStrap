@@ -106,5 +106,5 @@
 		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
 	
-	
+	<import resource="quartz_config.xml"/>
 </beans>

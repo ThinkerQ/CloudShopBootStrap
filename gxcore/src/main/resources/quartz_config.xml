@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/aop 
+						http://www.springframework.org/schema/aop/spring-aop.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+	">
+	
+	<bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">   
+    	<property name="dataSource" ref="dataSource"></property>
+ 	</bean>	
+ 	
+ 	<context:property-placeholder location="classpath:jdbc.properties,classpath:sms.properties,classpath:gxshop_core.properties"/>
+	
+	
+	<!-- 方式二：使用MethodInvokingJobDetailFactoryBean，任务类可以不实现Job接口，通过targetMethod指定调用方法-->   
+	<!-- 定义目标bean和bean中的方法 -->  
+	<bean id="SpringQtzTest" class="com.guangxunet.shop.business.quartz.SpringQtzTest"/>
+	<bean id="SpringQtzTestMethod" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">  
+        	<ref bean="SpringQtzTest"/>  
+	    </property>  
+	    <property name="targetMethod">  <!-- 要执行的方法名称 -->  
+	        <value>execute</value>  
+	    </property>  
+	</bean>
+	
+	<!-- ======================== 调度触发器 ======================== -->  
+	<bean id="CronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+	    <property name="jobDetail" ref="SpringQtzTestMethod"></property>  
+	    <property name="cronExpression" value="0/5 * * * * ?"></property>  
+	</bean>  
+	
+	<!-- ======================== 调度工厂 ======================== -->  
+	<bean id="SpringJobSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
+	    <property name="triggers">  
+	        <list>  
+	            <ref bean="CronTriggerBean"/>  
+	        </list>  
+	    </property>  
+	</bean>    
+		
+</beans>
