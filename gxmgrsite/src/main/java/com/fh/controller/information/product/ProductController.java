@@ -39,7 +39,6 @@ import com.guangxunet.shop.base.util.StringUtils;
 import com.guangxunet.shop.business.service.information.category.CategoryService;
 import com.guangxunet.shop.business.service.information.product.ProductService;
 import com.guangxunet.shop.business.util.AppUtil;
-import com.guangxunet.shop.business.util.PathUtil;
 
 /** 
  * 类名称：ProductController

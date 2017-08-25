@@ -82,9 +82,9 @@ public class AdvertisementController extends BaseController {
 			pd.put("adsurl", ffile + "/" + fileName);				//路径
 			pd.put("createTime", new Date());	//创建时间
 			pd.put("status", "1");	//状态
-			//加水印
+			//加水印 注释原因：广告图不需要添加水印 GENGSHUQIANG
 //			Watermark.setWatemark(PathUtil.getClasspath() + Const.FILEPATHIMG + ffile + "/" + fileName);
-			Watermark.setWatemark(commonImagesPath + ffile + "/" + fileName);
+//			Watermark.setWatemark(commonImagesPath + ffile + "/" + fileName);
 			advertisementService.save(pd);
 		}
 		map.put("result", "ok");
@@ -152,7 +152,7 @@ public class AdvertisementController extends BaseController {
 				pd.put("adsurl", tpz);
 			}
 //			Watermark.setWatemark(PathUtil.getClasspath() + Const.FILEPATHIMG + ffile + "/" + fileName);//加水印
-			Watermark.setWatemark(commonImagesPath + ffile + "/" + fileName);//加水印
+//			Watermark.setWatemark(commonImagesPath + ffile + "/" + fileName);//加水印
 			advertisementService.edit(pd);
 		}
 		

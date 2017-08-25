@@ -16,33 +16,65 @@ package com.aliyun.mns.sample;
  */
 
 
-import org.apache.commons.codec.binary.Base64;
-import org.apache.http.*;
-import org.apache.http.impl.DefaultBHttpServerConnection;
-import org.apache.http.impl.DefaultBHttpServerConnectionFactory;
-import org.apache.http.protocol.*;
-import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.BindException;
+import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.URL;
+import java.net.UnknownHostException;
+import java.security.PublicKey;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateFactory;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.*;
-import java.security.PublicKey;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateFactory;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.http.ConnectionClosedException;
+import org.apache.http.Header;
+import org.apache.http.HttpConnectionFactory;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpEntityEnclosingRequest;
+import org.apache.http.HttpException;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpServerConnection;
+import org.apache.http.HttpStatus;
+import org.apache.http.MethodNotSupportedException;
+import org.apache.http.impl.DefaultBHttpServerConnection;
+import org.apache.http.impl.DefaultBHttpServerConnectionFactory;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
+import org.apache.http.protocol.HttpProcessor;
+import org.apache.http.protocol.HttpProcessorBuilder;
+import org.apache.http.protocol.HttpRequestHandler;
+import org.apache.http.protocol.HttpService;
+import org.apache.http.protocol.ResponseConnControl;
+import org.apache.http.protocol.ResponseContent;
+import org.apache.http.protocol.ResponseDate;
+import org.apache.http.protocol.ResponseServer;
+import org.apache.http.protocol.UriHttpRequestHandlerMapper;
+import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 
 /**
