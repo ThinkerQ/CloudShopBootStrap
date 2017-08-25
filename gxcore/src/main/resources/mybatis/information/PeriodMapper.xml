@@ -23,7 +23,7 @@
 			set 
 				periodNumber = #{periodNumber}	,	
 				needCount = #{needCount}	,	
-				productId = #{productId}	,	
+				productId = #{productId}
 			where
 				period_ID = #{period_ID}
 	</update>
@@ -32,7 +32,7 @@
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
 		select 
-			periodNumber,prizeUserId,needCount,productId,alreadyCount,prizeNumber,date_format(a.createTime, '%Y-%m-%d') AS "createTime",prizeTime,status,period_ID
+			periodNumber,prizeUserId,needCount,productId,alreadyCount,prizeNumber,date_format(createTime, '%Y-%m-%d') AS "createTime",prizeTime,status,period_ID
 		from 
 			T_period
 		where 
