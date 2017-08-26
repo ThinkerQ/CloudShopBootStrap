@@ -133,7 +133,7 @@
 	//删除图片
 	function delP(PATH1,PATH2,product_ID){
 		 if(confirm("确定要删除图片？")){
-			var url = "product/deltp.do?PATH1="+PATH1+"&PATH2="+PATH2+"&product_ID="+product_ID+"&guid="+new Date().getTime();
+			var url = "pictures/deltp.do?PATH1="+PATH1+"&PATH2="+PATH2+"&product_ID="+product_ID+"&guid="+new Date().getTime();
 			$.get(url,function(data){
 				if(data=="success"){
 					alert("删除成功!");

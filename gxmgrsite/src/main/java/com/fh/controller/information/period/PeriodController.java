@@ -60,6 +60,8 @@ public class PeriodController extends BaseController {
 		//pd.put("period_ID", this.get32UUID());	//主键
 		pd.put("createTime", new Date());	//创建时间
 		pd.put("status", 1);	//状态
+		pd.put("alreadyCount", 0);	//已投人数默认为0
+		
 		periodService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
