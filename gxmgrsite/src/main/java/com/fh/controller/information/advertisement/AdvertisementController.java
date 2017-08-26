@@ -141,6 +141,7 @@ public class AdvertisementController extends BaseController {
 			pd.put("description", description);	//
 			pd.put("advertisement_ID", advertisement_ID);	//
 			
+			logger.info("-----------save----pd="+pd);
 			if(null == tpz){tpz = "";}
 			String  ffile = DateUtil.getDays(), fileName = "";
 			if (null != file && !file.isEmpty()) {

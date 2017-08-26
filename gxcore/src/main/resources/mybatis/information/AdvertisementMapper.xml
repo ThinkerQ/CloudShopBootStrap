@@ -88,6 +88,7 @@
 				)
 			</if>
 		</where>
+		order by a.no
 	</select>
 	
 	<!-- 列表(全部) -->
