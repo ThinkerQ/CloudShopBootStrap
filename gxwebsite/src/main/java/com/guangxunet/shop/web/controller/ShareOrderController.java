@@ -21,7 +21,7 @@ import com.guangxunet.shop.web.controller.base.BaseController;
  * 创建时间：2017-08-15
  */
 @Controller
-@RequestMapping(value="/shareorder")
+@RequestMapping(value="/shareOrder")
 public class ShareOrderController extends BaseController {
 	
 	@Resource(name="shareOrderService")

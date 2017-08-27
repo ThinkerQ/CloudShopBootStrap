@@ -11,7 +11,7 @@ import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.business.dao.DaoSupport;
 
 
-@Service("shoppingcartService")
+@Service("shoppingCartService")
 public class ShoppingCartService {
 
 	@Resource(name = "daoSupport")

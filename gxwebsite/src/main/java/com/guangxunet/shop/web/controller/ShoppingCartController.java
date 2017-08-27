@@ -40,7 +40,7 @@ import com.guangxunet.shop.web.controller.base.BaseController;
  * 创建时间：2017-08-16
  */
 @Controller
-@RequestMapping(value="/ShoppingCart")
+@RequestMapping(value="/shoppingCart")
 public class ShoppingCartController extends BaseController {
 	
 	@Autowired
@@ -59,16 +59,20 @@ public class ShoppingCartController extends BaseController {
 			pd = this.getPageData();
 			String periodsId = pd.getString("periodsId");
 			String participantCount = pd.getString("participantCount");
-			Logininfo current = UserContext.getCurrent();
-			pd.put("userId", current.getId());	//用户ID
-			pd.put("periodsId", periodsId);	//期数ID
-			pd.put("participantCount", participantCount);	//参与人次
-			pd.put("createTime", new Date());	//加入时间
-			shoppingcartService.save(pd);
-			result = new JsonResult(true,"购物车列表新增成功！");
+			if(StringUtils.hasLength(periodsId)&&StringUtils.hasLength(participantCount)){
+				Logininfo current = UserContext.getCurrent();
+				pd.put("userId", current.getId());	//用户ID
+				pd.put("periodsId", periodsId);	//期数ID
+				pd.put("participantCount", participantCount);	//参与人次
+				pd.put("createTime", new Date());	//加入时间
+				shoppingcartService.save(pd);
+				result = new JsonResult(true,"购物车列表添加成功！");
+			}else{
+				new JsonResult(false,"期数或参与人次不能为空！");
+			}
 		} catch (Exception e) {
-			result = new JsonResult(false,"购物车列表新增异常！");
-			logger.info("-----购物车列表新增出现异常------"+e);
+			result = new JsonResult(false,"购物车列表添加异常！");
+			logger.error("-----购物车列表新增出现异常------"+e);
 		}
 		return result;
 	}
@@ -92,7 +96,7 @@ public class ShoppingCartController extends BaseController {
 			result = new JsonResult(true,"购物车列表删除成功！");
 		} catch (Exception e) {
 			result = new JsonResult(false,"购物车列表删除异常！");
-			logger.info("-----购物车列表删除出现异常------"+e);
+			logger.error("-----购物车列表删除出现异常------"+e);
 		}
 		return result;
 		
@@ -115,7 +119,7 @@ public class ShoppingCartController extends BaseController {
 			result = new JsonResult(true,"购物车列表修改成功！");
 		} catch (Exception e) {
 			result = new JsonResult(false,"购物车列表修改异常！");
-			logger.info("-----购物车列表修改出现异常------"+e);
+			logger.error("-----购物车列表修改出现异常------"+e);
 		}
 		return result;
 	}
@@ -138,7 +142,7 @@ public class ShoppingCartController extends BaseController {
 			result = new JsonResult(true,"购物车列表查询成功！",varList);
 		} catch (Exception e) {
 			result = new JsonResult(false,"购物车列表查询异常！");
-			logger.info("-----购物车列表查询出现异常------"+e);
+			logger.error("-----购物车列表查询出现异常------"+e);
 		}
 		return result;
 	}
@@ -162,7 +166,7 @@ public class ShoppingCartController extends BaseController {
 			result = new JsonResult(true,"购物车列表删除成功！");
 		} catch (Exception e) {
 			result = new JsonResult(false,"购物车列表删除异常！");
-			logger.info("-----购物车列表删除出现异常------"+e);
+			logger.error("-----购物车列表删除出现异常------"+e);
 		}
 		return result;
 	}
