@@ -30,9 +30,9 @@
 	<!-- 修改 -->
 	<update id="edit" parameterType="pd">
 		update  T_shoppingcart
-			set 
+			set participantCount = #{participantCount}
 			where
-				shoppingcart_ID = #{shoppingcart_ID}
+				shoppingcart_ID = #{shoppingcart_ID} and userId = #{userId}
 	</update>
 	
 	
@@ -52,11 +52,7 @@
 
     <sql id="selectSql">
 
-        	a.userId,
-        	a.periodsId,
-        	a.participantCount,
-        	a.createTime,
-            a.shoppingcart_ID
+        	a.participantCount,a.shoppingcart_ID,b.period_ID,b.periodNumber,b.needCount,b.alreadyCount,b.status,p.product_ID,p.firstName,p.secondName,p.littleImgUrl
 	</sql>
 
     <!-- 列表 -->
@@ -64,7 +60,7 @@
 		select
         	<include refid="selectSql"/>
 		from
-				T_shoppingcart a
+				T_shoppingcart a LEFT JOIN T_period b ON a.periodsId=period_ID LEFT JOIN product p ON p.product_ID=b.productId 
 	</select>
 	
 	<!-- 列表(全部) -->

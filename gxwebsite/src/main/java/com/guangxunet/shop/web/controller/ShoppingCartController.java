@@ -36,7 +36,7 @@ import com.guangxunet.shop.web.controller.base.BaseController;
 
 /** 
  * 类名称：ShoppingCartController
- * 创建人：FH 
+ * 创建人：Chenmy
  * 创建时间：2017-08-16
  */
 @Controller
@@ -77,30 +77,6 @@ public class ShoppingCartController extends BaseController {
 		return result;
 	}
 	
-	/**
-	 * 删除
-	 */
-	@RequestMapping(value="/delete")
-	@ResponseBody
-	public Object delete(PrintWriter out){
-		logBefore(logger, "删除ShoppingCart");
-		JsonResult result = null;
-		PageData pd = null;
-		try{
-			pd = this.getPageData();
-			Logininfo current = UserContext.getCurrent();
-			pd.put("userId", current.getId());	//用户ID
-			String periodsId = pd.getString("periodsId");
-			pd.put("periodsId", periodsId);	//期数ID
-			shoppingcartService.delete(pd);
-			result = new JsonResult(true,"购物车列表删除成功！");
-		} catch (Exception e) {
-			result = new JsonResult(false,"购物车列表删除异常！");
-			logger.error("-----购物车列表删除出现异常------"+e);
-		}
-		return result;
-		
-	}
 	
 	/**
 	 * 修改
@@ -113,10 +89,19 @@ public class ShoppingCartController extends BaseController {
 		PageData pd = null;
 		try{
 			pd = this.getPageData();
-			Logininfo current = UserContext.getCurrent();
-			pd.put("userId", current.getId());	//用户ID
-			shoppingcartService.edit(pd);
-			result = new JsonResult(true,"购物车列表修改成功！");
+			
+			String shoppingcart_ID = pd.getString("shoppingcart_ID");
+			String participantCount = pd.getString("participantCount");//参与人次
+			if(StringUtils.hasLength(shoppingcart_ID)&&StringUtils.hasLength(participantCount)){
+				Logininfo current = UserContext.getCurrent();
+				pd.put("userId", current.getId());	//用户ID
+				pd.put("shoppingcart_ID", shoppingcart_ID);	//购物车ID
+				pd.put("participantCount", participantCount);	
+				shoppingcartService.edit(pd);
+				result = new JsonResult(true,"购物车列表修改成功！");
+			}else{
+				result = new JsonResult(true,"参数错误！");
+			}
 		} catch (Exception e) {
 			result = new JsonResult(false,"购物车列表修改异常！");
 			logger.error("-----购物车列表修改出现异常------"+e);
@@ -158,7 +143,7 @@ public class ShoppingCartController extends BaseController {
 		PageData pd = null;
 		try {
 			pd = this.getPageData();
-			String DATA_IDS = pd.getString("DATA_IDS");
+			String DATA_IDS = pd.getString("shoppingcart_IDS");
 			if(null != DATA_IDS && !"".equals(DATA_IDS)){
 				String ArrayDATA_IDS[] = DATA_IDS.split(",");
 				shoppingcartService.deleteAll(ArrayDATA_IDS);
