@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.base.util.JsonResult;
+import com.guangxunet.shop.base.util.LoggerUtil;
 import com.guangxunet.shop.business.service.information.period.PeriodService;
 import com.guangxunet.shop.business.util.CollectionUtil;
 import com.guangxunet.shop.web.controller.base.BaseController;
@@ -80,6 +81,14 @@ public class PeriodController extends BaseController{
 		try {
 			pd.put("period_ID", period_ID);
 			PageData pageData = periodService.queryPeriodById(pd);
+			
+			//补全图片访问地址
+			String littleImgUrl = commonImagesPath + pageData.getString("littleImgUrl");
+			String bigImgUrl = commonImagesPath + pageData.getString("bigImgUrl");
+			pageData.put("littleImgUrl", littleImgUrl);
+			pageData.put("bigImgUrl", bigImgUrl);
+			LoggerUtil.info("==================获取商品详情=====结果==pageData=" + pageData);
+			
 			result = new JsonResult(true,"查询queryPeriodById成功！",pageData);
 		} catch (Exception e) {
 			result = new JsonResult(false,"查询queryPeriodById异常！");

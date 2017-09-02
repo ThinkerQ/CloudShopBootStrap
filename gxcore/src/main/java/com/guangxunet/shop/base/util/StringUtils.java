@@ -1,6 +1,8 @@
 package com.guangxunet.shop.base.util;
 
 import java.io.UnsupportedEncodingException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Administrator on 2016/7/20.
@@ -48,6 +50,14 @@ public class StringUtils {
     	return newStr;
     }
     
-    
+  //判断是否为数字
+    public static boolean isNumeric(String str){ 
+       Pattern pattern = Pattern.compile("[0-9]*"); 
+       Matcher isNum = pattern.matcher(str);
+       if( !isNum.matches() ){
+           return false; 
+       } 
+       return true; 
+    }
 }
 
