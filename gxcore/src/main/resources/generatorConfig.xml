@@ -71,7 +71,7 @@
 			<!-- 可以为所有生成的接口添加一个父接口，但是MBG只负责生成，不负责检查 <property name="rootInterface" value=""/> -->
 		</javaClientGenerator>
 
-		<table tableName="t_verify_code" domainObjectName="VerifyCode">
+		<table tableName="t_address" domainObjectName="Address">
 			<!-- 参考 javaModelGenerator 的 constructorBased属性 -->
 			<property name="constructorBased" value="false" />
 			<generatedKey column="id" sqlStatement="JDBC" />

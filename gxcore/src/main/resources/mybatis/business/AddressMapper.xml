@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guangxunet.shop.business.mapper.AddressMapper" >
+  <resultMap id="BaseResultMap" type="com.guangxunet.shop.business.domain.Address" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="province_id" property="provinceId" jdbcType="INTEGER" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="biz_code" property="bizCode" jdbcType="VARCHAR" />
+    <result column="address_detail" property="addressDetail" jdbcType="VARCHAR" />
+    <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="context_name" property="contextName" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_address
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.guangxunet.shop.business.domain.Address" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_address (province_id, city_id, area_id, 
+      biz_code, address_detail, phone_number, 
+      context_name, user_id)
+    values (#{provinceId,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, 
+      #{bizCode,jdbcType=VARCHAR}, #{addressDetail,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, 
+      #{contextName,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.guangxunet.shop.business.domain.Address" >
+    update t_address
+    set province_id = #{provinceId,jdbcType=INTEGER},
+      city_id = #{cityId,jdbcType=INTEGER},
+      area_id = #{areaId,jdbcType=INTEGER},
+      biz_code = #{bizCode,jdbcType=VARCHAR},
+      address_detail = #{addressDetail,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      context_name = #{contextName,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <sql id="selectSql">
+  	id,
+	province_id as "provinceId",
+	city_id as "cityId",
+	area_id as "areaId",
+	biz_code as "bizCode",
+	address_detail as "addressDetail",
+	phone_number as "phoneNumber",
+	context_name as "contextName",
+	user_id as "userId"
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select <include refid="selectSql"/>
+    from t_address
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select <include refid="selectSql"/>
+    from t_address
+  </select>
+  
+  <!-- 根据用户id获取该用户的收货地址列表 -->
+   <select id="selectAddressByUserId" resultMap="BaseResultMap" >
+    select <include refid="selectSql"/>
+    from t_address
+    where user_id = #{userId}
+  </select>
+  
+  <!-- 根据用户id查询用户详细收货地址 -->
+   <select id="selectDetailAddressByUserId" resultType="pd" >
+    select 
+		p.province as "provinceName",
+		c.city as "cityName",
+		ar.area as "areaName",
+		a.address_detail as "addressDetail",
+		a.context_name as "contextName",
+		a.phone_number as "phoneNumber"
+	from t_address a
+	LEFT JOIN provinces p on a.province_id = p.provinceid
+	LEFT JOIN cities c on a.city_id = c.cityid
+	LEFT JOIN areas ar on a.area_id = ar.areaid
+	where user_id = #{userId}
+  </select>
+  
+</mapper>

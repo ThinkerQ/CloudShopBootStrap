@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guangxunet.shop.business.mapper.ProvincesMapper" >
+  <resultMap id="BaseResultMap" type="com.guangxunet.shop.business.domain.Provinces" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="provinceid" property="provinceid" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from provinces
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.guangxunet.shop.business.domain.Provinces" useGeneratedKeys="true" keyProperty="id" >
+    insert into provinces (provinceid, province)
+    values (#{provinceid,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.guangxunet.shop.business.domain.Provinces" >
+    update provinces
+    set provinceid = #{provinceid,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <sql id="selectProvincesSql">
+  	id as "id", provinceid as "provinceId", province as "province"
+  </sql>
+  
+  <!-- 根据省份编号获取指定省份 -->
+  <select id="selectByPrimaryKey" resultType="pd" parameterType="java.lang.Integer" >
+    select <include refid="selectProvincesSql"/>
+    from provinces
+    where provinceid = #{provinceId,jdbcType=INTEGER}
+  </select>
+  
+  <!--获取全部省份  -->
+  <select id="selectAll" resultType="pd" >
+    select <include refid="selectProvincesSql"/>
+    from provinces
+  </select>
+  
+  
+  <sql id="selectCitisSql">
+  	id as "id", cityid as "cityId", city as "city",provinceid as "provinceId"
+  </sql>
+  
+  <!-- 获取省份的全部城市 -->
+  <select id="selectAllCitisByPId" resultType="pd" parameterType="java.lang.Integer" >
+    select <include refid="selectCitisSql"/> 
+    from cities WHERE provinceid = #{provinceId}
+  </select>
+  
+  <sql id="selectAreasSql">
+  	id as "id", areaid as "areaId", area as "area",cityid as "cityId"
+  </sql>
+  
+  <!--获取城市的全部区域 -->
+   <select id="selectAllAreasByCId" resultType="pd" parameterType="java.lang.Integer" >
+    select <include refid="selectAreasSql"/> 
+    from areas WHERE cityid = #{cityId}
+  </select>
+  
+</mapper>
