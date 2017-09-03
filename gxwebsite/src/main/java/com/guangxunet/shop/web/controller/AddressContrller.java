@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.aliyun.mns.common.ServiceException;
 import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.base.util.JsonResult;
+import com.guangxunet.shop.base.util.LoggerUtil;
 import com.guangxunet.shop.business.service.IAddressService;
 import com.guangxunet.shop.business.service.IProvincesService;
 import com.guangxunet.shop.business.util.CollectionUtil;
@@ -60,6 +60,41 @@ public class AddressContrller extends BaseController{
     	List<PageData> allAllProvincesList = iProvincesService.selectAllProvinces();
     	logger.info("----------------------allAllProvincesList="+allAllProvincesList);
         return JSON.toJSONString(allAllProvincesList);
+    }
+	
+	/**
+	 * 获取全国的省市区json
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/getAllCountryPCA.screen")
+    @ResponseBody
+    public Object getAllCountryPCA() {
+		JsonResult result = null;
+		//先获取全部的省份
+    	List<PageData> allAllProvincesList;
+    	try {
+			allAllProvincesList = iProvincesService.selectAllProvinces();
+			LoggerUtil.info("----------------------allAllProvincesList=" + allAllProvincesList);
+			//遍历省份，放入对应的城市
+			for (PageData province : allAllProvincesList) {
+				List<PageData> allCitisByPIdList = iProvincesService
+						.selectAllCitisByPId(Integer.valueOf((String) province.get("provinceId")));
+				province.put("cities", allCitisByPIdList);
+
+				for (PageData cityPd : allCitisByPIdList) {
+					List<PageData> allAreasByCIdList = iProvincesService
+							.selectAllAreasByCId(Integer.valueOf((String) cityPd.get("cityId")));
+					cityPd.put("areas", allAreasByCIdList);
+				}
+			}
+			LoggerUtil.info("----------------over------allAllProvincesList=" + allAllProvincesList);
+			result = new JsonResult(true, "获取全国省市区数据成功！", allAllProvincesList);
+		} catch (Exception e) {
+			result = new JsonResult(false,"查询异常："+e.getMessage());
+			e.printStackTrace();
+		}
+		return result;
     }
 	
 	/**
