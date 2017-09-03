@@ -59,9 +59,9 @@ public class ShoppingCartController extends BaseController {
 			pd = this.getPageData();
 			String periodsId = pd.getString("periodsId");
 			String participantCount = pd.getString("participantCount");
+			String userId = pd.getString("userId");
 			if(StringUtils.hasLength(periodsId)&&StringUtils.hasLength(participantCount)){
-				Logininfo current = UserContext.getCurrent();
-				pd.put("userId", current.getId());	//用户ID
+				pd.put("userId",userId);	//用户ID
 				pd.put("periodsId", periodsId);	//期数ID
 				pd.put("participantCount", participantCount);	//参与人次
 				pd.put("createTime", new Date());	//加入时间
@@ -92,15 +92,15 @@ public class ShoppingCartController extends BaseController {
 			
 			String shoppingcart_ID = pd.getString("shoppingcart_ID");
 			String participantCount = pd.getString("participantCount");//参与人次
+			String userId = pd.getString("userId");
 			if(StringUtils.hasLength(shoppingcart_ID)&&StringUtils.hasLength(participantCount)){
-				Logininfo current = UserContext.getCurrent();
-				pd.put("userId", current.getId());	//用户ID
+				pd.put("userId",userId);	//用户ID
 				pd.put("shoppingcart_ID", shoppingcart_ID);	//购物车ID
 				pd.put("participantCount", participantCount);	
 				shoppingcartService.edit(pd);
 				result = new JsonResult(true,"购物车列表修改成功！");
 			}else{
-				result = new JsonResult(true,"参数错误！");
+				result = new JsonResult(false,"参数错误！");
 			}
 		} catch (Exception e) {
 			result = new JsonResult(false,"购物车列表修改异常！");
@@ -120,11 +120,15 @@ public class ShoppingCartController extends BaseController {
 		PageData pd = null;
 		try{
 			pd = this.getPageData();
-			Logininfo current = UserContext.getCurrent();
-			pd.put("userId", current.getId());	//用户ID
-			page.setPd(pd);
-			List<PageData>	varList = shoppingcartService.list(page);	//列出ShoppingCart列表
-			result = new JsonResult(true,"购物车列表查询成功！",varList);
+			String userId = pd.getString("userId");
+			if(StringUtils.hasLength(userId)){
+				pd.put("userId",userId);	//用户ID
+				page.setPd(pd);
+				List<PageData>	varList = shoppingcartService.list(page);	//列出ShoppingCart列表
+				result = new JsonResult(true,"购物车列表查询成功！",varList);
+			}else{
+				result = new JsonResult(false,"参数错误！");
+			}
 		} catch (Exception e) {
 			result = new JsonResult(false,"购物车列表查询异常！");
 			logger.error("-----购物车列表查询出现异常------"+e);
@@ -144,11 +148,15 @@ public class ShoppingCartController extends BaseController {
 		try {
 			pd = this.getPageData();
 			String DATA_IDS = pd.getString("shoppingcart_IDS");
-			if(null != DATA_IDS && !"".equals(DATA_IDS)){
+			String userId = pd.getString("userId");
+			if(StringUtils.hasLength(userId)&&StringUtils.hasLength(DATA_IDS)){
+				pd.put("userId",userId);	//用户ID
 				String ArrayDATA_IDS[] = DATA_IDS.split(",");
 				shoppingcartService.deleteAll(ArrayDATA_IDS);
+				result = new JsonResult(true,"购物车列表删除成功！");
+			}else{
+				result = new JsonResult(false,"参数错误！");
 			}
-			result = new JsonResult(true,"购物车列表删除成功！");
 		} catch (Exception e) {
 			result = new JsonResult(false,"购物车列表删除异常！");
 			logger.error("-----购物车列表删除出现异常------"+e);
