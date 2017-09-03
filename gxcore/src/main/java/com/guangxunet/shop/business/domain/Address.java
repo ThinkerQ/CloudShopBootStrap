@@ -20,8 +20,12 @@ public class Address {
 
     private String contextName;//联系人
 
+    private String isDefault;//是否为默认地址
+
     private Integer userId;//用户编号
 
+    
+    
     public Integer getId() {
         return id;
     }
@@ -93,4 +97,12 @@ public class Address {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
+
+	public String getIsDefault() {
+		return isDefault;
+	}
+
+	public void setIsDefault(String isDefault) {
+		this.isDefault = isDefault;
+	}
 }

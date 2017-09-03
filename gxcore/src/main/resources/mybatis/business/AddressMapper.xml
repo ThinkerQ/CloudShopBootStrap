@@ -19,10 +19,10 @@
   <insert id="insert" parameterType="com.guangxunet.shop.business.domain.Address" useGeneratedKeys="true" keyProperty="id" >
     insert into t_address (province_id, city_id, area_id, 
       biz_code, address_detail, phone_number, 
-      context_name, user_id)
+      context_name, user_id,is_default)
     values (#{provinceId,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, 
       #{bizCode,jdbcType=VARCHAR}, #{addressDetail,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, 
-      #{contextName,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER})
+      #{contextName,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER},#{isDefault})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.guangxunet.shop.business.domain.Address" >
     update t_address
@@ -33,7 +33,8 @@
       address_detail = #{addressDetail,jdbcType=VARCHAR},
       phone_number = #{phoneNumber,jdbcType=VARCHAR},
       context_name = #{contextName,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=INTEGER}
+      user_id = #{userId,jdbcType=INTEGER},
+      is_default = #{isDefault}
     where id = #{id,jdbcType=INTEGER}
   </update>
   
@@ -72,6 +73,7 @@
     select 
     	a.id as "id",
     	a.user_id as "userId",
+    	a.is_default as "isDefault",
 		p.province as "provinceName",
 		c.city as "cityName",
 		ar.area as "areaName",
