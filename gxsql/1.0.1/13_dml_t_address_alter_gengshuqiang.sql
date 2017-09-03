@@ -1,0 +1,1 @@
+alter table t_address add is_default varchar(32) DEFAULT 'N' COMMENT 'Y：默认地址  N:不是默认地址';
