@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSON;
 import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.base.util.JsonResult;
 import com.guangxunet.shop.base.util.LoggerUtil;
+import com.guangxunet.shop.business.domain.Address;
 import com.guangxunet.shop.business.service.IAddressService;
 import com.guangxunet.shop.business.service.IProvincesService;
 import com.guangxunet.shop.business.util.CollectionUtil;
@@ -160,6 +161,104 @@ public class AddressContrller extends BaseController{
 		} catch (Exception e) {
 			result = new JsonResult(false,"查询异常："+e.getMessage());
 			e.printStackTrace();
+		}
+		return result;
+    }
+    
+    /**
+     * 添加用户的收货地址
+     * @return
+     */
+    @RequestMapping("/insertUserAddress.screen")
+    @ResponseBody
+    public Object insertUserAddress(Address address) {
+    	JsonResult result = null;
+    	
+    	try {
+			//参数非空校验
+			Integer userId = address.getUserId();//用户编号
+			
+			if (userId == null) {
+				throw new RuntimeException("用户编号不能为空！");
+			}
+			
+			logger.info("====================add=" + address);
+			iAddressService.insert(address);//插入地址表
+			result = new JsonResult(true, "添加成功！");
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new JsonResult(e.getMessage());
+		}
+		return result;
+    }
+    
+    /**
+     * 根据id删除收货地址
+     * @param id:地址编号
+     * @return
+     */
+    @RequestMapping("/deleteAddressByPrimaryKey.screen")
+    @ResponseBody
+    public Object deleteAddressByPrimaryKey(Address address) {
+    	JsonResult result = null;
+    	
+    	try {
+			//参数非空校验
+			Integer id = address.getId();//地址编号
+			
+			if (id == null) {
+				throw new RuntimeException("地址编号不能为空！");
+			}
+			
+			logger.info("====================地址编号id=" + address.getId());
+			int count = iAddressService.deleteByPrimaryKey(id);//插入地址表
+			
+			if (count<=0) {
+				throw new RuntimeException("删除失败，没有对应数据！");
+			}
+			
+			result = new JsonResult(true, "删除收货地址成功！");
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new JsonResult(e.getMessage());
+		}
+		return result;
+    }
+    
+    /**
+     * 更新用户收货收货地址
+     * @param id:地址编号 Address address
+     * @return
+     */
+    @RequestMapping("/updateAddressByPrimaryKey.screen")
+    @ResponseBody
+    public Object updateAddressByPrimaryKey(Address address) {
+    	JsonResult result = null;
+    	
+    	try {
+			//参数非空校验
+			Integer id = address.getId();//地址编号
+			Integer userId = address.getUserId();//用户编号
+			
+			if (userId == null) {
+				throw new RuntimeException("用户编号不能为空！");
+			}
+			
+			if (id == null) {
+				throw new RuntimeException("地址编号不能为空！");
+			}
+			
+			logger.info("====================address=" + address);
+			int count = iAddressService.updateByPrimaryKey((address));//插入地址表
+			
+			if (count<=0) {
+				throw new RuntimeException("更新信息失败！");
+			}
+			
+			result = new JsonResult(true, "更新地址成功！");
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new JsonResult(e.getMessage());
 		}
 		return result;
     }

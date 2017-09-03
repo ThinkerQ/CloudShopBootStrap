@@ -4,7 +4,7 @@ import lombok.ToString;
 
 @ToString
 public class Address {
-    private Integer id;
+    private Integer id;//地址编号
 
     private Integer provinceId;//省份编号
 

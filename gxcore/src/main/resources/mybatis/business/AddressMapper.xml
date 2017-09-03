@@ -70,6 +70,8 @@
   <!-- 根据用户id查询用户详细收货地址 -->
    <select id="selectDetailAddressByUserId" resultType="pd" >
     select 
+    	a.id as "id",
+    	a.user_id as "userId",
 		p.province as "provinceName",
 		c.city as "cityName",
 		ar.area as "areaName",

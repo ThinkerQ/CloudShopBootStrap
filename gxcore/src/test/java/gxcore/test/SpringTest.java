@@ -33,6 +33,35 @@ public class SpringTest {
 	private IAddressService iAddressService;
 	
 	/**
+	 * 获取全国省市区
+	 * @throws Exception
+	 */
+	@Test
+	public void testSelectALlPCA() throws Exception {
+		long start = System.nanoTime();
+		//先获取全部的省份
+    	List<PageData> allAllProvincesList = iProvincesService.selectAllProvinces();
+    	LoggerUtil.info("----------------------allAllProvincesList="+allAllProvincesList);
+    	//遍历省份，放入对应的城市
+    	for (PageData province : allAllProvincesList) {
+    		List<PageData> allCitisByPIdList = iProvincesService.selectAllCitisByPId(Integer.valueOf((String) province.get("provinceId")));
+    		province.put("cities", allCitisByPIdList);
+    		
+    		for (PageData cityPd : allCitisByPIdList) {
+    			List<PageData> allAreasByCIdList = iProvincesService.selectAllAreasByCId(Integer.valueOf((String) cityPd.get("cityId")));
+    			cityPd.put("areas", allAreasByCIdList);
+			}
+    		
+		}
+    	long end = System.nanoTime();
+    	LoggerUtil.info("----------------over------allAllProvincesList="+allAllProvincesList);
+    	LoggerUtil.info("----------------over------用时="+(start-end));
+    	
+    	
+    	//遍历省市，放入对应的区县
+	}
+	
+	/**
 	 * 添加收货地址
 	 * @throws Exception
 	 */
