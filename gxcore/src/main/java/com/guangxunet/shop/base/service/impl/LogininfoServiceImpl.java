@@ -1,6 +1,14 @@
 package com.guangxunet.shop.base.service.impl;
 
 
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.guangxunet.shop.base.domain.Iplog;
 import com.guangxunet.shop.base.domain.Logininfo;
 import com.guangxunet.shop.base.mapper.IpLogMapper;
@@ -8,14 +16,12 @@ import com.guangxunet.shop.base.mapper.LogininfoMapper;
 import com.guangxunet.shop.base.service.ILogininfoService;
 import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.base.util.BidConst;
+import com.guangxunet.shop.base.util.LoggerUtil;
 import com.guangxunet.shop.base.util.MD5;
 import com.guangxunet.shop.base.util.StringUtils;
 import com.guangxunet.shop.base.util.UserContext;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.Date;
-import java.util.List;
+import com.guangxunet.shop.business.domain.Account;
+import com.guangxunet.shop.business.mapper.AccountMapper;
 
 /**登陆相关实现
  * Created by Administrator on 2016/9/30.
@@ -24,10 +30,14 @@ import java.util.List;
 public class LogininfoServiceImpl implements ILogininfoService{
     @Autowired
     private LogininfoMapper logininfoMapper;
+    @Autowired
+    private AccountMapper accountMapper;
+    
     
     @Autowired
     private IpLogMapper ipLogMapper;
-
+    
+    @Transactional
     public void register(String mobile, String password) {
         int count = logininfoMapper.countUserByMobile(mobile);
         if (count>0){
@@ -41,16 +51,21 @@ public class LogininfoServiceImpl implements ILogininfoService{
             logininfo.setState(Logininfo.STATE_NOMAL);
             logininfo.setUserType(Logininfo.USER_NORMAL);//登录设置为前台用户
             logininfoMapper.insert(logininfo);
-
+            
             //注册成功之后创建对应的用户信息对象和账户信息对象，由于用户对象是从one方，依赖于注册用户的id,所以要放在它后面创建
             /*Userinfo userinfo = new Userinfo();
             userinfo.setId(logininfo.getId());
             userinfoService.add(userinfo);*/
 
             //创建账户对象
-            /*Account account = new Account();
-            account.setId(logininfo.getId());
-            accountService.add(account);*/
+            Account account = new Account();
+            account.setUserId(logininfo.getId());//用户id
+            account.setUsableAmount(BigDecimal.ZERO);//可用余额默认为0
+            account.setInsertDate(new Date());//插入时间
+            account.setUpdateDate(new Date());//更新时间
+            account.setVersion(0);//版本号
+            LoggerUtil.info("-----------account----"+account);
+            accountMapper.insert(account);
         }
     }
 

@@ -1,10 +1,9 @@
 package gxcore.test;
 
-import static org.junit.Assert.*;
-
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.guangxunet.shop.base.system.PageData;
 import com.guangxunet.shop.base.util.LoggerUtil;
+import com.guangxunet.shop.business.domain.Account;
 import com.guangxunet.shop.business.domain.Address;
+import com.guangxunet.shop.business.mapper.AccountMapper;
+import com.guangxunet.shop.business.service.IAccountService;
 import com.guangxunet.shop.business.service.IAddressService;
 import com.guangxunet.shop.business.service.IProvincesService;
 
@@ -31,6 +33,56 @@ public class SpringTest {
 	private IProvincesService iProvincesService;
 	@Autowired
 	private IAddressService iAddressService;
+	@Autowired
+	private IAccountService iAccountService;
+	@Autowired
+	private AccountMapper accountMapper;
+	
+	@Test
+	public void testSelectByUserId() throws Exception {
+		Account a = new Account();
+		a.setUsableAmount(new BigDecimal("500"));//充值金额
+		a.setUserId(41L);
+		Account byUserId = accountMapper.selectByUserId(a);
+		LoggerUtil.info("--------------byUserId="+byUserId);
+	}
+	
+	/*
+	 * 测试账户相关操作
+	 */
+	@Test
+	public void testAccount() throws Exception {
+		Account a = new Account();
+		a.setUserId(28L);
+		iAccountService.insert(a);
+	}
+	
+	/**
+	 * 充值金额
+	 * @throws Exception
+	 */
+	@Test
+	public void testAddAmount() throws Exception {
+		Account a = new Account();
+		a.setUsableAmount(new BigDecimal("500"));//充值金额
+		a.setUserId(41L);
+		a.setVersion(0);
+		iAccountService.updateAmountByUserId(a);
+	}
+	
+	@Test
+	public void testUpdate() throws Exception {
+//		Account a = new Account();
+//		a.setId(1L);
+//		a.setUsableAmount(new BigDecimal("3000"));
+//		a.setUserId(27L);
+//		a.setVersion(0);
+//		a.setInsertDate(new Date());
+//		iAccountService.updateByPrimaryKey(a);
+//		
+//		
+//		iAccountService.updateAmountByUserId(a);
+	}
 	
 	/**
 	 * 获取全国省市区
